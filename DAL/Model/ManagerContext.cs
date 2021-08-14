@@ -11,13 +11,15 @@ namespace DAL.Model
 {
     public class ManagerContext : DbContext
     {
+        public ManagerContext()
+        { }
 
         public ManagerContext(DbContextOptions<ManagerContext> options)
             : base(options)
         {
         }
         public virtual DbSet<User> Users { get; set; }
-
+            
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -47,8 +49,7 @@ namespace DAL.Model
                 entity.Property(e => e.Password).HasMaxLength(100);
                 entity.Property(e => e.Telephone).HasMaxLength(20);
                 entity.Property(e => e.Email).HasMaxLength(100);
-               entity.Property(e => e.InsertTime).HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+           
             });
                 base.OnModelCreating(modelBuilder);
         }
