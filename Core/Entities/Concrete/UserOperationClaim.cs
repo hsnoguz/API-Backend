@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.Concrete
 {
-    class UserOperationClaim:IEntity
+    public partial class UserOperationClaim : IEntity
     {
         public int Id { get; set; }
         public int UserId { get; set; }
         public int OperationClaimId { get; set; }
+        public virtual List<OperationClaim> OperationClaims { get; set; }
     }
 }

@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 
 using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
-
-
+using Core.Entities.Concrete;
 
 namespace TemelService.Controllers
 {

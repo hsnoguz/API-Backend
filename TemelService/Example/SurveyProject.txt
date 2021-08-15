@@ -1,0 +1,26 @@
+﻿{
+	ProjectId:"",
+-	PeriotId:"",
+	Questions:{
+		Page:{
+			Question:{
+				Name: "",
+				Text:"",
+				Column:"",
+				Choices: {
+					Horizantal:{
+						Value:"",
+						Column:"",
+						Text:"",
+					}
+					Vertical
+					{
+						Value:"",
+						Column:"",
+						Text:"",
+					}
+				}
+			}
+		}
+	}
+}

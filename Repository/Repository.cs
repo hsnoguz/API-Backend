@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DAL.BaseEntites;
+using DAL.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-   /* public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
-        PANELContext _context;
+        ManagerContext _context;
 
         private DbSet<T> _entities;
 
-        public Repository(PANELContext context)
+        public Repository(ManagerContext context)
         {
             _context = context;
             _entities = context.Set<T>();
@@ -144,5 +146,5 @@ namespace Repository
         public virtual IQueryable<T> TableNoTracking => Entities.AsNoTracking();
 
         protected virtual DbSet<T> Entities => _entities ?? (_entities = _context.Set<T>());
-    }*/
+    }
 }
