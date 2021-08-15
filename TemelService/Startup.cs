@@ -1,4 +1,10 @@
+using Bussines.Abstract;
+using Bussines.Concrete;
+using Core.Utilities.Security.Encyption;
+using Core.Utilities.Security.JWT;
+using DAL.Abstract;
 using DAL.Model;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,7 +14,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Repository;
+using Service.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +38,30 @@ namespace TemelService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ManagerContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("ManagerConnection"), y => y.MigrationsAssembly("DAL")));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IUserService, UserManager>();
+            services.AddTransient<IUserDal, EfUserDal>();
+            services.AddTransient<IAuthService, AuthManager>();
+            services.AddTransient<ITokenHelper, JwtHelper>();
+
+            var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidIssuer = tokenOptions.Issuer,
+                        ValidAudience = tokenOptions.Audience,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+                    };
+                });
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -55,6 +88,8 @@ namespace TemelService
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

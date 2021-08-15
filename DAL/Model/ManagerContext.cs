@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Entities.Concrete;
 
 namespace DAL.Model
 {
@@ -19,7 +20,9 @@ namespace DAL.Model
         {
         }
         public virtual DbSet<User> Users { get; set; }
-            
+        public virtual DbSet<OperationClaim> OperationClaims { get; set; }
+        public virtual DbSet<UserOperationClaim> UserOperationClaims { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -46,12 +49,18 @@ namespace DAL.Model
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.UserName).HasMaxLength(100);
-                entity.Property(e => e.Password).HasMaxLength(100);
+                entity.Property(e => e.PasswordHash).HasMaxLength(100);
                 entity.Property(e => e.Telephone).HasMaxLength(20);
                 entity.Property(e => e.Email).HasMaxLength(100);
            
             });
-                base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<OperationClaim>(entity =>
+            {
+                entity.Property(e => e.Name).HasMaxLength(100);
+            });
+
+                
+            base.OnModelCreating(modelBuilder);
         }
       //  partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

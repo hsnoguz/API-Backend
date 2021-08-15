@@ -1,15 +1,15 @@
-﻿using Core.Entities.Concrete;
-using Core.Extensions;
-using Core.Utilities.Security.Encryption;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
+using Core.Entities.Concrete;
+using Core.Extensions;
+using Core.Utilities.Security.Encyption;
+using Microsoft.Extensions.Configuration;
+
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace Core.Utilities.Security.JWT
@@ -22,7 +22,7 @@ namespace Core.Utilities.Security.JWT
         public JwtHelper(IConfiguration configuration)
         {
             Configuration = configuration;
-            _tokenOptions =Configuration.GetSection("TokenOptions") as TokenOptions;//e<TokenOptions>();
+            _tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
         }
         public AccessToken CreateToken(User user, List<OperationClaim> operationClaims)
@@ -41,7 +41,7 @@ namespace Core.Utilities.Security.JWT
             };
 
         }
-        
+            
         public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user,
             SigningCredentials signingCredentials, List<OperationClaim> operationClaims)
         {

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Entities.Concrete
+namespace DAL.Model
 {
-  public partial class OperationClaim:IEntity
+    /*
+    public partial class OperationClaim 
     {
         public int Id { get; set; }
-        
+
         public string Name { get; set; }
     }
+*/
 }
