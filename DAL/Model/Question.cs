@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DAL.Model
@@ -16,7 +17,12 @@ namespace DAL.Model
         public string Text { get; set; }
         public int Index { get; set; }
         public int ParentId { get; set; }
+
+   
         public List<QuestionHorizontal> QuestionHorizontals { get; set; }
+   
         public List<QuestionVertical> QuestionVerticals { get; set; }
+        [JsonIgnore]
+        public virtual Project Project { get; set; }
     }
 }

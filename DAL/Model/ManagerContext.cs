@@ -13,6 +13,9 @@ namespace DAL.Model
 {
     public class ManagerContext : DbContext
     {
+
+        //Add-Migration ProjectQuestionCreate -Context ManagerContext -OutputDir Migrations
+        //update-database -Context ManagerContext
         public ManagerContext()
         { }
 
@@ -24,10 +27,10 @@ namespace DAL.Model
         public virtual DbSet<OperationClaim> OperationClaims { get; set; }
         public virtual DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public virtual DbSet<Periot> Periots { get; set; }
-           public virtual DbSet<Project> Projects { get; set; }
-         public virtual DbSet<Question> Questions { get; set; }
-          public virtual DbSet<QuestionHorizontal> QuestionHorizontals { get; set; }
-          public virtual DbSet<QuestionVertical> QuestionVerticals { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<QuestionHorizontal> QuestionHorizontals { get; set; }
+        public virtual DbSet<QuestionVertical> QuestionVerticals { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -66,7 +69,7 @@ namespace DAL.Model
             };
 
             modelBuilder.Entity<User>().HasData(user);
-           // modelBuilder.Entity<OperationClaim>().HasData(new OperationClaim { Id = 1, Name = "Admin" });
+            // modelBuilder.Entity<OperationClaim>().HasData(new OperationClaim { Id = 1, Name = "Admin" });
             modelBuilder.Entity<UserOperationClaim>().HasData(new UserOperationClaim { Id = 1, UserId = 1, OperationClaimId = 1 });
 
             modelBuilder.Entity<User>(entity =>
@@ -78,36 +81,36 @@ namespace DAL.Model
 
             });
 
-                 modelBuilder.Entity<Project>(entity =>
-                {
-                    entity.Property(e => e.Name).HasMaxLength(100);
-                    entity.Property(e => e.InsertTime).HasDefaultValue(DateTime.Now);
+            modelBuilder.Entity<Project>(entity =>
+            {
+                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.InsertTime).HasDefaultValue(DateTime.Now);
 
-                });
+            });
 
-               modelBuilder.Entity<Question>(entity =>
-                {
-                    entity.Property(e => e.ColumnName).HasMaxLength(70);
-                    entity.Property(e => e.Text).HasMaxLength(1000);
-                    entity.Property(e => e.Type).HasMaxLength(100);
-                    entity.Property(e => e.ColumnName).HasMaxLength(70);
+            modelBuilder.Entity<Question>(entity =>
+            {
+                entity.Property(e => e.ColumnName).HasMaxLength(70);
+                entity.Property(e => e.Text).HasMaxLength(1000);
+                entity.Property(e => e.Type).HasMaxLength(100);
+                entity.Property(e => e.ColumnName).HasMaxLength(70);
 
 
-                });
+            });
 
-                modelBuilder.Entity<QuestionHorizontal>(entity =>
-                {
-                    entity.Property(e => e.ColumnName).HasMaxLength(70);
-                    entity.Property(e => e.Text).HasMaxLength(1000);
+            modelBuilder.Entity<QuestionHorizontal>(entity =>
+            {
+                entity.Property(e => e.ColumnName).HasMaxLength(70);
+                entity.Property(e => e.Text).HasMaxLength(1000);
 
-                });
+            });
 
-                modelBuilder.Entity<QuestionVertical>(entity =>
-                {
-                    entity.Property(e => e.ColumnName).HasMaxLength(70);
-                    entity.Property(e => e.Text).HasMaxLength(1000);
-                    entity.Property(e => e.Point).HasPrecision(9, 4); ;
-                });
+            modelBuilder.Entity<QuestionVertical>(entity =>
+            {
+                entity.Property(e => e.ColumnName).HasMaxLength(70);
+                entity.Property(e => e.Text).HasMaxLength(1000);
+                entity.Property(e => e.Point).HasPrecision(9, 4); ;
+            });
 
 
             modelBuilder.Entity<OperationClaim>(entity =>

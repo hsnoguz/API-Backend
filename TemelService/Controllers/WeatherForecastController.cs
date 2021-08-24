@@ -10,12 +10,17 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Core.Entities.Concrete;
+using Core.Results;
+using Bussines.Concrete;
+using Bussines.Abstract;
+using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace TemelService.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class WeatherForecastController : Controller
     {
         private static readonly string[] Summaries = new[]
         {
@@ -23,12 +28,29 @@ namespace TemelService.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        ManagerContext _manager;
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, ManagerContext manager)
+        private readonly ManagerContext _manager;
+        private readonly IProjectManager  _projectManager;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ManagerContext manager,IProjectManager projectManager)
         {
             _manager = manager;
             var user = _manager.Set<User>();
-            _logger = logger;
+            _projectManager = projectManager;
+              _logger = logger;
+        }
+
+        [HttpGet("GetProject")]
+        public string GetProject()
+        {
+            var result= _projectManager.GetProjectQuestion(10);
+            return System.Text.Json.JsonSerializer.Serialize(result);
+        }
+
+
+        [HttpGet("Test")]
+        public IResult GetProject2()
+        {
+            return new SuccessResult(true,"Selam");
         }
 
         [HttpGet]

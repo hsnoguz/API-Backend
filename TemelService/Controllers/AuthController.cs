@@ -17,6 +17,7 @@ namespace TemelService.Controllers
         public AuthController(IAuthService authService)
         {
             _authService = authService;
+
         }
 
         [HttpPost("login")]
@@ -37,6 +38,14 @@ namespace TemelService.Controllers
             return BadRequest(result.Message);
         }
 
+
+        [HttpPost("test1")]
+        public ActionResult test()
+        {
+        
+             return Ok();
+        }
+   
         [HttpPost("test")]
         public ActionResult test(UserForRegisterDto userForRegisterDto)
         {

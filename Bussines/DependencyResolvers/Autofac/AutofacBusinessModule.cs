@@ -25,9 +25,14 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<UserManager>().As<IUserService>();
             builder.RegisterType<EfUserDal>().As<IUserDal>();
             builder.RegisterType<EfPeriotDal>().As<IEfPeriotDal>();
-
+            builder.RegisterType<ProjectManager>().As<IProjectManager>();
+            builder.RegisterType<EfProjectDal>().As<IEfProjectDal>();
+            builder.RegisterType<EfQuestionDal>().As<IEfQuestionDal>();
+            builder.RegisterType<EfQuestionHorizontalDal>().As<IEfQuestionHorizontalDal>();
+            builder.RegisterType<EfQuestionVerticalDal>().As<IEfQuestionVerticalDal>();
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
+      
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
             builder.RegisterType<PeriotManager>().As<IPeriotManager>();
 

@@ -6,6 +6,7 @@
 			Question:{
 				Name: "",
 				Text:"",
+				Type="",
 				Column:"",
 				Choices: {
 					Horizantal:{

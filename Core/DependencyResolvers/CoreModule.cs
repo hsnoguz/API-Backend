@@ -16,6 +16,7 @@ namespace Core.DependencyResolvers
             services.AddMemoryCache();
             
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
          
         }
 

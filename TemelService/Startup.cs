@@ -29,6 +29,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.SecondModel;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using System.Text.Json.Serialization;
 
 namespace TemelService
 {
@@ -45,9 +47,18 @@ namespace TemelService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ManagerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ManagerConnection"), y => y.MigrationsAssembly("DAL")));
-              services.AddDbContext<SecondDbContext>(options => options.UseSqlServer( y => y.MigrationsAssembly("DAL")));
+        //    services.AddDbContext<SecondDbContext>(options => options.UseSqlServer(y => y.MigrationsAssembly("DAL")));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddControllersWithViews()
+              .AddNewtonsoftJson(options =>
+              options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+          );
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize);
+
+            services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
             /* services.AddTransient<IUserService, UserManager>();
              services.AddTransient<IUserDal, EfUserDal>();
              services.AddTransient<IAuthService, AuthManager>();
@@ -73,6 +84,7 @@ namespace TemelService
               {
                 new CoreModule(),
               });
+
             //  services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddControllers();
