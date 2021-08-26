@@ -11,6 +11,7 @@ namespace DAL.Model
   public partial class Question:IEntity
     {
         public int Id { get; set; }
+        [JsonIgnore]
         public int ProjectId { get; set; }
         public string ColumnName { get; set; }
         public string Type { get; set; }

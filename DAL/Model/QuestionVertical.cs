@@ -14,10 +14,10 @@ namespace DAL.Model
         public int QuestionId { get; set; }
         public string ColumnName { get; set; }
         public string Text { get; set; }
-        public int Index { get; set; }
+     
+        public Int16 Value{ get; set; }
         public int ParentId { get; set; }
         public decimal Point { get; set; }
-        public bool IsVisible { get; set; }
         [JsonIgnore]
         public virtual Question Question { get; set; }
     }

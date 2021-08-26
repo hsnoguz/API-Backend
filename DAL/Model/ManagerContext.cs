@@ -13,7 +13,7 @@ namespace DAL.Model
 {
     public class ManagerContext : DbContext
     {
-
+        //enable-migrations -ContextTypeName DAL.Model.ManagerContext -MigrationsDirectory Migrations
         //Add-Migration ProjectQuestionCreate -Context ManagerContext -OutputDir Migrations
         //update-database -Context ManagerContext
         public ManagerContext()
@@ -31,6 +31,9 @@ namespace DAL.Model
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<QuestionHorizontal> QuestionHorizontals { get; set; }
         public virtual DbSet<QuestionVertical> QuestionVerticals { get; set; }
+        public virtual DbSet<Branch> Branchs { get; set; }
+        public virtual DbSet<Jop> Jops { get; set; }
+        public virtual DbSet<Organization> Organizations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -85,7 +88,8 @@ namespace DAL.Model
             {
                 entity.Property(e => e.Name).HasMaxLength(100);
                 entity.Property(e => e.InsertTime).HasDefaultValue(DateTime.Now);
-
+                entity.Property(e => e.IsSuccess).HasDefaultValue(false);
+                entity.Property(e => e.SuccesCount).HasDefaultValue(0);
             });
 
             modelBuilder.Entity<Question>(entity =>
@@ -103,6 +107,22 @@ namespace DAL.Model
                 entity.Property(e => e.ColumnName).HasMaxLength(70);
                 entity.Property(e => e.Text).HasMaxLength(1000);
 
+            });
+
+      
+            modelBuilder.Entity<Jop>(entity =>
+            {
+                entity.Property(e => e.Explanation).HasMaxLength(150);
+            });
+
+            modelBuilder.Entity<Organization>(entity =>
+            {
+                entity.Property(e => e.Explanation).HasMaxLength(150);
+            });
+
+            modelBuilder.Entity<Branch>(entity =>
+            {
+                entity.Property(e => e.Explanation).HasMaxLength(150);
             });
 
             modelBuilder.Entity<QuestionVertical>(entity =>

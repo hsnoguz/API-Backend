@@ -39,19 +39,8 @@ namespace TemelService.Controllers
         }
 
 
-        [HttpPost("test1")]
-        public ActionResult test()
-        {
-        
-             return Ok();
-        }
-   
-        [HttpPost("test")]
-        public ActionResult test(UserForRegisterDto userForRegisterDto)
-        {
-            return Ok();
-        }
-            [HttpPost("register")]
+
+      [HttpPost("register")]
         public ActionResult Register(UserForRegisterDto userForRegisterDto)
         {
             var userExists = _authService.UserExists(userForRegisterDto.Email);

@@ -14,11 +14,10 @@ namespace DAL.Model
         public string Name { get; set; }
         public int PeriotId { get; set; }
         public int SuccesCount { get; set; }
+        public bool IsSuccess { get; set; }
         public DateTime? InsertTime { get; set; }
         [JsonIgnore]
-
         public virtual Periot Periot { get; set; }
-        
         public virtual List<Question> Questions { get; set; }
 
     }

@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20210824192200_Virtual")]
+    partial class Virtual
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,30 +21,6 @@ namespace DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Core.Entities.Concrete.Branch", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Branch");
-                });
-
-            modelBuilder.Entity("Core.Entities.Concrete.Jop", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Jop");
-                });
 
             modelBuilder.Entity("Core.Entities.Concrete.OperationClaim", b =>
                 {
@@ -65,27 +43,12 @@ namespace DAL.Migrations
                     b.ToTable("OperationClaims");
                 });
 
-            modelBuilder.Entity("Core.Entities.Concrete.Organization", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Organization");
-                });
-
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BranchId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(100)
@@ -100,14 +63,8 @@ namespace DAL.Migrations
                     b.Property<string>("IsActive")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("JopId")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("int");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasMaxLength(100)
@@ -119,6 +76,9 @@ namespace DAL.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
+                    b.Property<short>("SubeID")
+                        .HasColumnType("smallint");
+
                     b.Property<string>("Telephone")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
@@ -129,28 +89,20 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("JopId");
-
-                    b.HasIndex("OrganizationId");
-
                     b.ToTable("Users");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            BranchId = 0,
                             Email = "admin@arastirmaturk.com",
                             FirstName = "Admin",
                             InsertTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            JopId = 0,
                             LastName = "Admin",
-                            OrganizationId = 0,
-                            PasswordHash = new byte[] { 200, 185, 38, 114, 175, 33, 125, 226, 154, 148, 7, 134, 192, 105, 246, 31, 39, 36, 173, 196, 150, 129, 93, 43, 66, 89, 76, 110, 176, 29, 14, 138, 245, 55, 235, 201, 99, 197, 128, 158, 199, 19, 93, 77, 121, 55, 4, 4, 163, 131, 153, 186, 96, 8, 105, 171, 64, 133, 154, 62, 227, 123, 13, 15 },
-                            PasswordSalt = new byte[] { 5, 252, 36, 212, 206, 245, 246, 192, 214, 85, 35, 216, 0, 74, 137, 45, 209, 40, 59, 155, 128, 205, 162, 250, 255, 17, 96, 19, 29, 227, 197, 227, 250, 187, 255, 169, 4, 247, 125, 75, 89, 116, 154, 183, 143, 38, 31, 202, 165, 176, 183, 5, 246, 164, 178, 27, 39, 225, 236, 171, 168, 239, 91, 238, 116, 217, 146, 225, 255, 211, 118, 157, 144, 88, 234, 250, 211, 182, 7, 205, 189, 80, 40, 120, 78, 119, 180, 214, 55, 233, 34, 124, 192, 17, 163, 118, 81, 103, 200, 214, 139, 124, 54, 35, 23, 33, 181, 254, 238, 236, 141, 225, 134, 164, 169, 223, 157, 222, 38, 131, 42, 64, 120, 106, 57, 80, 214, 31 },
-                            Status = true
+                            PasswordHash = new byte[] { 162, 111, 45, 103, 20, 75, 66, 34, 171, 157, 29, 58, 250, 169, 8, 207, 188, 165, 166, 239, 226, 245, 19, 7, 169, 86, 230, 128, 50, 21, 148, 96, 158, 30, 79, 91, 11, 152, 198, 181, 157, 183, 52, 250, 101, 61, 156, 172, 78, 174, 109, 43, 50, 185, 163, 2, 195, 112, 188, 98, 194, 113, 2, 32 },
+                            PasswordSalt = new byte[] { 5, 202, 38, 148, 93, 213, 0, 154, 63, 204, 86, 86, 229, 103, 83, 191, 47, 89, 148, 173, 225, 82, 88, 143, 104, 42, 155, 156, 135, 196, 196, 146, 65, 186, 127, 63, 253, 85, 224, 241, 200, 187, 112, 63, 178, 198, 150, 47, 188, 150, 245, 221, 164, 58, 86, 162, 244, 24, 139, 10, 174, 0, 195, 110, 166, 79, 144, 88, 168, 182, 63, 98, 100, 69, 198, 10, 14, 29, 8, 189, 211, 88, 171, 128, 84, 31, 39, 145, 56, 4, 65, 51, 232, 222, 206, 109, 183, 254, 163, 110, 95, 193, 182, 45, 161, 87, 57, 103, 17, 7, 92, 19, 51, 182, 196, 188, 165, 227, 186, 196, 165, 133, 62, 11, 184, 130, 32, 2 },
+                            Status = true,
+                            SubeID = (short)0
                         });
                 });
 
@@ -180,63 +132,6 @@ namespace DAL.Migrations
                             OperationClaimId = 1,
                             UserId = 1
                         });
-                });
-
-            modelBuilder.Entity("DAL.Model.Branch", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Explanation")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<short>("parentId")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Branchs");
-                });
-
-            modelBuilder.Entity("DAL.Model.Jop", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Explanation")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<short>("parentId")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Jops");
-                });
-
-            modelBuilder.Entity("DAL.Model.Organization", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Explanation")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<short>("parentId")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Organizations");
                 });
 
             modelBuilder.Entity("DAL.Model.Periot", b =>
@@ -274,12 +169,7 @@ namespace DAL.Migrations
                     b.Property<DateTime?>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 8, 26, 21, 50, 15, 519, DateTimeKind.Local).AddTicks(861));
-
-                    b.Property<bool>("IsSuccess")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasDefaultValue(new DateTime(2021, 8, 24, 22, 22, 0, 101, DateTimeKind.Local).AddTicks(4285));
 
                     b.Property<string>("Name")
                         .HasMaxLength(100)
@@ -289,9 +179,7 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("SuccesCount")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -349,18 +237,12 @@ namespace DAL.Migrations
                     b.Property<int>("Index")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
-
-                    b.Property<short>("Value")
-                        .HasColumnType("smallint");
 
                     b.HasKey("Id");
 
@@ -380,6 +262,9 @@ namespace DAL.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
+
                     b.Property<int>("ParentId")
                         .HasColumnType("int");
 
@@ -394,9 +279,6 @@ namespace DAL.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<short>("Value")
-                        .HasColumnType("smallint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("QuestionId");
@@ -409,33 +291,6 @@ namespace DAL.Migrations
                     b.HasOne("Core.Entities.Concrete.UserOperationClaim", null)
                         .WithMany("OperationClaims")
                         .HasForeignKey("UserOperationClaimId");
-                });
-
-            modelBuilder.Entity("Core.Entities.Concrete.User", b =>
-                {
-                    b.HasOne("Core.Entities.Concrete.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Concrete.Jop", "Jop")
-                        .WithMany()
-                        .HasForeignKey("JopId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Concrete.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("Jop");
-
-                    b.Navigation("Organization");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.UserOperationClaim", b =>

@@ -1,4 +1,5 @@
 ﻿using Bussines.Abstract;
+using Bussines.BussinesAspects.Autofac;
 using Bussines.Constans;
 using Core.Entities.Concrete;
 using Core.Results;
@@ -23,7 +24,7 @@ namespace Bussines.Concrete
             _userService = userService;
             _tokenHelper = tokenHelper;
         }
-
+        [SecuredOperation("Admin")]
         public IResultData<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;

@@ -24,7 +24,9 @@ namespace Bussines.DependencyResolvers.Autofac
 
             builder.RegisterType<UserManager>().As<IUserService>();
             builder.RegisterType<EfUserDal>().As<IUserDal>();
+ 
             builder.RegisterType<EfPeriotDal>().As<IEfPeriotDal>();
+
             builder.RegisterType<ProjectManager>().As<IProjectManager>();
             builder.RegisterType<EfProjectDal>().As<IEfProjectDal>();
             builder.RegisterType<EfQuestionDal>().As<IEfQuestionDal>();

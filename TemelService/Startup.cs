@@ -31,6 +31,9 @@ using System.Threading.Tasks;
 using DAL.SecondModel;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using System.Text.Json.Serialization;
+using System.Text.Unicode;
+using System.Text.Encodings.Web;
+using Service.Abstract;
 
 namespace TemelService
 {
@@ -47,17 +50,21 @@ namespace TemelService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ManagerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ManagerConnection"), y => y.MigrationsAssembly("DAL")));
-        //    services.AddDbContext<SecondDbContext>(options => options.UseSqlServer(y => y.MigrationsAssembly("DAL")));
+            //    services.AddDbContext<SecondDbContext>(options => options.UseSqlServer(y => y.MigrationsAssembly("DAL")));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient(typeof(IEfListServiceDal<>), typeof(EfListServiceDal<>));
+            services.AddTransient(typeof(IListService<>), typeof(ListService<>));
             services.AddControllersWithViews()
               .AddNewtonsoftJson(options =>
               options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
           );
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize);
+            services.AddSingleton(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.BasicLatin, UnicodeRanges.Latin1Supplement, UnicodeRanges.LatinExtendedA }));
 
             services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+     
 
             /* services.AddTransient<IUserService, UserManager>();
              services.AddTransient<IUserDal, EfUserDal>();

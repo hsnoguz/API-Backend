@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.Concrete
 {
-   public class User:IEntity
+    public class User : IEntity
     {
         public int Id { get; set; }
         public string UserName { get; set; }
@@ -17,10 +17,16 @@ namespace Core.Entities.Concrete
         public bool Status { get; set; }
         public string Telephone { get; set; }
         public string Email { get; set; }
-        public Int16 SubeID { get; set; }
+        public int OrganizationId { get; set; }
+        public int BranchId { get; set; }
+
+        public int JopId { get; set; }
         public string IsActive { get; set; }
         public DateTime InsertTime { get; set; }
         public virtual List<UserOperationClaim> UserOperationClaim { get; set; }
-        
+        public virtual Jop Jop { get; set; }
+        public virtual Branch Branch { get; set; }
+        public virtual Organization Organization { get; set; }
+
     }
 }

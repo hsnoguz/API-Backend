@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 namespace TemelService.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("west/[controller]")]
     public class WeatherForecastController : Controller
     {
         private static readonly string[] Summaries = new[]
@@ -29,34 +29,44 @@ namespace TemelService.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
         private readonly ManagerContext _manager;
-        private readonly IProjectManager  _projectManager;
+        private readonly IProjectManager _projectManager;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, ManagerContext manager,IProjectManager projectManager)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ManagerContext manager, IProjectManager projectManager)
         {
             _manager = manager;
             var user = _manager.Set<User>();
             _projectManager = projectManager;
-              _logger = logger;
+            _logger = logger;
         }
 
-        [HttpGet("GetProject")]
-        public string GetProject()
+        [HttpGet("GetProject/{projectId}")]
+        public string GetProject(int projectId)
         {
-            var result= _projectManager.GetProjectQuestion(10);
-            return System.Text.Json.JsonSerializer.Serialize(result);
+            var result = _projectManager.GetProjectQuestion(projectId);
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            return System.Text.Json.JsonSerializer.Serialize(result,jso);
+        }
+
+
+        [HttpPost("SetProject")]
+        public IResult SetProject(Project json)
+        {
+          //  var result = System.Text.Json.JsonSerializer.Deserialize<Project>(json);
+            return new SuccessResult("sdsad");
         }
 
 
         [HttpGet("Test")]
         public IResult GetProject2()
         {
-            return new SuccessResult(true,"Selam");
+            return new SuccessResult(true, "Selam");
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-       
+
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

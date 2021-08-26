@@ -4,14 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Model
+namespace Core.Entities.Concrete
 {
-    /*
-    public partial class OperationClaim 
+  public partial  class Branch : IEntity
     {
         public int Id { get; set; }
-
-        public string Name { get; set; }
     }
-*/
 }
