@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bussines.Concrete
 {
+    
     public class ListService<T> : IListService<T> where T : class
     {
         IEfListServiceDal<T> _efListService;
@@ -22,7 +23,7 @@ namespace Bussines.Concrete
         {
             try
             {
-                _efListService.Add(entity);
+                _efListService.Insert(entity);
                 return new SuccessResult();
             }
             catch (Exception ex)
@@ -47,10 +48,15 @@ namespace Bussines.Concrete
            
         }
 
+        public IResultData<T> getEntity(int Id)
+        {
+            return new SuccessResultData<T>(_efListService.GetById(Id));
+        }
+
         public IResultData<List<T>> getList()
         {
 
-            return new SuccessResultData<List<T>>(_efListService.getList().ToList());
+            return new SuccessResultData<List<T>>(_efListService.Table.ToList());
         }
 
         public IResult Update(T entity)

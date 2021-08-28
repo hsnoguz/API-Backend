@@ -39,7 +39,7 @@ namespace DAL.Model
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=ManagerDb;Integrated Security=SSPI;");
+                optionsBuilder.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=ManagerDb;Integrated Security=SSPI;MultipleActiveResultSets=True");
             }
             base.OnConfiguring(optionsBuilder.UseLoggerFactory(CustomerLoggerFactory));
             base.OnConfiguring(optionsBuilder);
@@ -81,6 +81,7 @@ namespace DAL.Model
                 entity.Property(e => e.PasswordHash).HasMaxLength(100);
                 entity.Property(e => e.Telephone).HasMaxLength(20);
                 entity.Property(e => e.Email).HasMaxLength(100);
+                entity.Property(e => e.RefreshToken).HasMaxLength(255);
 
             });
 

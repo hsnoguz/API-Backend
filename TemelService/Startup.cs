@@ -54,7 +54,7 @@ namespace TemelService
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient(typeof(IEfListServiceDal<>), typeof(EfListServiceDal<>));
-            services.AddTransient(typeof(IListService<>), typeof(ListService<>));
+      //      services.AddTransient(typeof(IListService<>), typeof(ListService<>));
             services.AddControllersWithViews()
               .AddNewtonsoftJson(options =>
               options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

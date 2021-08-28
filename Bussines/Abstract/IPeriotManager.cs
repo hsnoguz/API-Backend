@@ -1,4 +1,5 @@
 ﻿using Core.Results;
+using DAL.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ public interface IPeriotManager
     {
         public IResult createPeriot(string name, int startYear, int stopYear);
         public IResult editPeriot(int id, string name);
+        public IResultData<List<Periot>> listPeriot();
     }
 }

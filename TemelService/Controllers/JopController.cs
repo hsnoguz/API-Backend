@@ -1,4 +1,5 @@
 ﻿using Bussines.Abstract;
+using Bussines.Service.Abstract;
 using Core.Results;
 using DAL.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -10,32 +11,33 @@ using System.Threading.Tasks;
 
 namespace TemelService.Controllers
 {
+    
     [Route("jop/[controller]")]
     [Authorize()]
     public class JopController : Controller
     {
-        private IListService<Jop> _JopService;
+        private IJopService _JopService;
 
-        public JopController(IListService<Jop> JopService)
+        public JopController(IJopService JopService)
         {
             _JopService = JopService;
         }
 
 
-        [Route("jop/[jopList]")]
+        [HttpGet("jopList")]
         public IResultData<List<Jop>>  JopList()
         {
           return  _JopService.getList();
         }
 
-        [Route("jop/[jopAdd]")]
+        [HttpPost("jopAdd")]
         public IResult JopAdd(Jop Jop)
         {
 
             return _JopService.Add(Jop);
         }
 
-        [Route("jop/[jopDelete]")]
+        [HttpDelete("jopDelete")]
         public IResult JopDelete(Jop Jop)
         {
 

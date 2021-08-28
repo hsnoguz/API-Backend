@@ -1,4 +1,5 @@
-﻿using Repository;
+﻿using DAL.Model;
+using Repository;
 using Service.Abstract;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,19 @@ using System.Threading.Tasks;
 
 namespace Service.Concrete
 {
-    public class EfListServiceDal<T> : IEfListServiceDal<T> where T : class
+    public class EfListServiceDal<T> : Repository<T>, IEfListServiceDal<T> where T:class
     {
-        public IRepository<T> _repository;
-        public EfListServiceDal(IRepository<T> repository) {
-            _repository = repository;
+        ManagerContext _context;
+        public EfListServiceDal(ManagerContext context) : base(context)
+        {
+            _context = context;
         }
 
+        /* 
+        public EfListServiceDal(IRepository<T> repository) {
+         //   _repository = repository;
+        }
+       
         public void Add(T entity)
         {
             _repository.Insert(entity);
@@ -36,5 +43,6 @@ namespace Service.Concrete
         {
             _repository.Update(entity);
         }
+        */
     }
 }

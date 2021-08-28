@@ -1,6 +1,7 @@
 ﻿using Bussines.Abstract;
 using Bussines.BussinesAspects.Autofac;
 using Core.Results;
+using DAL.Model;
 using Service.Abstract;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,16 @@ namespace Bussines.Concrete
             }
             return new SuccessResult();
         }
+
+        [SecuredOperation("admin")]
+        
+        public IResultData<List<Periot>> listPeriot()
+        {
+           
+            return new SuccessResultData<List<Periot>>(_efPeriotDal.listPeriot());
+        }
+
+
 
     }
 }

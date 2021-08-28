@@ -35,17 +35,36 @@ namespace Service.Concrete
                             select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };*/
             //   return result.ToList();
             List<OperationClaim> operations = new();
-            var resultUser = this.Table.Include(x => x.UserOperationClaim).Where(x => x.Id == user.Id).ToList();
+            var resultUser = this.Table.Include(x => x.UserOperationClaim).ThenInclude(x=>x.OperationClaim).Where(x => x.Id == user.Id).ToList();
             foreach (var resultUserOperation in resultUser)
             {
+
                 foreach (var operation in resultUserOperation.UserOperationClaim)
                 {
-                    operations.AddRange(operation.OperationClaims);
+                    operations.Add(operation.OperationClaim);
                 }
-             
+
+                /*   if (resultUserOperation.UserOperationClaim.Count == 0)
+                   { 
+
+                   }
+                   foreach (var operation in resultUserOperation.UserOperationClaim)
+                   {
+                       operations.AddRange(operation.OperationClaims);
+                   }*/
+
             }
             return operations;
          
+        }
+
+        public void SetRefreshToken(int userId, string token, DateTime tokendatetime)
+        {
+            var user = this.Table.Where(x => x.Id == userId).FirstOrDefault();
+            user.RefreshToken = token;
+            user.RefreshTokenEndDate = tokendatetime;
+            this.Update(user);
+
         }
     }
 }

@@ -39,5 +39,22 @@ namespace TemelService.Controllers
             }
 
         }
+
+
+        [HttpGet("listPeriot")]
+        public ActionResult ListPeriot()
+        {
+
+            IResultData<List<Periot>> result = _periotManager.listPeriot();
+            if (result.IsValid)
+            {
+                return Ok(result.Data);
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+
+        }
     }
 }

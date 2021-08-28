@@ -28,5 +28,12 @@ namespace Service.Concrete
             periot.Name = name;
             _repository.Insert(periot);
         }
+
+        public List<Periot> listPeriot()
+        {
+            List<Periot> listPeriot = _repository.Table.ToList();
+         
+           return listPeriot;
+        }
     }
 }

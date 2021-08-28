@@ -22,6 +22,8 @@ namespace Core.Entities.Concrete
 
         public int JopId { get; set; }
         public string IsActive { get; set; }
+        public string RefreshToken { get; set; }
+        public DateTime RefreshTokenEndDate { get; set; }
         public DateTime InsertTime { get; set; }
         public virtual List<UserOperationClaim> UserOperationClaim { get; set; }
         public virtual Jop Jop { get; set; }

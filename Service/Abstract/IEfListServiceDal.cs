@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Service.Abstract
 {
-   public interface IEfListServiceDal<T> where T:class
+   public interface IEfListServiceDal<T>: IRepository<T> where T:class
     {
-        public ICollection<T> getList();
+     /*   public ICollection<T> getList();
         public void Add(T entity);
         public void Delete(T entity);
-        public void Update(T entity);
+        public void Update(T entity);*/
     }
 }

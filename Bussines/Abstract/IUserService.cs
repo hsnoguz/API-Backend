@@ -1,5 +1,7 @@
 ﻿using Core.Entities.Concrete;
+using Core.Results;
 using DAL.Model;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +15,6 @@ namespace Bussines.Abstract
         List<OperationClaim> GetClaims(User user);
         void Add(User user);
         User GetByMail(string email);
+        IResultData<List<UserList>> GetUserList();
     }
 }

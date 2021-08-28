@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace TemelService.Controllers
 {
+    /*
     [Route("Organization/[controller]")]
     [Authorize()]
     public class OrganizationController : Controller
@@ -22,24 +23,25 @@ namespace TemelService.Controllers
         }
 
 
-        [Route("Organization/[organizationList]")]
+        [Route("organizationList")]
         public IResultData<List<Organization>>  OrganizationList()
         {
           return  _OrganizationService.getList();
         }
 
-        [Route("Organization/[organizationAdd]")]
+        [Route("organizationAdd")]
         public IResult OrganizationAdd(Organization Organization)
         {
 
             return _OrganizationService.Add(Organization);
         }
 
-        [Route("Organization/[organizationDelete]")]
+        [Route("organizationDelete")]
         public IResult OrganizationDelete(Organization Organization)
         {
 
             return _OrganizationService.Delete(Organization);
         }
-    }
+    
+    }*/
 }

@@ -10,6 +10,7 @@ namespace Bussines.Abstract
    public interface IListService<T> where T:class
     {
         public IResultData<List<T>> getList();
+        public IResultData<T> getEntity(int Id);
         public IResult Add(T entity);
         public IResult Delete(T entity);
         public IResult Update(T entity);
