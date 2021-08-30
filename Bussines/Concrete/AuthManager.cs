@@ -1,6 +1,7 @@
 ﻿using Bussines.Abstract;
 using Bussines.BussinesAspects.Autofac;
 using Bussines.Constans;
+using Bussines.Service.Abstract;
 using Core.Entities.Concrete;
 using Core.Results;
 using Core.Utilities.Security.Hashing;
@@ -18,11 +19,12 @@ namespace Bussines.Concrete
     {
         private IUserService _userService;
         private ITokenHelper _tokenHelper;
-
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper)
+        private IRefreshTokenService _refreshToken;
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper, IRefreshTokenService refreshToken)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
+            _refreshToken = refreshToken;
         }
         [SecuredOperation("Admin")]
         public IResultData<User> Register(UserForRegisterDto userForRegisterDto, string password)
@@ -69,9 +71,43 @@ namespace Bussines.Concrete
 
         public IResultData<AccessToken> CreateAccessToken(User user)
         {
-            var claims = _userService.GetClaims(user);
+            var claims = _userService.GetClaims(user.Id);
             var accessToken = _tokenHelper.CreateToken(user, claims);
-            return new SuccessResultData<AccessToken>(accessToken, Messages.AccessTokenCreated);
+            Result result =setRefreshToken(user.Id, accessToken.RefreshToken);
+            if (result.IsValid)
+            {
+                return new SuccessResultData<AccessToken>(accessToken, Messages.AccessTokenCreated);
+            }
+            else
+            {
+                return new ErrorResultData<AccessToken>(null, result.Message);
+            }
+        }
+        public bool getRefreshTokenControl(int userId, string lastRefreshToken)
+        {
+            bool lastToken = _refreshToken.getRefreshTokenControl(userId, lastRefreshToken);
+            return lastToken;
+        }
+        public IResultData<AccessToken> setNewRefreshToken(int userId)
+        {
+          
+            User user = _userService.GetUser(userId);
+            return CreateAccessToken(user);
+
+        }
+        public Result setRefreshToken(int userId,string token)
+        {
+            try
+            {
+               int refreshId= _refreshToken.Insert(userId, token);
+                _userService.SetRefreshTokenId(userId, refreshId);
+                return new SuccessResult();
+            }
+            catch (Exception ex)
+            {
+                return new ErrorResult(ex.Message);
+            }
+           
         }
     }
 }

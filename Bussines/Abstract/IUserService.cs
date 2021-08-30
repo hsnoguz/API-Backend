@@ -12,9 +12,11 @@ namespace Bussines.Abstract
 {
     public interface IUserService
     {
-        List<OperationClaim> GetClaims(User user);
+        List<OperationClaim> GetClaims(int userId);
         void Add(User user);
+        void SetRefreshTokenId(int userId,int refreshTokenId);
         User GetByMail(string email);
+        User GetUser(int userId);
         IResultData<List<UserList>> GetUserList();
     }
 }

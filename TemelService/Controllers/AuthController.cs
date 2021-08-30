@@ -1,4 +1,5 @@
 ﻿using Bussines.Abstract;
+using Core.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Service.Model;
 using System;
@@ -51,12 +52,47 @@ namespace TemelService.Controllers
 
             var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
             var result = _authService.CreateAccessToken(registerResult.Data);
+
             if (result.IsValid)
             {
                 return Ok(result.Data);
             }
 
             return BadRequest(result.Message);
+        }
+
+        [HttpPost("refreshToken")]
+        public ActionResult RefreshToken(string refreshToken)
+        {
+            var claim = HttpContext.User.ClaimNameIdentifier();
+            if (claim.Count > 0)
+            {
+                int userId = Convert.ToInt32(claim[0].ToString());
+                bool lastToken = _authService.getRefreshTokenControl(userId, refreshToken);
+                if (lastToken)
+                {
+
+                    var result = _authService.setNewRefreshToken(userId);
+                    if (result.IsValid)
+                    {
+                        return Ok(result.Data);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
+                }
+                else
+                {
+                    return BadRequest("Token Hatalı!");
+                }
+           
+            }
+            else
+            {
+                return BadRequest("Token Hatalı!");
+            }
+
         }
     }
 }

@@ -81,14 +81,23 @@ namespace DAL.Model
                 entity.Property(e => e.PasswordHash).HasMaxLength(100);
                 entity.Property(e => e.Telephone).HasMaxLength(20);
                 entity.Property(e => e.Email).HasMaxLength(100);
-                entity.Property(e => e.RefreshToken).HasMaxLength(255);
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+
+            });
+
+            modelBuilder.Entity<RefreshToken>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.IsUsing).HasDefaultValue(false);
+                entity.Property(e => e.Token).HasMaxLength(255);
+       
 
             });
 
             modelBuilder.Entity<Project>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(100);
-                entity.Property(e => e.InsertTime).HasDefaultValue(DateTime.Now);
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
                 entity.Property(e => e.IsSuccess).HasDefaultValue(false);
                 entity.Property(e => e.SuccesCount).HasDefaultValue(0);
             });

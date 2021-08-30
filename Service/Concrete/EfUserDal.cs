@@ -12,19 +12,27 @@ using System.Threading.Tasks;
 
 using System.ComponentModel.DataAnnotations;
 using Core.Entities.Concrete;
+using Core.Utilities.Security.JWT;
+using Microsoft.Extensions.Configuration;
+
+using System.IdentityModel.Tokens.Jwt;
+
+using System.Security.Claims;
+using Service.Abstract;
 
 namespace Service.Concrete
 {
     public class EfUserDal :Repository<User>,IUserDal //<T> where T : class, IUserDal<T> 
     {
         ManagerContext _context;
+
         
-        public EfUserDal(ManagerContext context):base(context)
+        public EfUserDal(ManagerContext context) :base(context)
         {
-          
             _context = context;
+      
         }
-        public List<OperationClaim> GetClaims(User user)
+        public List<OperationClaim> GetClaims(int userId)
         {
 
             //var result = this.Table.Include(x => x.UserOperationClaim).Include(x=>x.UserOperationClaim.UserId).Where(x=>x.UserId==user.Id).Select(x=>new OperationClaim { Id=x.OperationClaimId,Name=x.OperationClaim.Name});
@@ -35,7 +43,7 @@ namespace Service.Concrete
                             select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };*/
             //   return result.ToList();
             List<OperationClaim> operations = new();
-            var resultUser = this.Table.Include(x => x.UserOperationClaim).ThenInclude(x=>x.OperationClaim).Where(x => x.Id == user.Id).ToList();
+            var resultUser = this.Table.Include(x => x.UserOperationClaim).ThenInclude(x=>x.OperationClaim).Where(x => x.Id == userId).ToList();
             foreach (var resultUserOperation in resultUser)
             {
 
@@ -58,13 +66,11 @@ namespace Service.Concrete
          
         }
 
-        public void SetRefreshToken(int userId, string token, DateTime tokendatetime)
+        public void SetRefreshToken(int userId, int refreshTokenId)
         {
             var user = this.Table.Where(x => x.Id == userId).FirstOrDefault();
-            user.RefreshToken = token;
-            user.RefreshTokenEndDate = tokendatetime;
+            user.RefreshTokenId = refreshTokenId;
             this.Update(user);
-
         }
     }
 }

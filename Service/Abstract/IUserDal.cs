@@ -12,8 +12,8 @@ namespace DAL.Abstract
 {
     public interface IUserDal : IRepository<User>
     {
-        List<OperationClaim> GetClaims(User user);
-        void SetRefreshToken(int userId,string token,DateTime tokendatetime);
+        List<OperationClaim> GetClaims(int userId);
+        void SetRefreshToken(int userId,int refreshTokenId);
 
     }
 }

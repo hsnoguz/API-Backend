@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20210830195652_RefreshToken23")]
+    partial class RefreshToken23
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,6 +150,9 @@ namespace DAL.Migrations
                     b.Property<int?>("RefreshTokenId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RefreshTokenId1")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -167,6 +172,8 @@ namespace DAL.Migrations
 
                     b.HasIndex("OrganizationId");
 
+                    b.HasIndex("RefreshTokenId1");
+
                     b.ToTable("Users");
 
                     b.HasData(
@@ -179,8 +186,8 @@ namespace DAL.Migrations
                             JopId = 0,
                             LastName = "Admin",
                             OrganizationId = 0,
-                            PasswordHash = new byte[] { 6, 106, 133, 64, 151, 126, 228, 105, 9, 165, 129, 147, 15, 233, 5, 198, 106, 21, 122, 169, 14, 42, 61, 242, 171, 15, 213, 146, 20, 63, 138, 135, 9, 22, 17, 82, 102, 22, 228, 170, 17, 25, 162, 110, 130, 73, 104, 157, 144, 46, 156, 221, 99, 214, 101, 137, 80, 142, 217, 47, 136, 79, 124, 231 },
-                            PasswordSalt = new byte[] { 19, 13, 230, 240, 147, 117, 239, 2, 66, 249, 137, 148, 72, 231, 44, 112, 184, 233, 99, 39, 143, 179, 9, 237, 41, 176, 31, 25, 231, 90, 149, 116, 90, 93, 54, 56, 196, 192, 51, 39, 224, 183, 68, 70, 47, 233, 160, 137, 153, 55, 67, 150, 128, 246, 141, 165, 153, 112, 190, 254, 125, 76, 49, 227, 169, 116, 250, 221, 155, 152, 32, 153, 58, 69, 101, 135, 88, 53, 19, 153, 58, 24, 209, 207, 156, 173, 219, 37, 154, 220, 119, 215, 190, 158, 0, 41, 54, 182, 246, 250, 167, 170, 182, 158, 140, 8, 146, 62, 183, 236, 76, 197, 80, 225, 196, 215, 100, 28, 70, 205, 53, 255, 159, 48, 235, 40, 244, 196 },
+                            PasswordHash = new byte[] { 45, 98, 82, 188, 83, 244, 78, 227, 208, 58, 168, 231, 27, 169, 55, 164, 160, 253, 18, 160, 28, 79, 211, 192, 11, 225, 148, 115, 160, 67, 123, 15, 181, 146, 224, 136, 188, 64, 193, 201, 169, 116, 242, 104, 165, 17, 20, 205, 137, 201, 223, 31, 154, 45, 120, 194, 64, 50, 0, 224, 19, 70, 207, 21 },
+                            PasswordSalt = new byte[] { 161, 83, 198, 235, 181, 234, 224, 127, 69, 109, 207, 94, 35, 186, 207, 164, 172, 62, 92, 205, 81, 174, 197, 14, 176, 28, 54, 93, 14, 157, 192, 54, 223, 58, 117, 145, 183, 252, 217, 183, 79, 6, 124, 76, 62, 90, 78, 194, 10, 17, 5, 28, 239, 25, 73, 234, 150, 12, 151, 183, 115, 172, 15, 237, 67, 208, 215, 247, 209, 155, 65, 124, 130, 175, 129, 76, 155, 186, 177, 215, 60, 79, 66, 228, 16, 192, 151, 4, 97, 103, 195, 65, 3, 82, 100, 54, 19, 137, 116, 166, 187, 224, 175, 171, 46, 73, 69, 250, 90, 95, 128, 5, 221, 21, 208, 220, 89, 91, 91, 13, 116, 208, 104, 74, 132, 145, 147, 205 },
                             Status = true
                         });
                 });
@@ -457,11 +464,17 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Core.Entities.Concrete.RefreshToken", "RefreshToken")
+                        .WithMany()
+                        .HasForeignKey("RefreshTokenId1");
+
                     b.Navigation("Branch");
 
                     b.Navigation("Jop");
 
                     b.Navigation("Organization");
+
+                    b.Navigation("RefreshToken");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.UserOperationClaim", b =>

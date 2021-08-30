@@ -34,9 +34,9 @@ namespace Bussines.Concrete
             _jopService = jopService;
         }
 
-        public List<OperationClaim> GetClaims(User user)
+        public List<OperationClaim> GetClaims(int userId)
         {
-            return _userDal.GetClaims(user);
+            return _userDal.GetClaims(userId);
         }
 
         public void Add(User user)
@@ -46,9 +46,13 @@ namespace Bussines.Concrete
 
         public User GetByMail(string email)
         {
-            return _userDal.Table.FirstOrDefault(u => u.Email == email);
+            return _userDal.Table.FirstOrDefault(u => u.Email ==email);
         }
 
+        public User GetUser(int userId)
+        {
+            return _userDal.Table.FirstOrDefault(u => u.Id == userId);
+        }
         public IResultData<List<UserList>> GetUserList()
         {
             var userTable= _userDal.Table;
@@ -63,6 +67,11 @@ namespace Bussines.Concrete
 
             }
             return new SuccessResultData<List<UserList>>(userList);
+        }
+
+        public void SetRefreshTokenId(int userId, int refreshTokenId)
+        {
+            _userDal.SetRefreshToken(userId, refreshTokenId);
         }
     }
 }

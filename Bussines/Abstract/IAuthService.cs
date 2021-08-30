@@ -16,6 +16,8 @@ namespace Bussines.Abstract
         IResultData<User> Register(UserForRegisterDto userForRegisterDto, string password);
         IResultData<User> Login(UserForLoginDto userForLoginDto);
         IResult UserExists(string email);
+        bool getRefreshTokenControl(int userId, string lastRefreshToken);
         IResultData<AccessToken> CreateAccessToken(User user);
+        IResultData<AccessToken> setNewRefreshToken(int userId);
     }
 }

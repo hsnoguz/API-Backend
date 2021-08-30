@@ -17,5 +17,9 @@ namespace Core.Results
         {
 
         }
+        public ErrorResult() : base(false)
+        {
+
+        }
     }
 }
