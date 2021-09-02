@@ -39,7 +39,8 @@ namespace DAL.Model
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=ManagerDb;Integrated Security=SSPI;MultipleActiveResultSets=True");
+                         // optionsBuilder.UseSqlServer("Data Source= DESKTOP-FSJ8JLM\\SQLEXPRESS;Initial Catalog=ManagerDb;User ID=sa;Password=nasah;MultipleActiveResultSets=True");
+                        optionsBuilder.UseSqlServer("Data Source=89.252.181.210\\MSSQLSERVER2019;Initial Catalog=arastir3_ManagerDb;User ID=arastir3_service;Password=AraTara05*;MultipleActiveResultSets=True");
             }
             base.OnConfiguring(optionsBuilder.UseLoggerFactory(CustomerLoggerFactory));
             base.OnConfiguring(optionsBuilder);
@@ -71,9 +72,9 @@ namespace DAL.Model
                 Status = true
             };
 
-            modelBuilder.Entity<User>().HasData(user);
+           // modelBuilder.Entity<User>().HasData(user);
             // modelBuilder.Entity<OperationClaim>().HasData(new OperationClaim { Id = 1, Name = "Admin" });
-            modelBuilder.Entity<UserOperationClaim>().HasData(new UserOperationClaim { Id = 1, UserId = 1, OperationClaimId = 1 });
+           // modelBuilder.Entity<UserOperationClaim>().HasData(new UserOperationClaim { Id = 1, UserId = 1, OperationClaimId = 1 });
 
             modelBuilder.Entity<User>(entity =>
             {

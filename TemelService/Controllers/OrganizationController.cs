@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace TemelService.Controllers
 {
-    /*
+    
     [Route("Organization/[controller]")]
     [Authorize()]
     public class OrganizationController : Controller
@@ -23,25 +23,45 @@ namespace TemelService.Controllers
         }
 
 
-        [Route("organizationList")]
+
+        [HttpGet("organizationList")]
         public IResultData<List<Organization>>  OrganizationList()
         {
           return  _OrganizationService.getList();
         }
 
-        [Route("organizationAdd")]
-        public IResult OrganizationAdd(Organization Organization)
+        
+        [HttpPost("organizorganizationAddationDelete")]
+        public IActionResult OrganizationAdd(Organization Organization)
         {
-
-            return _OrganizationService.Add(Organization);
+            IResult result = _OrganizationService.Add(Organization);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+         
         }
 
-        [Route("organizationDelete")]
-        public IResult OrganizationDelete(Organization Organization)
+     
+        [HttpDelete("organizationDelete")]
+        public IActionResult OrganizationDelete(Organization Organization)
         {
+            IResult result = _OrganizationService.Delete(Organization);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
 
-            return _OrganizationService.Delete(Organization);
+       
         }
     
-    }*/
+    }
 }

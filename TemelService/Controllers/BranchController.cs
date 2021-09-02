@@ -32,17 +32,30 @@ namespace TemelService.Controllers
         }
 
         [HttpPost("jopAdd")]
-        public IResult BranchAdd(Branch branch)
+        public IActionResult BranchAdd(Branch branch)
         {
+            IResult result = _branchService.Add(branch);
 
-            return _branchService.Add(branch);
+            if (result.IsValid)
+                return Ok();
+            else
+            {
+                return BadRequest(result.Message);
+            }
         }
 
         [HttpDelete("branchDelete")]
-        public IResult BranchDelete(Branch branch)
+        public IActionResult BranchDelete(Branch branch)
         {
+            IResult result = _branchService.Delete(branch);
 
-            return _branchService.Delete(branch);
+            if (result.IsValid)
+                return Ok();
+            else
+            {
+                return BadRequest(result.Message);
+            }
+          
         }
     }
 }

@@ -31,17 +31,32 @@ namespace TemelService.Controllers
         }
 
         [HttpPost("jopAdd")]
-        public IResult JopAdd(Jop Jop)
+        public IActionResult JopAdd(Jop Jop)
         {
+            IResult result = _JopService.Add(Jop);
 
-            return _JopService.Add(Jop);
+            if (result.IsValid)
+                return Ok();
+            else
+            {
+                return BadRequest(result.Message);
+            }
+      
         }
 
         [HttpDelete("jopDelete")]
-        public IResult JopDelete(Jop Jop)
+        public IActionResult JopDelete(Jop Jop)
         {
+            IResult result = _JopService.Delete(Jop);
 
-            return _JopService.Delete(Jop);
+            if (result.IsValid)
+                return Ok();
+            else
+            {
+                return BadRequest(result.Message);
+            }
+
+      
         }
     }
 }

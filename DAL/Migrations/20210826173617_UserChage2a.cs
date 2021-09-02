@@ -134,9 +134,9 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
+          /*  migrationBuilder.DropForeignKey(
                 name: "FK_Users_Branch_BranchId",
-                table: "Users");
+                table: "Users");*/
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Users_Jop_JopId",
