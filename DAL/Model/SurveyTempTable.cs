@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace DAL.Model
 {
-  public partial  class Jop:IEntity
+   public partial class SurveyTempTable:IEntity
     {
         public int Id { get; set; }
-        public string Explanation { get; set; }
-        public int? parentId { get; set; }
+        public int userId { get; set; }
+        public DateTime? InsertTime { get; set; }
 
     }
 }

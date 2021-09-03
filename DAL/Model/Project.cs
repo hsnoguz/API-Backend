@@ -15,6 +15,8 @@ namespace DAL.Model
         public int PeriotId { get; set; }
         public int SuccesCount { get; set; }
         public bool IsSuccess { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? StopTime { get; set; }
         public DateTime? InsertTime { get; set; }
         [JsonIgnore]
         public virtual Periot Periot { get; set; }

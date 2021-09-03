@@ -13,7 +13,7 @@ namespace DAL.Model
         public int Id { get; set; }
         [JsonIgnore]
         public int ProjectId { get; set; }
-        public string ColumnName { get; set; }
+        public string Name { get; set; }
         public string Type { get; set; }
         public string Text { get; set; }
         public int Index { get; set; }

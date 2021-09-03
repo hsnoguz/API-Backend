@@ -39,22 +39,7 @@ namespace TemelService.Controllers
             _logger = logger;
         }
 
-        [HttpGet("GetProject/{projectId}")]
-        public string GetProject(int projectId)
-        {
-            var result = _projectManager.GetProjectQuestion(projectId);
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return System.Text.Json.JsonSerializer.Serialize(result,jso);
-        }
-
-
-        [HttpPost("SetProject")]
-        public IResult SetProject(Project json)
-        {
-          //  var result = System.Text.Json.JsonSerializer.Deserialize<Project>(json);
-            return new SuccessResult("sdsad");
-        }
+     
 
 
         [HttpGet("Test")]

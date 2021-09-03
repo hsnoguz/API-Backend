@@ -114,6 +114,8 @@ namespace TemelService
             }
             else
             {
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TemelService v1"));
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
@@ -125,7 +127,7 @@ namespace TemelService
             }
 
 
-        //    app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 

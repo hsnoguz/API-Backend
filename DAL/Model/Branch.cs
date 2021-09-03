@@ -13,6 +13,6 @@ namespace DAL.Model
 
         public int Id { get; set; }
         public string Explanation { get; set; }
-        public Int16 parentId { get; set; }
+        public int? parentId { get; set; }
     }
 }

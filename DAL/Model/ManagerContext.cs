@@ -58,6 +58,7 @@ namespace DAL.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.HasAnnotation("Relational:Collation", "Turkish_CI_AS");
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash("S1425p", out passwordHash, out passwordSalt);
@@ -72,10 +73,12 @@ namespace DAL.Model
                 Status = true
             };
 
-           // modelBuilder.Entity<User>().HasData(user);
-            // modelBuilder.Entity<OperationClaim>().HasData(new OperationClaim { Id = 1, Name = "Admin" });
-           // modelBuilder.Entity<UserOperationClaim>().HasData(new UserOperationClaim { Id = 1, UserId = 1, OperationClaimId = 1 });
-
+           /* modelBuilder.Entity<Branch>().HasData(new Branch { Id=1,Explanation="IT"});
+            modelBuilder.Entity<OperationClaim>().HasData(new OperationClaim { Id = 1, Name = "Admin" });
+            modelBuilder.Entity<User>().HasData(user);
+            
+            modelBuilder.Entity<UserOperationClaim>().HasData(new UserOperationClaim { Id = 1, UserId = 1, OperationClaimId = 1 });
+           */
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.UserName).HasMaxLength(100);
@@ -105,10 +108,10 @@ namespace DAL.Model
 
             modelBuilder.Entity<Question>(entity =>
             {
-                entity.Property(e => e.ColumnName).HasMaxLength(70);
+                entity.Property(e => e.Name).HasMaxLength(70);
                 entity.Property(e => e.Text).HasMaxLength(1000);
                 entity.Property(e => e.Type).HasMaxLength(100);
-                entity.Property(e => e.ColumnName).HasMaxLength(70);
+                
 
 
             });

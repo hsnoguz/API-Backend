@@ -2,6 +2,7 @@
 using Core.Results;
 using DAL.Model;
 using Service.Abstract;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,20 @@ namespace Bussines.Concrete
         public ProjectManager(IEfProjectDal projectDal)
         {
             _projectDal = projectDal;
+        }
+
+        public IResult CreateProject(CustomProjectDto project)
+        {
+            try
+            {
+                _projectDal.CreateProject(project);
+                return new SuccessResult();
+            }
+            catch (Exception ex)
+            {
+
+                return new ErrorResult(ex.Message);
+            }
         }
 
         public IResultData<Project> GetProjectQuestion(int Id)

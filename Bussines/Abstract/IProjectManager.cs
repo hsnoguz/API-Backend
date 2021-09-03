@@ -1,5 +1,6 @@
 ﻿using Core.Results;
 using DAL.Model;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace Bussines.Abstract
         
         public IResultData<List<Project>> Projects(int periotID);
         public IResultData<Project> GetProjectQuestion(int Id);
-        
+        public IResult CreateProject(CustomProjectDto project);
     }
 }
