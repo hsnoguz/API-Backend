@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity.Core.Objects;
+using Microsoft.Data.SqlClient;
+
 namespace Service.Concrete
 {
     public class EfProjectDal : IEfProjectDal
@@ -35,9 +37,22 @@ namespace Service.Concrete
             tempProject.StartTime = project.StartTime;
             tempProject.StopTime = project.StopTime;
             _repositoryProject.Insert(tempProject);
+            int Id = tempProject.Id;
+            createTable(Id);
+
             //var table = _context.Database.<SurveyTempTable>("SELECT ... FROM " + project.Name);
         }
 
+        public void createTable(int Id)
+        {
+            var result = _repositoryProject.UpdateSql("sp_CreateProjectTable @Id", new SqlParameter("@Id",Id.ToString()));
+        }
+        public void AddProjectQuestion(Question question)
+        {
+
+            _efQuestionDal.addQuestion(question);
+            
+        }
         public Project GetProjectQuestion(int projectID)
         {
             var projeQuestions=  _repositoryProject.Table.Include(x=>x.Questions).Where(x=>x.Id==projectID).FirstOrDefault();

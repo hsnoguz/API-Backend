@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20210903195236_RelationShip")]
+    partial class RelationShip
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,30 +21,6 @@ namespace DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Core.Entities.Concrete.Branch", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Branch");
-                });
-
-            modelBuilder.Entity("Core.Entities.Concrete.Jop", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Jop");
-                });
 
             modelBuilder.Entity("Core.Entities.Concrete.OperationClaim", b =>
                 {
@@ -65,18 +43,6 @@ namespace DAL.Migrations
                             Id = 1,
                             Name = "Admin"
                         });
-                });
-
-            modelBuilder.Entity("Core.Entities.Concrete.Organization", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Organization");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.RefreshToken", b =>
@@ -168,12 +134,6 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("JopId");
-
-                    b.HasIndex("OrganizationId");
-
                     b.ToTable("Users");
 
                     b.HasData(
@@ -186,10 +146,9 @@ namespace DAL.Migrations
                             JopId = 0,
                             LastName = "Admin",
                             OrganizationId = 0,
-                            PasswordHash = new byte[] { 200, 119, 20, 27, 252, 74, 14, 91, 57, 104, 120, 24, 165, 211, 39, 190, 159, 106, 224, 204, 150, 143, 151, 231, 2, 205, 248, 219, 29, 79, 117, 134, 197, 174, 22, 22, 33, 105, 118, 4, 245, 207, 194, 194, 62, 177, 164, 186, 38, 231, 250, 64, 104, 152, 112, 195, 120, 198, 122, 107, 202, 170, 130, 97 },
-                            PasswordSalt = new byte[] { 186, 139, 185, 6, 30, 143, 124, 180, 49, 111, 131, 241, 69, 126, 191, 252, 131, 11, 33, 9, 196, 178, 192, 220, 56, 77, 114, 99, 53, 169, 185, 8, 46, 136, 108, 166, 19, 224, 252, 248, 22, 140, 67, 179, 182, 211, 215, 153, 85, 211, 222, 212, 243, 158, 144, 31, 208, 192, 0, 142, 123, 48, 20, 67, 67, 35, 88, 8, 27, 240, 198, 26, 30, 229, 207, 228, 123, 32, 109, 53, 111, 192, 134, 52, 10, 207, 165, 40, 65, 211, 230, 11, 0, 52, 4, 114, 144, 229, 49, 165, 31, 132, 222, 123, 16, 146, 79, 93, 88, 74, 103, 239, 187, 245, 62, 93, 138, 88, 150, 249, 222, 173, 28, 101, 203, 253, 4, 188 },
-                            Status = true,
-                            UserName = "admin@arastirmaturk.com"
+                            PasswordHash = new byte[] { 81, 67, 40, 78, 18, 230, 242, 218, 252, 253, 243, 17, 166, 95, 86, 229, 176, 184, 122, 40, 70, 185, 2, 134, 33, 191, 30, 5, 121, 144, 90, 0, 97, 234, 119, 136, 197, 134, 127, 237, 12, 76, 251, 230, 85, 132, 241, 93, 239, 241, 197, 187, 44, 143, 213, 225, 173, 143, 155, 25, 31, 186, 77, 253 },
+                            PasswordSalt = new byte[] { 80, 113, 249, 23, 176, 105, 46, 165, 57, 9, 208, 117, 244, 189, 222, 41, 10, 28, 138, 237, 77, 243, 123, 115, 40, 228, 23, 217, 239, 159, 24, 228, 249, 201, 107, 5, 211, 52, 218, 108, 154, 83, 59, 41, 3, 193, 133, 100, 222, 135, 156, 169, 77, 30, 116, 199, 251, 55, 70, 188, 58, 124, 225, 221, 201, 43, 20, 166, 54, 144, 19, 23, 156, 181, 194, 189, 253, 148, 240, 43, 216, 250, 230, 81, 84, 19, 161, 170, 71, 108, 179, 111, 185, 87, 224, 124, 196, 186, 54, 163, 226, 137, 180, 160, 59, 24, 73, 101, 154, 15, 93, 238, 125, 154, 41, 18, 255, 110, 47, 240, 172, 107, 160, 18, 121, 232, 135, 63 },
+                            Status = true
                         });
                 });
 
@@ -413,7 +372,7 @@ namespace DAL.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<short?>("Value")
+                    b.Property<short>("Value")
                         .HasColumnType("smallint");
 
                     b.HasKey("Id");
@@ -434,13 +393,10 @@ namespace DAL.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
-                    b.Property<short?>("Index")
-                        .HasColumnType("smallint");
-
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Point")
+                    b.Property<decimal>("Point")
                         .HasPrecision(9, 4)
                         .HasColumnType("decimal(9,4)");
 
@@ -459,33 +415,6 @@ namespace DAL.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("QuestionVerticals");
-                });
-
-            modelBuilder.Entity("Core.Entities.Concrete.User", b =>
-                {
-                    b.HasOne("Core.Entities.Concrete.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Concrete.Jop", "Jop")
-                        .WithMany()
-                        .HasForeignKey("JopId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Concrete.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("Jop");
-
-                    b.Navigation("Organization");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.UserOperationClaim", b =>

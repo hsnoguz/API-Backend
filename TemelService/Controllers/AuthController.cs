@@ -51,14 +51,14 @@ namespace TemelService.Controllers
             }
 
             var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
-            var result = _authService.CreateAccessToken(registerResult.Data);
+           // var result = _authService.CreateAccessToken(registerResult.Data);
 
-            if (result.IsValid)
+      //      if (result.IsValid)
             {
-                return Ok(result.Data);
+                return Ok(registerResult.IsValid);
             }
 
-            return BadRequest(result.Message);
+            return BadRequest(registerResult.Message);
         }
 
         [HttpPost("refreshToken")]

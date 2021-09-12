@@ -45,7 +45,7 @@ namespace DAL.SecondModel
         if (!optionsBuilder.IsConfigured)
         {
               
-            optionsBuilder.UseSqlServer("Data Source=89.252.181.210\\MSSQLSERVER2019;Initial Catalog=" +database+ ";User ID=arastir3_service;Password=AraTara05*;MultipleActiveResultSets=True");
+            optionsBuilder.UseSqlServer("Data Source=89.252.181.210\\MSSQLSERVER2019;Initial Catalog=" +database+ ";User ID=arastirma_ManagerDb;Password=AraTara05*;MultipleActiveResultSets=True");
         }
         base.OnConfiguring(optionsBuilder.UseLoggerFactory(CustomerLoggerFactory));
         base.OnConfiguring(optionsBuilder);

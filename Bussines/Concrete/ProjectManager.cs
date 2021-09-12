@@ -19,6 +19,20 @@ namespace Bussines.Concrete
             _projectDal = projectDal;
         }
 
+        public IResult AddProject(Question question)
+        {
+            try
+            {
+                _projectDal.AddProjectQuestion(question);
+                return new SuccessResult();
+            }
+            catch (Exception ex)
+            {
+                return new ErrorResult(ex.Message);
+            }
+         
+        }
+
         public IResult CreateProject(CustomProjectDto project)
         {
             try

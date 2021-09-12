@@ -33,12 +33,17 @@ namespace Bussines.Concrete
             HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
             var user = new User
             {
+                UserName = userForRegisterDto.UserName,
                 Email = userForRegisterDto.Email,
                 FirstName = userForRegisterDto.FirstName,
                 LastName = userForRegisterDto.LastName,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Status = true
+                Status = true,
+                BranchId= userForRegisterDto.BranchId,
+                OrganizationId = userForRegisterDto.OrganizationId,
+                JopId = userForRegisterDto.JopId
+
             };
             _userService.Add(user);
             return new SuccessResultData<User>(user, Messages.UserRegistered);

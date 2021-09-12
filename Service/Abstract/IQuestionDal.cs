@@ -10,6 +10,6 @@ namespace Service.Abstract
   public  interface IEfQuestionDal
     {
         public List<Question> getQuestion(int projectId);
-        
+        public void addQuestion(Question question);
     }
 }

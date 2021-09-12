@@ -29,17 +29,8 @@ namespace DAL.Migrations
                 oldClrType: typeof(int),
                 oldType: "int");
 
-            migrationBuilder.AddColumn<DateTime>(
-                name: "StartTime",
-                table: "Projects",
-                type: "datetime2",
-                nullable: true);
+            
 
-            migrationBuilder.AddColumn<DateTime>(
-                name: "StopTime",
-                table: "Projects",
-                type: "datetime2",
-                nullable: true);
 
             migrationBuilder.AlterColumn<int>(
                 name: "parentId",

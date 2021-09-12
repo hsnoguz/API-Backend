@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.Concrete
 {
+    
   public partial  class Organization:IEntity
     {
         public int Id { get; set; }
     }
+    
 }

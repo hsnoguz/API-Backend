@@ -15,5 +15,6 @@ namespace Bussines.Abstract
         public IResultData<List<Project>> Projects(int periotID);
         public IResultData<Project> GetProjectQuestion(int Id);
         public IResult CreateProject(CustomProjectDto project);
+        public IResult AddProject(Question question);
     }
 }

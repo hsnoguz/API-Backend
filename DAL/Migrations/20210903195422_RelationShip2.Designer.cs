@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20210903195422_RelationShip2")]
+    partial class RelationShip2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,10 +188,9 @@ namespace DAL.Migrations
                             JopId = 0,
                             LastName = "Admin",
                             OrganizationId = 0,
-                            PasswordHash = new byte[] { 200, 119, 20, 27, 252, 74, 14, 91, 57, 104, 120, 24, 165, 211, 39, 190, 159, 106, 224, 204, 150, 143, 151, 231, 2, 205, 248, 219, 29, 79, 117, 134, 197, 174, 22, 22, 33, 105, 118, 4, 245, 207, 194, 194, 62, 177, 164, 186, 38, 231, 250, 64, 104, 152, 112, 195, 120, 198, 122, 107, 202, 170, 130, 97 },
-                            PasswordSalt = new byte[] { 186, 139, 185, 6, 30, 143, 124, 180, 49, 111, 131, 241, 69, 126, 191, 252, 131, 11, 33, 9, 196, 178, 192, 220, 56, 77, 114, 99, 53, 169, 185, 8, 46, 136, 108, 166, 19, 224, 252, 248, 22, 140, 67, 179, 182, 211, 215, 153, 85, 211, 222, 212, 243, 158, 144, 31, 208, 192, 0, 142, 123, 48, 20, 67, 67, 35, 88, 8, 27, 240, 198, 26, 30, 229, 207, 228, 123, 32, 109, 53, 111, 192, 134, 52, 10, 207, 165, 40, 65, 211, 230, 11, 0, 52, 4, 114, 144, 229, 49, 165, 31, 132, 222, 123, 16, 146, 79, 93, 88, 74, 103, 239, 187, 245, 62, 93, 138, 88, 150, 249, 222, 173, 28, 101, 203, 253, 4, 188 },
-                            Status = true,
-                            UserName = "admin@arastirmaturk.com"
+                            PasswordHash = new byte[] { 240, 72, 59, 123, 185, 16, 229, 237, 21, 200, 22, 174, 191, 178, 53, 41, 107, 63, 245, 164, 251, 152, 246, 208, 120, 12, 73, 215, 41, 205, 81, 236, 165, 65, 227, 118, 245, 31, 189, 150, 59, 152, 121, 25, 249, 110, 244, 191, 181, 255, 208, 197, 55, 87, 86, 96, 182, 1, 40, 245, 250, 254, 166, 68 },
+                            PasswordSalt = new byte[] { 65, 22, 75, 217, 241, 13, 219, 249, 50, 133, 203, 24, 200, 81, 39, 53, 146, 188, 36, 108, 65, 21, 122, 86, 143, 218, 230, 59, 72, 8, 82, 178, 255, 52, 210, 139, 128, 176, 111, 12, 180, 109, 34, 209, 174, 78, 89, 245, 19, 238, 30, 134, 47, 159, 17, 47, 245, 9, 80, 148, 205, 204, 204, 5, 191, 96, 127, 59, 109, 95, 173, 35, 85, 44, 28, 67, 29, 102, 101, 122, 207, 179, 140, 194, 231, 196, 52, 144, 65, 250, 15, 154, 208, 56, 120, 110, 101, 39, 46, 27, 17, 20, 128, 12, 162, 80, 41, 52, 55, 69, 114, 155, 232, 251, 192, 48, 240, 250, 221, 89, 79, 246, 126, 123, 112, 118, 126, 144 },
+                            Status = true
                         });
                 });
 
@@ -413,7 +414,7 @@ namespace DAL.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<short?>("Value")
+                    b.Property<short>("Value")
                         .HasColumnType("smallint");
 
                     b.HasKey("Id");
@@ -434,13 +435,10 @@ namespace DAL.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
-                    b.Property<short?>("Index")
-                        .HasColumnType("smallint");
-
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Point")
+                    b.Property<decimal>("Point")
                         .HasPrecision(9, 4)
                         .HasColumnType("decimal(9,4)");
 

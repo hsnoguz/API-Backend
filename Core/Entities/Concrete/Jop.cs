@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.Concrete
 {
+    
   public partial  class Jop:IEntity
     {
         public int Id { get; set; }

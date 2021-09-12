@@ -14,5 +14,6 @@ namespace Service.Abstract
         public List<Project> Projects(int periotID);
         public Project GetProjectQuestion(int projectID);
         public void CreateProject(CustomProjectDto project);
+        public void AddProjectQuestion(Question question);
     }
 }

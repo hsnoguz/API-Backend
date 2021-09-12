@@ -47,7 +47,7 @@ namespace Service.Concrete
         }
         public void UserAllRefreshTokenUsin(int userId)
         {
-            var res = _refreshToken.Table.Where(r => r.UserId == userId).ToList();
+            var res = _refreshToken.Table.Where(r => r.UserId == userId && r.IsUsing==false).ToList();
             // update
             foreach (var r in res)
             {

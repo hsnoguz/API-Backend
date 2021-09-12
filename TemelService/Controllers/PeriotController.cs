@@ -1,4 +1,5 @@
-﻿using Bussines.Concrete;
+﻿using Bussines.Abstract;
+using Bussines.Concrete;
 using Core.Results;
 using DAL.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -10,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace TemelService.Controllers
 {
-    [Authorize()]
+
     public class PeriotController : Controller
     {
-        PeriotManager _periotManager;
-        public PeriotController(PeriotManager periotManager)
+        IPeriotManager _periotManager;
+        public PeriotController(IPeriotManager periotManager)
         {
             _periotManager = periotManager;
         }

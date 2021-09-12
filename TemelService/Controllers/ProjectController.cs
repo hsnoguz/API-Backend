@@ -12,9 +12,10 @@ using System.Threading.Tasks;
 
 namespace TemelService.Controllers
 {
-    [Route("project/[controller]")]
-    [ApiController]
-    public class ProjectController : ControllerBase
+
+    [Route("[controller]")]
+
+    public class ProjectController : Controller
     {
         private readonly IProjectManager _projectManager;
         public ProjectController(IProjectManager projectManager)
@@ -33,7 +34,7 @@ namespace TemelService.Controllers
 
 
         [HttpPost("CreateProject")]
-        public IActionResult CreateProject(CustomProjectDto project)
+        public IActionResult CreateProject([FromBody] CustomProjectDto project)
         {
             //  var result = System.Text.Json.JsonSerializer.Deserialize<Project>(json);
             IResult result=   _projectManager.CreateProject(project);
@@ -47,5 +48,21 @@ namespace TemelService.Controllers
             }
         }
 
+        [HttpPost("AddProjectQuestion")]
+        public IActionResult AddProjectQuestion([FromBody] Question question)
+        {
+            //  var result = System.Text.Json.JsonSerializer.Deserialize<Project>(json);
+            IResult result = _projectManager.AddProject(question);
+            return Ok();            
+          /*  IResult result = _projectManager.CreateProject(project);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }*/
+        }
     }
 }

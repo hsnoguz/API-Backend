@@ -29,6 +29,6 @@ namespace TemelService
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                  });
     }
 }

@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Entities.Concrete
+namespace Service.Enums
 {
-    
-  public partial  class Branch : IEntity
+    class Enum
     {
-        public int Id { get; set; }
     }
-    
 }

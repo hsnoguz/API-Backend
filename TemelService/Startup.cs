@@ -49,6 +49,25 @@ namespace TemelService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                    builder.SetIsOriginAllowed(_ => true)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
+         /*   services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                        );
+            });*/  
+
             services.AddDbContext<ManagerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ManagerConnection"), y => y.MigrationsAssembly("DAL")));
             //    services.AddDbContext<SecondDbContext>(options => options.UseSqlServer(y => y.MigrationsAssembly("DAL")));
 
@@ -125,8 +144,9 @@ namespace TemelService
                 var dbContext = serviceScope.ServiceProvider.GetService<ManagerContext>();
                 dbContext.Database.EnsureCreated();
             }
-
-
+            app.UseCors();
+      //      app.UseCors(option => option.WithOrigins("http://localhost:3000").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+            //      app.UseCors(option => option.WithOrigins().AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             app.UseHttpsRedirection();
 
             app.UseRouting();

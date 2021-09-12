@@ -31,7 +31,7 @@ namespace Core.Entities.Concrete
         public virtual Jop Jop { get; set; }
         public virtual Branch Branch { get; set; }
         public virtual Organization Organization { get; set; }
-
+       
 
     }
 }

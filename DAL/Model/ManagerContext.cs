@@ -16,6 +16,7 @@ namespace DAL.Model
         //enable-migrations -ContextTypeName DAL.Model.ManagerContext -MigrationsDirectory Migrations
         //Add-Migration ProjectQuestionCreate -Context ManagerContext -OutputDir Migrations
         //update-database -Context ManagerContext
+        //remove-migration -context ManagerContext
         public ManagerContext()
         { }
 
@@ -40,7 +41,7 @@ namespace DAL.Model
             if (!optionsBuilder.IsConfigured)
             {
                          // optionsBuilder.UseSqlServer("Data Source= DESKTOP-FSJ8JLM\\SQLEXPRESS;Initial Catalog=ManagerDb;User ID=sa;Password=nasah;MultipleActiveResultSets=True");
-                        optionsBuilder.UseSqlServer("Data Source=89.252.181.210\\MSSQLSERVER2019;Initial Catalog=arastir3_ManagerDb;User ID=arastir3_service;Password=AraTara05*;MultipleActiveResultSets=True");
+                   optionsBuilder.UseSqlServer("Server=89.252.181.210\\MSSQLSERVER2019;Database=arastirma_ManagerDb;User Id=arastirma_service;Password=AraTara05*;MultipleActiveResultSets=True");
             }
             base.OnConfiguring(optionsBuilder.UseLoggerFactory(CustomerLoggerFactory));
             base.OnConfiguring(optionsBuilder);
@@ -65,6 +66,7 @@ namespace DAL.Model
             var user = new User
             {
                 Id = 1,
+                UserName= "admin@arastirmaturk.com",
                 Email = "admin@arastirmaturk.com",
                 FirstName = "Admin",
                 LastName = "Admin",
@@ -73,12 +75,12 @@ namespace DAL.Model
                 Status = true
             };
 
-           /* modelBuilder.Entity<Branch>().HasData(new Branch { Id=1,Explanation="IT"});
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id=1,Explanation="IT"});
             modelBuilder.Entity<OperationClaim>().HasData(new OperationClaim { Id = 1, Name = "Admin" });
             modelBuilder.Entity<User>().HasData(user);
             
             modelBuilder.Entity<UserOperationClaim>().HasData(new UserOperationClaim { Id = 1, UserId = 1, OperationClaimId = 1 });
-           */
+           
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.UserName).HasMaxLength(100);

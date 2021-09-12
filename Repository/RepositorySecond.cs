@@ -189,7 +189,8 @@ namespace Repository
             }
         }
 
-        public int UpdateSql(string sql, params object[] _params)
+        public int 
+  (string sql, params object[] _params)
         {
             using (_context = new SecondDbContext(_db))
             {
