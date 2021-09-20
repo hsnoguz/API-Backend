@@ -55,7 +55,7 @@ namespace TemelService
                     builder.SetIsOriginAllowed(_ => true)
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .AllowCredentials());
+                    .AllowCredentials().WithOrigins("http://*","https://*"));
             });
 
          /*   services.AddCors(options =>

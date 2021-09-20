@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace TemelService.Controllers
 {
     
     [Route("jop/[controller]")]
-    [Authorize()]
+
     public class JopController : Controller
     {
         private IJopService _JopService;
@@ -25,9 +26,12 @@ namespace TemelService.Controllers
 
 
         [HttpGet("jopList")]
-        public IResultData<List<Jop>>  JopList()
+        public IActionResult JopList()
         {
-          return  _JopService.getList();
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_JopService.getList().Data, jso));
+      
         }
 
         [HttpPost("jopAdd")]

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity.Core.Objects;
 using Microsoft.Data.SqlClient;
+using Service.Enums;
 
 namespace Service.Concrete
 {
@@ -47,12 +48,62 @@ namespace Service.Concrete
         {
             var result = _repositoryProject.UpdateSql("sp_CreateProjectTable @Id", new SqlParameter("@Id",Id.ToString()));
         }
+
+        public bool columnControl(string tableName,string columnName)
+        {
+            var parameterReturn = new SqlParameter
+            {
+                ParameterName = "result",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Output,
+            };
+
+            var result = _repositoryProject.UpdateSql("EXEC @result = sp_TableColumnControl @table,@columnName", new SqlParameter("@table", tableName.ToString()), new SqlParameter("@columnName", columnName.ToString()), parameterReturn);
+            int returnValue = (int)parameterReturn.Value;
+            return returnValue.ToString() == "1";
+        }
+        public void addColumn(string tableName, string columnName,string type)
+        {
+                _repositoryProject.UpdateSql("sp_AddColumn @table,@columnName,@type", new SqlParameter("@table", tableName.ToString()), new SqlParameter("@columnName", columnName.ToString()), new SqlParameter("@type", type.ToString()));
+        }
+
+        public void setColumnValue(string tableName,Dictionary<string,string> columnValue,int Id) {
+            SqlParameter[] sqlParameters = new SqlParameter[columnValue.Count];
+            string updateString = "";
+            foreach (var column in columnValue)
+            {
+                sqlParameters[0] = new SqlParameter("@" + column.Key  , column.Value);
+                if (updateString != "") updateString += ",";
+                updateString += "[" + column.Key + "]=@" + column.Key;
+            }
+            sqlParameters[0] = new SqlParameter("@Id",Id);
+            _repositoryProject.UpdateSql("update " + tableName + " set " + updateString + " where Id=@Id", sqlParameters); 
+        }
+
         public void AddProjectQuestion(Question question)
         {
 
+            columnOperation(question);
             _efQuestionDal.addQuestion(question);
-            
+
         }
+        public void columnOperation(Question question)
+        {
+            if (question.Type == QuestionType.SingleMatris.ToString())
+            {
+
+                foreach (var item in question.QuestionHorizontals)
+                {
+                    string tableName = "p" + question.ProjectId;
+                    if (!columnControl(tableName, item.ColumnName))
+                    {
+                        addColumn(tableName, item.ColumnName, "smallint");
+                    }
+
+                }
+            }
+        }
+
         public Project GetProjectQuestion(int projectID)
         {
             var projeQuestions=  _repositoryProject.Table.Include(x=>x.Questions).Where(x=>x.Id==projectID).FirstOrDefault();

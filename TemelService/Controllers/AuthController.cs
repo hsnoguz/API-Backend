@@ -14,7 +14,7 @@ namespace TemelService.Controllers
     public class AuthController : Controller
     {
         private IAuthService _authService;
-
+ 
         public AuthController(IAuthService authService)
         {
             _authService = authService;

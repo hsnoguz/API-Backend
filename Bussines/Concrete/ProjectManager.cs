@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Bussines.Concrete
@@ -57,5 +58,13 @@ namespace Bussines.Concrete
             return new SuccessResultData<List<Project>>(_projectDal.Projects(periotID));
         }
 
+        public IResult SetColumnValue(string tableName,string columnValue, int Id)
+        {
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            object[] columnValueArr = System.Text.Json.JsonSerializer.Deserialize<object[]>(columnValue);
+            object[] columnValueArr2 = System.Text.Json.JsonSerializer.Deserialize<object[]>(columnValueArr[0].ToString(), jso);
+            return new SuccessResult();
+        }
     }
 }

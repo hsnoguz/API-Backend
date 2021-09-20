@@ -130,6 +130,11 @@ namespace Repository
             return Entities.FromSqlRaw(sql);
         }
 
+        public object GetSqlValue(string sql)
+        {
+            return Entities.FromSqlRaw(sql);
+        }
+
 
         public int UpdateSql(string sql, params object[] _params)
         {

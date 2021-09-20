@@ -19,9 +19,15 @@ namespace Service.Concrete
 
         public void addQuestion(Question question)
         {
+            if (question.Type == Enums.QuestionType.SingleMatris.ToString())
+            { 
+                
+            }
             _repository.Insert(question);
         }
 
+
+        
         public List<Question> getQuestion(int projectId)
         {
             List<Question> question= _repository.Table.Where(x=>x.ProjectId==projectId).ToList();

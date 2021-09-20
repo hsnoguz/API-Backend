@@ -15,5 +15,6 @@ namespace Service.Abstract
         public Project GetProjectQuestion(int projectID);
         public void CreateProject(CustomProjectDto project);
         public void AddProjectQuestion(Question question);
+        public void setColumnValue(string tableName, Dictionary<string, string> columnValue, int Id);
     }
 }

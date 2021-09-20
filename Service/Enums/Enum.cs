@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Service.Enums
 {
-    class Enum
+     enum QuestionType
     {
+        SingleMatris,
+        Single,
+        Multi,
+        MultiMatris
     }
 }

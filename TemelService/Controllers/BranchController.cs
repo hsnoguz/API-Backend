@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace TemelService.Controllers
@@ -25,10 +26,21 @@ namespace TemelService.Controllers
 
 
         [HttpGet("branchList")]
-        public IResultData<List<Branch>>  BranchList()
+        public IActionResult BranchList()
         {
+            IResultData<List<Branch>> result = _branchService.getList();
+            if (result.IsValid)
+            {
 
-          return  _branchService.getList();
+                JsonSerializerOptions jso = new JsonSerializerOptions();
+                jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+                return Ok(System.Text.Json.JsonSerializer.Serialize(result.Data, jso));
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+          
         }
 
         [HttpPost("jopAdd")]

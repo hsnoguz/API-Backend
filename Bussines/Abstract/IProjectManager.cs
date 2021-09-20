@@ -16,5 +16,6 @@ namespace Bussines.Abstract
         public IResultData<Project> GetProjectQuestion(int Id);
         public IResult CreateProject(CustomProjectDto project);
         public IResult AddProject(Question question);
+        public IResult SetColumnValue(string tableName, string columnValue, int Id);
     }
 }

@@ -24,12 +24,18 @@ namespace TemelService.Controllers
         }
 
         [HttpGet("GetProject/{projectId}")]
-        public string GetProject(int projectId)
+        public IActionResult GetProject(int projectId)
         {
             var result = _projectManager.GetProjectQuestion(projectId);
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return System.Text.Json.JsonSerializer.Serialize(result, jso);
+            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+        }
+        [HttpPut("SetColumnValue")]
+        public IActionResult SetColumnValue(int projectId, string columnValue, int Id)
+        {
+            _projectManager.SetColumnValue("p" + projectId.ToString(), columnValue, Id);
+            return Ok();
         }
 
 

@@ -23,6 +23,6 @@ namespace Repository
         void Delete(T entity);
         void Delete(IEnumerable<T> entities);
         IEnumerable<T> GetSql(string sql);
-
+        object GetSqlValue(string sql);
     }
 }
