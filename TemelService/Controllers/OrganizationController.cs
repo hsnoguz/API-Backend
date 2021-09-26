@@ -51,10 +51,10 @@ namespace TemelService.Controllers
         }
 
      
-        [HttpDelete("organizationDelete")]
-        public IActionResult OrganizationDelete(Organization Organization)
+        [HttpPost("organizationDelete")]
+        public IActionResult OrganizationDelete(int Id)
         {
-            IResult result = _OrganizationService.Delete(Organization);
+            IResult result = _OrganizationService.Delete(Id);
             if (result.IsValid)
             {
                 return Ok();

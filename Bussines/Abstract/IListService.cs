@@ -12,7 +12,7 @@ namespace Bussines.Abstract
         public IResultData<List<T>> getList();
         public IResultData<T> getEntity(int Id);
         public IResult Add(T entity);
-        public IResult Delete(T entity);
+        public IResult Delete(int entity);
         public IResult Update(T entity);
     }
 }

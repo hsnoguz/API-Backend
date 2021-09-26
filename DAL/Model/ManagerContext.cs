@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Entities.Concrete;
 using Core.Utilities.Security.Hashing;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Model
 {
@@ -34,6 +35,10 @@ namespace DAL.Model
         public virtual DbSet<QuestionVertical> QuestionVerticals { get; set; }
         public virtual DbSet<Branch> Branchs { get; set; }
         public virtual DbSet<Jop> Jops { get; set; }
+
+        public virtual DbSet<Aim> Aims { get; set; }
+        public virtual DbSet<Target> Targets { get; set; }
+
         public virtual DbSet<Organization> Organizations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -96,13 +101,27 @@ namespace DAL.Model
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
                 entity.Property(e => e.IsUsing).HasDefaultValue(false);
                 entity.Property(e => e.Token).HasMaxLength(255);
-       
+            });
+
+            modelBuilder.Entity<Aim>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.Explanation).HasMaxLength(500);
 
             });
 
+
+            modelBuilder.Entity<Target>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.Explanation).HasMaxLength(700);
+
+            });
             modelBuilder.Entity<Project>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.Guid).HasDefaultValueSql("(newid())");
+                entity.Property(e => e.Guid).HasMaxLength(100);
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
                 entity.Property(e => e.IsSuccess).HasDefaultValue(false);
                 entity.Property(e => e.SuccesCount).HasDefaultValue(0);
@@ -125,7 +144,16 @@ namespace DAL.Model
 
             });
 
-      
+
+        
+
+            modelBuilder.Entity<SurveyStatu>(entity =>
+            {
+                entity.Property(e => e.Statu).HasMaxLength(150);
+                
+
+            });
+
             modelBuilder.Entity<Jop>(entity =>
             {
                 entity.Property(e => e.Explanation).HasMaxLength(150);
@@ -145,7 +173,8 @@ namespace DAL.Model
             {
                 entity.Property(e => e.ColumnName).HasMaxLength(70);
                 entity.Property(e => e.Text).HasMaxLength(1000);
-                entity.Property(e => e.Point).HasPrecision(9, 4); ;
+                entity.Property(e => e.Point).HasPrecision(9, 4);
+                entity.Property(e => e.IsOpen).HasDefaultValue(false);
             });
 
 

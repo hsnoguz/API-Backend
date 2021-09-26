@@ -29,23 +29,22 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<RefreshTokenService>().As<IRefreshTokenService>();
             builder.RegisterType<EfRefreshTokenDal>().As<IEfRefreshTokenDal>();
             builder.RegisterType<EfPeriotDal>().As<IEfPeriotDal>();
-
-            builder.RegisterType<ProjectManager>().As<IProjectManager>();
+            builder.RegisterType<EfAimDal>().As<IEfAimDal>();
+      //      builder.RegisterType<EfTargetDal>().As<IEfAimDal>();
             builder.RegisterType<EfProjectDal>().As<IEfProjectDal>();
             builder.RegisterType<EfQuestionDal>().As<IEfQuestionDal>();
             builder.RegisterType<EfQuestionHorizontalDal>().As<IEfQuestionHorizontalDal>();
             builder.RegisterType<EfQuestionVerticalDal>().As<IEfQuestionVerticalDal>();
-
-
+            
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
-      
+            builder.RegisterType<ProjectManager>().As<IProjectManager>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
             builder.RegisterType<PeriotManager>().As<IPeriotManager>();
             builder.RegisterType<BranchService>().As<IBranchService>();
             builder.RegisterType<JopService>().As<IJopService>();
             builder.RegisterType<OrganizationService>().As<IOrganizationService>();
-
+            builder.RegisterType<AimManager>().As<IAimManager>();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

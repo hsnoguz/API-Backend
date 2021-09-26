@@ -14,7 +14,7 @@ namespace TemelService.Controllers
 {
 
     [Route("branch/[controller]")]
-    [Authorize()]
+
     public class BranchController : Controller
     {
         private IBranchService _branchService;
@@ -43,7 +43,7 @@ namespace TemelService.Controllers
           
         }
 
-        [HttpPost("jopAdd")]
+        [HttpPost("BranchAdd")]
         public IActionResult BranchAdd(Branch branch)
         {
             IResult result = _branchService.Add(branch);
@@ -56,10 +56,10 @@ namespace TemelService.Controllers
             }
         }
 
-        [HttpDelete("branchDelete")]
-        public IActionResult BranchDelete(Branch branch)
+        [HttpPost("branchDelete")]
+        public IActionResult BranchDelete(int Id)
         {
-            IResult result = _branchService.Delete(branch);
+            IResult result = _branchService.Delete(Id);
 
             if (result.IsValid)
                 return Ok();

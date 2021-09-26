@@ -66,5 +66,27 @@ namespace Bussines.Concrete
             object[] columnValueArr2 = System.Text.Json.JsonSerializer.Deserialize<object[]>(columnValueArr[0].ToString(), jso);
             return new SuccessResult();
         }
+
+        public IResultData<int> insertSurvey(string tableName)
+        {
+            return new SuccessResultData<int>(_projectDal.InsertSurvey(tableName));
+        }
+        public IResult SendSurveyStatu(string tableName, int projectId, Int16 statu, int Id)
+        {
+            try
+            {
+                _projectDal.SendSurveyStatu(tableName, projectId, statu, Id);
+            }
+            catch (Exception ex)
+            {
+                return new ErrorResult(ex.Message);
+            }
+            return new SuccessResult();
+        }
+
+        public IResultData<Project> GetProjectQuestion(string guid)
+        {
+            return new SuccessResultData<Project>(_projectDal.GetProjectQuestion(guid));
+        }
     }
 }

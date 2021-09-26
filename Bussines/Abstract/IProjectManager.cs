@@ -13,9 +13,12 @@ namespace Bussines.Abstract
     {
         
         public IResultData<List<Project>> Projects(int periotID);
+        public IResultData<Project> GetProjectQuestion(string guid);
         public IResultData<Project> GetProjectQuestion(int Id);
         public IResult CreateProject(CustomProjectDto project);
         public IResult AddProject(Question question);
         public IResult SetColumnValue(string tableName, string columnValue, int Id);
+        public IResultData<int> insertSurvey(string tableName);
+        public IResult SendSurveyStatu(string tableName, int projectId, Int16 statu, int Id);
     }
 }

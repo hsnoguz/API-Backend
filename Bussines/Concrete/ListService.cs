@@ -33,11 +33,12 @@ namespace Bussines.Concrete
             }
         }
 
-        public IResult Delete(T entity)
+        public IResult Delete(int Id)
         {
             try
             {
-                _efListService.Delete(entity);
+
+                _efListService.Delete(_efListService.GetById(Id));
                 return new SuccessResult();
             }
             catch (Exception ex)

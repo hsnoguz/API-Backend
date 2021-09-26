@@ -48,10 +48,10 @@ namespace TemelService.Controllers
       
         }
 
-        [HttpDelete("jopDelete")]
-        public IActionResult JopDelete(Jop Jop)
+        [HttpPost("jopDelete")]
+        public IActionResult JopDelete(int Id)
         {
-            IResult result = _JopService.Delete(Jop);
+            IResult result = _JopService.Delete(Id);
 
             if (result.IsValid)
                 return Ok();

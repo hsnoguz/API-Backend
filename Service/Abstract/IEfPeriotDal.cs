@@ -13,5 +13,7 @@ namespace Service.Abstract
         public void editPeriot(int id, string name);
 
         public List<Periot> listPeriot();
+
+        
     }
 }

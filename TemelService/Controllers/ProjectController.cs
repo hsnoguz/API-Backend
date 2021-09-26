@@ -31,6 +31,25 @@ namespace TemelService.Controllers
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
         }
+
+        [HttpGet("GetProject/{guid}")]
+        public IActionResult GetProject(string guid)
+        {
+            var result = _projectManager.GetProjectQuestion(guid);
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+        }
+
+        [HttpGet("GetProjectList/{periotId}")]
+        public IActionResult GetProjectList(int periotId)
+        {
+            var result = _projectManager.Projects(periotId);
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+        }
+
         [HttpPut("SetColumnValue")]
         public IActionResult SetColumnValue(int projectId, string columnValue, int Id)
         {
@@ -69,6 +88,37 @@ namespace TemelService.Controllers
             {
                 return BadRequest();
             }*/
+        }
+
+        [HttpPost("InsertSurvey")]
+        public IActionResult InsertSurvey(int projectId)
+        {
+            IResultData<int> result = _projectManager.insertSurvey("p" + projectId.ToString());
+
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+        }
+
+        [HttpPost("SendSurveyStatu")]
+        public IActionResult SendSurveyStatu(int projectId,Int16 statu,int Id)
+        {
+            IResult result = _projectManager.SendSurveyStatu("p" + projectId.ToString(), projectId,statu,Id);
+
+
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
         }
     }
 }

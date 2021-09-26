@@ -14,7 +14,7 @@ namespace DAL.Model
         public int StartYear { get; set; }
         public int StopYear { get; set; }
         public DateTime InsertTime { get; set; }
-
+        public virtual List<Aim> Aims { get; set; }
      
     }
 }

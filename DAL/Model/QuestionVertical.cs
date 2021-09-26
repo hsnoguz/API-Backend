@@ -17,6 +17,7 @@ namespace DAL.Model
         public string Text { get; set; }
         public Int16? Index { get; set; }
         public Int16? Value{ get; set; }
+        public bool IsOpen { get; set; }
         public int? ParentId { get; set; }
         public decimal? Point { get; set; }
         [JsonIgnore]

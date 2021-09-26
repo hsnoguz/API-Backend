@@ -11,6 +11,7 @@ namespace DAL.Model
     public partial class Project:IEntity
     {
         public int Id { get; set; }
+        public string? Guid { get; set; }
         public string Name { get; set; }
         public int PeriotId { get; set; }
         public int SuccesCount { get; set; }

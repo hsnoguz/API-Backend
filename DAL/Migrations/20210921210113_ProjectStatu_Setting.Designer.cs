@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20210921210113_ProjectStatu_Setting")]
+    partial class ProjectStatu_Setting
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,8 +188,8 @@ namespace DAL.Migrations
                             JopId = 0,
                             LastName = "Admin",
                             OrganizationId = 0,
-                            PasswordHash = new byte[] { 69, 78, 157, 43, 28, 111, 126, 109, 133, 33, 135, 133, 16, 230, 177, 224, 58, 8, 74, 61, 171, 127, 85, 34, 179, 141, 205, 90, 221, 173, 167, 163, 65, 57, 109, 27, 213, 162, 166, 11, 108, 213, 104, 119, 137, 95, 218, 198, 34, 62, 126, 164, 232, 4, 212, 159, 43, 11, 59, 44, 183, 147, 57, 20 },
-                            PasswordSalt = new byte[] { 204, 37, 44, 224, 78, 105, 115, 220, 63, 111, 201, 33, 213, 185, 205, 75, 212, 72, 160, 172, 122, 193, 233, 9, 127, 157, 151, 1, 245, 116, 236, 168, 223, 55, 250, 31, 237, 118, 182, 76, 112, 227, 60, 227, 174, 150, 154, 80, 79, 130, 234, 191, 116, 179, 93, 205, 22, 73, 251, 60, 25, 23, 31, 129, 10, 101, 122, 166, 6, 140, 163, 66, 218, 172, 170, 10, 138, 0, 168, 67, 73, 223, 129, 247, 246, 142, 2, 174, 210, 12, 220, 252, 80, 254, 185, 39, 46, 235, 199, 199, 240, 12, 169, 219, 236, 69, 128, 18, 193, 187, 116, 211, 170, 128, 248, 200, 205, 205, 213, 66, 224, 216, 168, 243, 134, 93, 148, 205 },
+                            PasswordHash = new byte[] { 171, 133, 147, 14, 22, 51, 232, 25, 168, 116, 181, 84, 92, 37, 186, 147, 126, 10, 105, 194, 136, 183, 82, 108, 55, 235, 46, 75, 90, 229, 182, 87, 14, 130, 30, 139, 120, 246, 28, 195, 2, 158, 55, 28, 117, 50, 186, 223, 47, 139, 23, 125, 189, 213, 2, 41, 228, 158, 109, 121, 107, 51, 20, 217 },
+                            PasswordSalt = new byte[] { 51, 198, 40, 201, 168, 207, 172, 84, 186, 8, 235, 227, 124, 5, 156, 222, 39, 109, 11, 205, 80, 25, 170, 216, 102, 125, 143, 135, 182, 47, 99, 73, 71, 215, 109, 190, 220, 52, 43, 160, 122, 126, 120, 249, 99, 78, 13, 165, 53, 86, 91, 66, 66, 213, 161, 234, 4, 36, 217, 183, 175, 41, 178, 72, 31, 50, 64, 140, 7, 233, 152, 106, 70, 230, 49, 35, 179, 37, 85, 182, 83, 134, 236, 120, 254, 59, 100, 242, 233, 189, 190, 176, 49, 107, 128, 244, 126, 210, 200, 29, 165, 112, 10, 151, 35, 172, 214, 117, 208, 7, 37, 117, 172, 231, 2, 91, 242, 14, 56, 198, 233, 206, 110, 79, 42, 162, 250, 149 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });
@@ -221,32 +223,6 @@ namespace DAL.Migrations
                             OperationClaimId = 1,
                             UserId = 1
                         });
-                });
-
-            modelBuilder.Entity("DAL.Model.Aim", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Explanation")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<DateTime?>("InsertTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.Property<int>("PeriotId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PeriotId");
-
-                    b.ToTable("Aims");
                 });
 
             modelBuilder.Entity("DAL.Model.Branch", b =>
@@ -344,12 +320,6 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Guid")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasDefaultValueSql("(newid())");
 
                     b.Property<DateTime?>("InsertTime")
                         .ValueGeneratedOnAdd()
@@ -515,32 +485,6 @@ namespace DAL.Migrations
                     b.ToTable("SurveyStatu");
                 });
 
-            modelBuilder.Entity("DAL.Model.Target", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AimId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Explanation")
-                        .HasMaxLength(700)
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("InsertTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AimId");
-
-                    b.ToTable("Targets");
-                });
-
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Branch", "Branch")
@@ -583,15 +527,6 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("OperationClaim");
-                });
-
-            modelBuilder.Entity("DAL.Model.Aim", b =>
-                {
-                    b.HasOne("DAL.Model.Periot", null)
-                        .WithMany("Aims")
-                        .HasForeignKey("PeriotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DAL.Model.Project", b =>
@@ -638,28 +573,9 @@ namespace DAL.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("DAL.Model.Target", b =>
-                {
-                    b.HasOne("DAL.Model.Aim", null)
-                        .WithMany("Targets")
-                        .HasForeignKey("AimId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>
                 {
                     b.Navigation("UserOperationClaim");
-                });
-
-            modelBuilder.Entity("DAL.Model.Aim", b =>
-                {
-                    b.Navigation("Targets");
-                });
-
-            modelBuilder.Entity("DAL.Model.Periot", b =>
-                {
-                    b.Navigation("Aims");
                 });
 
             modelBuilder.Entity("DAL.Model.Project", b =>

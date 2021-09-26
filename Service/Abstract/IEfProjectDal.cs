@@ -13,8 +13,11 @@ namespace Service.Abstract
 
         public List<Project> Projects(int periotID);
         public Project GetProjectQuestion(int projectID);
+        public Project GetProjectQuestion(string guid);
         public void CreateProject(CustomProjectDto project);
         public void AddProjectQuestion(Question question);
-        public void setColumnValue(string tableName, Dictionary<string, string> columnValue, int Id);
+        public void SetColumnValue(string tableName, Dictionary<string, string> columnValue, int Id);
+        public int InsertSurvey(string tableName);
+        public void SendSurveyStatu(string tableName,int projectId,Int16 statu,int Id);
     }
 }

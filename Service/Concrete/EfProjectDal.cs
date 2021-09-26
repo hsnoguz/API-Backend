@@ -62,12 +62,12 @@ namespace Service.Concrete
             int returnValue = (int)parameterReturn.Value;
             return returnValue.ToString() == "1";
         }
-        public void addColumn(string tableName, string columnName,string type)
+        public void AddColumn(string tableName, string columnName,string type)
         {
                 _repositoryProject.UpdateSql("sp_AddColumn @table,@columnName,@type", new SqlParameter("@table", tableName.ToString()), new SqlParameter("@columnName", columnName.ToString()), new SqlParameter("@type", type.ToString()));
         }
 
-        public void setColumnValue(string tableName,Dictionary<string,string> columnValue,int Id) {
+        public void SetColumnValue(string tableName,Dictionary<string,string> columnValue,int Id) {
             SqlParameter[] sqlParameters = new SqlParameter[columnValue.Count];
             string updateString = "";
             foreach (var column in columnValue)
@@ -83,24 +83,50 @@ namespace Service.Concrete
         public void AddProjectQuestion(Question question)
         {
 
-            columnOperation(question);
+            ColumnOperation(question);
             _efQuestionDal.addQuestion(question);
 
         }
-        public void columnOperation(Question question)
+        public void ColumnOperation(Question question)
         {
             if (question.Type == QuestionType.SingleMatris.ToString())
             {
-
+                string tableName = "p" + question.ProjectId;
                 foreach (var item in question.QuestionHorizontals)
                 {
-                    string tableName = "p" + question.ProjectId;
-                    if (!columnControl(tableName, item.ColumnName))
-                    {
-                        addColumn(tableName, item.ColumnName, "smallint");
-                    }
-
+                    columnProvider(tableName, item.ColumnName, "smallint");
                 }
+                bool isOpen= question.QuestionVerticals.Where(x => x.IsOpen == true).Any();
+                if (isOpen)
+                {
+                    foreach (var item in question.QuestionHorizontals)
+                    {
+                        columnProvider(tableName, item.ColumnName, "varchar(250)");
+                    }
+                }
+            }
+        }
+
+        public int InsertSurvey(string tableName)
+        {
+            int Id = 0;
+            var parameterReturn = new SqlParameter
+            {
+                ParameterName = "result",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Direction = System.Data.ParameterDirection.Output,
+            };
+
+            var result = _repositoryProject.UpdateSql("EXEC @result = sp_InsertSurvey @tableName", new SqlParameter("@tableName", tableName.ToString()), parameterReturn);
+            int returnValue = (int)parameterReturn.Value;
+            Id = Convert.ToInt32(returnValue.ToString());
+            return Id;
+        }
+        public void columnProvider(string tableName, string columnName, string type)
+        {
+            if (!columnControl(tableName, columnName))
+            {
+                AddColumn(tableName, columnName, type);
             }
         }
 
@@ -125,6 +151,47 @@ namespace Service.Concrete
         public List<Project> Projects(int periotId)
         {
             return _repositoryProject.Table.Where(x => x.PeriotId == periotId).ToList();
+        }
+        public void SendSurveyStatu(string tableName, int projectId, Int16 statu, int Id)
+        {
+            SqlParameter[] sqlParameters = new SqlParameter[4];
+            string updateString = "";
+       
+                sqlParameters[0] = new SqlParameter("@tableName" ,tableName);
+            sqlParameters[1] = new SqlParameter("@projectId", projectId);
+            sqlParameters[2] = new SqlParameter("@statu", statu);
+            sqlParameters[3] = new SqlParameter("@Id", Id);
+
+
+            
+            _repositoryProject.UpdateSql("sp_SuccessSurvey @tableName,@projectId,@statu,@Id", sqlParameters);
+        }
+
+        public Project GetProjectQuestion(string guid)
+        {
+            var projeQuestions = _repositoryProject.Table.Include(x => x.Questions).Where(x => x.Guid == guid).FirstOrDefault();
+            if (projeQuestions.Questions == null)
+            {
+             if (projeQuestions!=null)
+                {
+
+                    projeQuestions.Questions = _efQuestionDal.getQuestion(projeQuestions.Id);
+                }
+                else
+                {
+                    throw new Exception("Not Found Project");
+                }
+                
+            }
+
+            foreach (var question in projeQuestions.Questions)
+            {
+                question.QuestionHorizontals = _efQuestionHorizontalDal.getQuestionHorizontal(question.Id);
+                question.QuestionVerticals = _efQuestionVertical.getQuestionVertical(question.Id);
+            }
+
+
+            return projeQuestions;
         }
     }
 }
