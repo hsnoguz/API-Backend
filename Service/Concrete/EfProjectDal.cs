@@ -67,17 +67,19 @@ namespace Service.Concrete
                 _repositoryProject.UpdateSql("sp_AddColumn @table,@columnName,@type", new SqlParameter("@table", tableName.ToString()), new SqlParameter("@columnName", columnName.ToString()), new SqlParameter("@type", type.ToString()));
         }
 
-        public void SetColumnValue(string tableName,Dictionary<string,string> columnValue,int Id) {
-            SqlParameter[] sqlParameters = new SqlParameter[columnValue.Count];
+        public void SetColumnValue(ProjectColumnValueDto projectColumnValue) {
+            SqlParameter[] sqlParameters = new SqlParameter[projectColumnValue.ColumnValues.Count+1];
             string updateString = "";
-            foreach (var column in columnValue)
+            Int16 counter = 0;
+            foreach (var column in projectColumnValue.ColumnValues)
             {
-                sqlParameters[0] = new SqlParameter("@" + column.Key  , column.Value);
+                sqlParameters[counter] = new SqlParameter("@" + column.Key  , column.Value);
                 if (updateString != "") updateString += ",";
                 updateString += "[" + column.Key + "]=@" + column.Key;
+                counter++;
             }
-            sqlParameters[0] = new SqlParameter("@Id",Id);
-            _repositoryProject.UpdateSql("update " + tableName + " set " + updateString + " where Id=@Id", sqlParameters); 
+            sqlParameters[counter] = new SqlParameter("@Id", projectColumnValue.SurveyId);
+            _repositoryProject.UpdateSql("update p" + projectColumnValue.ProjectId + " set " + updateString + " where Id=@Id", sqlParameters); 
         }
 
         public void AddProjectQuestion(Question question)
@@ -107,8 +109,10 @@ namespace Service.Concrete
             }
         }
 
-        public int InsertSurvey(string tableName)
+        public int InsertSurvey(string guid)
         {
+            int projectId = _repositoryProject.Table.Include(x => x.Questions).Where(x => x.Guid == guid).FirstOrDefault().Id;
+            string tableName ="p" + projectId.ToString() ;
             int Id = 0;
             var parameterReturn = new SqlParameter
             {
@@ -135,7 +139,7 @@ namespace Service.Concrete
             var projeQuestions=  _repositoryProject.Table.Include(x=>x.Questions).Where(x=>x.Id==projectID).FirstOrDefault();
             if (projeQuestions.Questions == null)
             {
-                projeQuestions.Questions = _efQuestionDal.getQuestion(projectID);
+                projeQuestions.Questions = _efQuestionDal.getQuestionList(projectID);
             }
 
             foreach (var question in projeQuestions.Questions)
@@ -167,7 +171,7 @@ namespace Service.Concrete
             _repositoryProject.UpdateSql("sp_SuccessSurvey @tableName,@projectId,@statu,@Id", sqlParameters);
         }
 
-        public Project GetProjectQuestion(string guid)
+        public Project GetProjectQuestionGuid(string guid)
         {
             var projeQuestions = _repositoryProject.Table.Include(x => x.Questions).Where(x => x.Guid == guid).FirstOrDefault();
             if (projeQuestions.Questions == null)
@@ -175,7 +179,7 @@ namespace Service.Concrete
              if (projeQuestions!=null)
                 {
 
-                    projeQuestions.Questions = _efQuestionDal.getQuestion(projeQuestions.Id);
+                    projeQuestions.Questions = _efQuestionDal.getQuestionList(projeQuestions.Id);
                 }
                 else
                 {
@@ -192,6 +196,21 @@ namespace Service.Concrete
 
 
             return projeQuestions;
+        }
+
+        public void EditQuestionIndex(List<EditProjectIndexDto> editProjectIndexDtos)
+        {
+            foreach (var editQuestionId in editProjectIndexDtos)
+            {
+                _efQuestionDal.editQuestionIndex(editQuestionId);
+            }
+        }
+
+        public void EditQuestion(Question question)
+        {
+            ColumnOperation(question);
+            _efQuestionDal.editQuestion(question);
+
         }
     }
 }

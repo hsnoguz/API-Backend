@@ -32,10 +32,10 @@ namespace TemelService.Controllers
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
         }
 
-        [HttpGet("GetProject/{guid}")]
-        public IActionResult GetProject(string guid)
+        [HttpGet("GetProjectGuid/{guid}")]
+        public IActionResult GetProjectGuid(string guid)
         {
-            var result = _projectManager.GetProjectQuestion(guid);
+            var result = _projectManager.GetProjectQuestionGuid(guid);
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
@@ -50,11 +50,19 @@ namespace TemelService.Controllers
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
         }
 
-        [HttpPut("SetColumnValue")]
-        public IActionResult SetColumnValue(int projectId, string columnValue, int Id)
+        [HttpPost("SetColumnValue")]
+        public IActionResult SetColumnValue([FromBody] ProjectColumnValueDto projectColumnValue)
         {
-            _projectManager.SetColumnValue("p" + projectId.ToString(), columnValue, Id);
-            return Ok();
+         var result=   _projectManager.SetColumnValue(projectColumnValue);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+            
         }
 
 
@@ -78,8 +86,46 @@ namespace TemelService.Controllers
         {
             //  var result = System.Text.Json.JsonSerializer.Deserialize<Project>(json);
             IResult result = _projectManager.AddProject(question);
-            return Ok();            
-          /*  IResult result = _projectManager.CreateProject(project);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+            /*  IResult result = _projectManager.CreateProject(project);
+              if (result.IsValid)
+              {
+                  return Ok();
+              }
+              else
+              {
+                  return BadRequest();
+              }*/
+        }
+
+        [HttpPost("EditQuestion")]
+        public IActionResult EditQuestion([FromBody] Question question)
+        {
+
+           IResult result= _projectManager.EditQuestion(question);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+
+        }
+
+       [HttpPost("EditQuestionIndex")]
+        public IActionResult EditQuestionIndex([FromBody] List<EditProjectIndexDto> listEditProjectIndexDto)
+        {
+            //  var result = System.Text.Json.JsonSerializer.Deserialize<Project>(json);
+            IResult result = _projectManager.EditQuestionIndex(listEditProjectIndexDto);
             if (result.IsValid)
             {
                 return Ok();
@@ -87,17 +133,17 @@ namespace TemelService.Controllers
             else
             {
                 return BadRequest();
-            }*/
+            }
         }
 
-        [HttpPost("InsertSurvey")]
-        public IActionResult InsertSurvey(int projectId)
+        [HttpPost("InsertSurvey/{guid}")]
+        public IActionResult InsertSurvey(string guid)
         {
-            IResultData<int> result = _projectManager.insertSurvey("p" + projectId.ToString());
+            IResultData<int> result = _projectManager.insertSurvey(guid);
 
             if (result.IsValid)
             {
-                return Ok();
+                return Ok(result.Data);
             }
             else
             {

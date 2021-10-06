@@ -17,6 +17,6 @@ namespace Bussines.Abstract
         void SetRefreshTokenId(int userId,int refreshTokenId);
         User GetByMail(string email);
         User GetUser(int userId);
-        IResultData<List<UserList>> GetUserList();
+        IResultData<List<UserListDto>> GetUserList();
     }
 }

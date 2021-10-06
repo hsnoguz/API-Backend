@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Service.Model
 {
-    public class UserList: ICustomEntity
+    public class UserListDto: ICustomEntity
     {
         public int Id { get; set; }
         public string UserName { get; set; }

@@ -53,10 +53,10 @@ namespace Bussines.Concrete
         {
             return _userDal.Table.FirstOrDefault(u => u.Id == userId);
         }
-        public IResultData<List<UserList>> GetUserList()
+        public IResultData<List<UserListDto>> GetUserList()
         {
             var userTable= _userDal.Table;
-            var userList = userTable.Select(X => new UserList() { Id = X.Id, UserName = X.UserName, FirstName = X.FirstName, LastName = X.LastName, Email = X.Email, IsActive = X.IsActive, Telephone = X.Telephone, UserOperationClaim = X.UserOperationClaim }).ToList();
+            var userList = userTable.Select(X => new UserListDto() { Id = X.Id, UserName = X.UserName, FirstName = X.FirstName, LastName = X.LastName, Email = X.Email, IsActive = X.IsActive, Telephone = X.Telephone, UserOperationClaim = X.UserOperationClaim }).ToList();
             foreach (var user in userList)
             {
                 var tempUser = userTable.Where(x => x.Id == user.Id).FirstOrDefault();
@@ -66,7 +66,7 @@ namespace Bussines.Concrete
 
 
             }
-            return new SuccessResultData<List<UserList>>(userList);
+            return new SuccessResultData<List<UserListDto>>(userList);
         }
 
         public void SetRefreshTokenId(int userId, int refreshTokenId)

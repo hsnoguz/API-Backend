@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace DAL.Model
 {
-    public class Target
+ public   class Action
     {
         public int Id { get; set; }
         public string Explanation { get; set; }
-        public int AimId { get; set; }
+        public int TargetId { get; set; }
         public DateTime? InsertTime { get; set; }
-
-        public virtual List<Action> Actions { get; set; }
+        public virtual List<SubAction> SubActions { get; set; }
     }
 }

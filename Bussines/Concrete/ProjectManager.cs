@@ -58,18 +58,25 @@ namespace Bussines.Concrete
             return new SuccessResultData<List<Project>>(_projectDal.Projects(periotID));
         }
 
-        public IResult SetColumnValue(string tableName,string columnValue, int Id)
+        public IResult SetColumnValue(ProjectColumnValueDto projectColumnValue)
         {
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            object[] columnValueArr = System.Text.Json.JsonSerializer.Deserialize<object[]>(columnValue);
-            object[] columnValueArr2 = System.Text.Json.JsonSerializer.Deserialize<object[]>(columnValueArr[0].ToString(), jso);
+            try
+            {
+                _projectDal.SetColumnValue(projectColumnValue);
+            }
+            catch (Exception ex)
+            {
+
+                return new ErrorResult(ex.Message);
+            }
+        
             return new SuccessResult();
         }
 
-        public IResultData<int> insertSurvey(string tableName)
+        public IResultData<int> insertSurvey(string guid)
         {
-            return new SuccessResultData<int>(_projectDal.InsertSurvey(tableName));
+          
+            return new SuccessResultData<int>(_projectDal.InsertSurvey(guid));
         }
         public IResult SendSurveyStatu(string tableName, int projectId, Int16 statu, int Id)
         {
@@ -84,9 +91,40 @@ namespace Bussines.Concrete
             return new SuccessResult();
         }
 
-        public IResultData<Project> GetProjectQuestion(string guid)
+        public IResultData<Project> GetProjectQuestionGuid(string guid)
         {
-            return new SuccessResultData<Project>(_projectDal.GetProjectQuestion(guid));
+            return new SuccessResultData<Project>(_projectDal.GetProjectQuestionGuid(guid));
+        }
+
+        public IResult EditQuestionIndex(List<EditProjectIndexDto> editProjectIndexDtos)
+        {
+            List<int> Indexs = new();
+            foreach (var item in editProjectIndexDtos)
+            {
+                if (Indexs.Contains(item.QuestionIndex))
+                {
+                    return new ErrorResult("Duplicate Index Question");
+                }
+                else
+                {
+                    Indexs.Add(item.QuestionIndex);
+                }
+            }
+            _projectDal.EditQuestionIndex(editProjectIndexDtos);
+            return new SuccessResult();
+        }
+
+        public IResult EditQuestion(Question question)
+        {
+            try
+            {
+                _projectDal.EditQuestion(question);
+            }
+            catch (Exception ex)
+            {
+                return new ErrorResult(ex.Message);
+            }
+            return new SuccessResult();
         }
     }
 }

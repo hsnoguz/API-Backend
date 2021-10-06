@@ -10,7 +10,7 @@ namespace DAL.Model
 {
     public partial class QuestionVertical : IEntity
     {
-        [JsonIgnore]
+ 
         public int Id { get; set; }
         public int QuestionId { get; set; }
         public string? ColumnName { get; set; }
@@ -24,3 +24,4 @@ namespace DAL.Model
         public virtual Question Question { get; set; }
     }
 }
+        

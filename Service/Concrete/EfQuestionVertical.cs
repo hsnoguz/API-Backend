@@ -18,7 +18,7 @@ namespace Service.Concrete
         }
         public List<QuestionVertical> getQuestionVertical(int questionId)
         {
-            List<QuestionVertical> questionVerticals = _repository.Table.Where(x => x.QuestionId == questionId).ToList();
+            List<QuestionVertical> questionVerticals = _repository.TableNoTracking.Where(x => x.QuestionId == questionId).ToList();
             return questionVerticals;
         }
     }

@@ -10,7 +10,7 @@ namespace DAL.Model
 {
   public partial class Question:IEntity
     {
-        [JsonIgnore]
+
         public int Id { get; set; }
 
         public int ProjectId { get; set; }

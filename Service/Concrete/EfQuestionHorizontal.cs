@@ -18,7 +18,7 @@ namespace Service.Concrete
         }
         public List<QuestionHorizontal> getQuestionHorizontal(int questionId)
         {
-            List<QuestionHorizontal> questionHorizontals= _repository.Table.Where(x=>x.QuestionId==questionId).ToList();
+            List<QuestionHorizontal> questionHorizontals= _repository.TableNoTracking.Where(x=>x.QuestionId==questionId).ToList();
             return questionHorizontals;
         }
     }

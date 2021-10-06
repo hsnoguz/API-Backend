@@ -39,7 +39,10 @@ namespace Core.Utilities.Security.JWT
             {
                 Token = token,
                 Expiration = _accessTokenExpiration,
-                RefreshToken= refreshToken
+                RefreshToken= refreshToken,
+                Email=user.Email,
+                Name=user.FirstName,
+                Surname=user.LastName
 
             };
 

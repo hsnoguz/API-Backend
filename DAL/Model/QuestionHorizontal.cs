@@ -10,7 +10,7 @@ namespace DAL.Model
 {
     public partial class QuestionHorizontal : IEntity
     {
-        [JsonIgnore]
+
         public int Id { get; set; }
         public int? ParentId { get; set; }
         public int QuestionId { get; set; }
