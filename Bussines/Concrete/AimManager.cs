@@ -35,6 +35,23 @@ namespace Bussines.Concrete
             
         }
 
+        public IResult EditAim(int id, string explanation)
+        {
+            IResult result;
+            try
+            {
+                _efAimDal.EditAim(id,explanation);
+                result = new SuccessResult();
+            }
+            catch (Exception ex)
+            {
+
+                result = new ErrorResult(ex.Message);
+            }
+
+            return result;
+        }
+
         public List<Aim> AimList(int periotId)
         {
             return _efAimDal.AimList(periotId);

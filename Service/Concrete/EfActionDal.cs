@@ -28,6 +28,35 @@ namespace Service.Concrete
             return ActionList;
         }
 
+        public void EditTarget(int id, int targetId)
+        {
+            var action = _repository.Table.Where(x => x.Id == id).FirstOrDefault();
+            if (action != null)
+            {
+                action.TargetId = targetId;
+            }
+            else
+            {
+                throw new Exception("Not Found SubAction");
+            }
+
+        }
+
+        public void EditAction(int id, int targetId, string explanation)
+        {
+            var action = _repository.Table.Where(x => x.Id == id).FirstOrDefault();
+
+            if (action != null)
+            {
+                action.TargetId = targetId;
+                action.Explanation = explanation;
+            }
+            else
+            {
+                throw new Exception("Not Found SubAction");
+            }
+        }
+
         public List<DAL.Model.Action> ActionListFull()
         {
             var ActionList = _repository.Table.ToList();

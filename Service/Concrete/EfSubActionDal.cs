@@ -34,6 +34,35 @@ namespace Service.Concrete
             return SubActionList;
         }
 
+        public void EditAction(int id, int newActionId)
+        {
+            var subAction = _repository.Table.Where(x => x.Id == id).FirstOrDefault();
+            if (subAction != null)
+            {
+                subAction.ActionId = newActionId;
+            }
+            else
+            {
+                throw new Exception("Not Found SubAction");
+            }
+
+        }
+
+        public void EditSubAction(int id, int actionId,string explanation)
+        {
+            var subAction = _repository.Table.Where(x => x.Id == id).FirstOrDefault();
+            
+            if (subAction != null)
+            {
+                subAction.ActionId = actionId;
+                subAction.Explanation= explanation;
+            }
+            else
+            {
+                throw new Exception("Not Found SubAction");
+            }
+        }
+
         public void DeleteSubAction( int id)
         {
             var SubAction = _repository.Table.Where(x => x.Id == id).FirstOrDefault();

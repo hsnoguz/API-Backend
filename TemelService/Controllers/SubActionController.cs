@@ -23,7 +23,7 @@ namespace TemelService.Controllers
             _SubActionManager = SubActionManager;
         }
 
-        [HttpGet("SubActionList/{actionId}")]
+        [HttpGet("SubActionList")]
         public IActionResult GetSubActionList(int actionId)
         {
             var result = _SubActionManager.SubActionList(actionId);
@@ -40,7 +40,32 @@ namespace TemelService.Controllers
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
         }
+        [HttpGet("EditAction/id/newActionId")]
+        public IActionResult EditAction(int id, int newActionId) {
+            var result = _SubActionManager.EditAction(id, newActionId);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+        }
 
+        [HttpGet("EditSubAction/id/actionId/")]
+        public IActionResult EditSubAction(int id, int actionId, [FromBody] string explanation)
+        {
+            var result = _SubActionManager.EditSubAction(id, actionId,explanation);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+        }
 
         [HttpPost("AddSubAction")]
         public IActionResult AddSubAction([FromBody] DAL.Model.SubAction SubAction)
@@ -54,10 +79,9 @@ namespace TemelService.Controllers
             {
                 return BadRequest(result.Message);
             }
-               
         }
 
-        [HttpPost("DeleteSubAction/{SubActionId}")]
+        [HttpPost("DeleteSubAction")]
         public IActionResult GetProjectList(int SubActionId)
         {
             var result = _SubActionManager.DeleteSubAction(SubActionId);

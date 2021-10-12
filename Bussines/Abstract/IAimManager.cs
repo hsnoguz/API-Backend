@@ -11,6 +11,7 @@ namespace Bussines.Abstract
    public interface IAimManager
     {
         public List<Aim> AimList(int periotId);
+        public IResult EditAim(int id, string explanation);
         public IResult AddAim( Aim aim);
         public IResult DeleteAim( int id);
 

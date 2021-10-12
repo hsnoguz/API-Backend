@@ -23,7 +23,7 @@ namespace TemelService.Controllers
             _ActionManager = ActionManager;
         }
 
-        [HttpGet("ActionList/{targetId}")]
+        [HttpGet("ActionList")]
         public IActionResult GetActionList(int targetId)
         {
             var result = _ActionManager.ActionList(targetId);
@@ -39,6 +39,32 @@ namespace TemelService.Controllers
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+        }
+        [HttpGet("EditTarget/{id}")]
+        public IActionResult EditTarget(int id, int targetId) {
+            var result = _ActionManager.EditTarget(id,targetId);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+        }
+
+        [HttpGet("EditAction/{id}/{targetId}")]
+        public IActionResult EditAction(int id, int targetId, [FromBody] string explanation) {
+            var result = _ActionManager.EditAction(id,targetId,explanation);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+
         }
 
         [HttpPost("AddAction")]
@@ -56,7 +82,7 @@ namespace TemelService.Controllers
                
         }
 
-        [HttpPost("DeleteAction/{ActionId}")]
+        [HttpPost("DeleteAction")]
         public IActionResult GetProjectList(int ActionId)
         {
             var result = _ActionManager.DeleteAction(ActionId);

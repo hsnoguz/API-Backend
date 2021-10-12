@@ -23,7 +23,7 @@ namespace TemelService.Controllers
             _TargetManager = TargetManager;
         }
 
-        [HttpGet("TargetList/{aimId}")]
+        [HttpGet("TargetList")]
         public IActionResult GetTargetList(int aimId)
         {
             var result = _TargetManager.TargetList(aimId);
@@ -41,6 +41,34 @@ namespace TemelService.Controllers
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
         }
 
+        [HttpGet("EditAim/{id}/{aimId}")]
+        public IActionResult EditAim(int id, int aimId) {
+            var result = _TargetManager.EditAim(id,aimId);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+        }
+
+        [HttpGet("EditTarget/{id}/{aimId}")]
+        public IActionResult EditTarget(int id, int aimId, [FromBody] string explanation) {
+            var result = _TargetManager.EditTarget(id,aimId,explanation);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+        }
+
+
+
         [HttpPost("AddTarget")]
         public IActionResult AddTarget([FromBody] Target Target)
         {
@@ -56,7 +84,7 @@ namespace TemelService.Controllers
                
         }
 
-        [HttpPost("DeleteTarget/{TargetId}")]
+        [HttpPost("DeleteTarget")]
         public IActionResult GetProjectList(int TargetId)
         {
             var result = _TargetManager.DeleteTarget(TargetId);

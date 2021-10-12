@@ -10,6 +10,9 @@ namespace Service.Abstract
  public  interface IEfAimDal
     {
         public List<Aim> AimList(int periotId);
+
+        public void EditAim(int Id,string explanation);
+
         public void AddAim( Aim aim);
         public void DeleteAim(int id);
         

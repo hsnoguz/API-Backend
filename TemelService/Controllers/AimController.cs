@@ -23,7 +23,7 @@ namespace TemelService.Controllers
             _aimManager = aimManager;
         }
 
-        [HttpGet("AimList/{periotId}")]
+        [HttpGet("AimList")]
         public IActionResult GetAimList(int periotId)
         {
             var result = _aimManager.AimList(periotId);
@@ -47,7 +47,21 @@ namespace TemelService.Controllers
                
         }
 
-        [HttpPost("DeleteAim/{aimId}")]
+        [HttpPost("EditAim/{id}")]
+        public IActionResult EditAim(int id, [FromBody] string explanation)
+        {
+            var result = _aimManager.EditAim(id,explanation);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+        }
+
+            [HttpPost("DeleteAim")]
         public IActionResult GetProjectList(int aimId)
         {
             var result = _aimManager.DeleteAim(aimId);

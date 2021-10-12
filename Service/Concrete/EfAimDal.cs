@@ -28,6 +28,20 @@ namespace Service.Concrete
             return aimList;
         }
 
+
+        public void EditAim(int id,  string explanation)
+        {
+            var aim = _repository.Table.Where(x => x.Id == id).FirstOrDefault();
+
+            if (aim != null)
+            {
+                aim.Explanation = explanation;
+            }
+            else
+            {
+                throw new Exception("Not Found SubAction");
+            }
+        }
         public void DeleteAim( int id)
         {
             var aim = _repository.Table.Where(x => x.Id == id).FirstOrDefault();

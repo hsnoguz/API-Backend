@@ -35,6 +35,45 @@ namespace Bussines.Concrete
             
         }
 
+        public IResult EditAim(int id, int aimId) {
+            IResult result;
+            try
+            {
+                _efTargetDal.EditAim(id, aimId);
+                result = new SuccessResult();
+            }
+            catch (Exception ex)
+            {
+
+                result = new ErrorResult(ex.Message);
+            }
+
+            return result;
+        }
+        public IResult EditTarget(int id, int aimId, string explanation)
+        {
+            IResult result;
+            try
+            {
+                _efTargetDal.EditTarget(id, aimId, explanation);
+                result = new SuccessResult();
+            }
+            catch (Exception ex)
+            {
+
+                result = new ErrorResult(ex.Message);
+            }
+
+            return result;
+        }
+
+
+
+        public List<Target> TargetListFull()
+        {
+            return _efTargetDal.TargetListFull();
+        }
+
         public List<Target> TargetList(int aimId)
         {
             return _efTargetDal.TargetList(aimId);

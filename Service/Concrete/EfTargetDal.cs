@@ -34,6 +34,36 @@ namespace Service.Concrete
             return TargetList;
         }
 
+
+        public void EditAim(int id, int aimId)
+        {
+            var action = _repository.Table.Where(x => x.Id == id).FirstOrDefault();
+            if (action != null)
+            {
+                action.AimId = aimId;
+            }
+            else
+            {
+                throw new Exception("Not Found SubAction");
+            }
+
+        }
+
+        public void EditTarget(int id, int aimId, string explanation)
+        {
+            var action = _repository.Table.Where(x => x.Id == id).FirstOrDefault();
+
+            if (action != null)
+            {
+                action.AimId = aimId;
+                action.Explanation = explanation;
+            }
+            else
+            {
+                throw new Exception("Not Found SubAction");
+            }
+        }
+
         public void DeleteTarget( int id)
         {
             var Target = _repository.Table.Where(x => x.Id == id).FirstOrDefault();

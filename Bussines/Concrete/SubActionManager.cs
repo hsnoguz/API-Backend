@@ -35,6 +35,42 @@ namespace Bussines.Concrete
             
         }
 
+        public IResult EditAction(int id, int newActionId) {
+            IResult result;
+            try
+            {
+                _efSubActionDal.EditAction(id,newActionId);
+                result = new SuccessResult();
+            }
+            catch (Exception ex)
+            {
+
+                result = new ErrorResult(ex.Message);
+            }
+
+            return result;
+        }
+        public IResult EditSubAction(int id, int actionId, string explanation) {
+            IResult result;
+            try
+            {
+                _efSubActionDal.EditSubAction(id, actionId,explanation);
+                result = new SuccessResult();
+            }
+            catch (Exception ex)
+            {
+
+                result = new ErrorResult(ex.Message);
+            }
+
+            return result;
+        }
+
+        public List<DAL.Model.SubAction> SubActionListFull()
+        {
+            return _efSubActionDal.SubActionListFull();
+        }
+
         public List<DAL.Model.SubAction> SubActionList(int actionId)
         {
             return _efSubActionDal.SubActionList(actionId);
