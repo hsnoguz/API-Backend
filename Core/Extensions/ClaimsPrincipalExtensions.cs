@@ -24,5 +24,10 @@ namespace Core.Extensions
         {
             return claimsPrincipal?.Claims(ClaimTypes.NameIdentifier);
         }
+
+        public static string ClaimPeriotId(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal?.Claims("PeriotId")[0];
+        }
     }
 }

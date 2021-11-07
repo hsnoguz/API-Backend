@@ -38,7 +38,7 @@ namespace TemelService.Controllers
             var result = _aimManager.AddAim(aim);
             if (result.IsValid)
             {
-                return Ok();
+                return Ok(aim.Id);
             }
             else
             {
@@ -62,7 +62,7 @@ namespace TemelService.Controllers
         }
 
             [HttpPost("DeleteAim")]
-        public IActionResult GetProjectList(int aimId)
+        public IActionResult DeleteAim(int aimId)
         {
             var result = _aimManager.DeleteAim(aimId);
             if (result.IsValid)

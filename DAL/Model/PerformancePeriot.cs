@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DAL.Model
 {
-  public  class SingType
+  public  class PerformancePeriot
     {
-        public Int16 Id { get; set; }
-        public string Explanation { get; set; }
+        public int Id { get; set; }
+        public Int16 Explanation { get; set; }
         public DateTime? InsertTime { get; set; }
     }
 }

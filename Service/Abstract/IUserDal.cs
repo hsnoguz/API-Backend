@@ -14,6 +14,6 @@ namespace DAL.Abstract
     {
         List<OperationClaim> GetClaims(int userId);
         void SetRefreshToken(int userId,int refreshTokenId);
-
+        public int currentUserOrgizationId(int userId);
     }
 }

@@ -10,6 +10,8 @@ namespace Core.Entities.Concrete
   public partial  class Organization:IEntity
     {
         public int Id { get; set; }
+        public string Explanation { get; set; }
+        public int? ParentId { get; set; }
     }
     
 }

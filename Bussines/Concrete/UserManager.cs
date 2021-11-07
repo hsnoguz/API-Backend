@@ -73,5 +73,11 @@ namespace Bussines.Concrete
         {
             _userDal.SetRefreshToken(userId, refreshTokenId);
         }
+
+        public IResultData<int> CurrentOrganizationId(int userId)
+        {
+
+            return new SuccessResultData<int>(_userDal.currentUserOrgizationId(userId));
+        }
     }
 }

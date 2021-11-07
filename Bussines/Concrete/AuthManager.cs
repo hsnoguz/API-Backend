@@ -20,11 +20,13 @@ namespace Bussines.Concrete
         private IUserService _userService;
         private ITokenHelper _tokenHelper;
         private IRefreshTokenService _refreshToken;
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper, IRefreshTokenService refreshToken)
+        IOperationService _operationService;
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper, IOperationService operationService, IRefreshTokenService refreshToken)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
             _refreshToken = refreshToken;
+            _operationService = operationService;
         }
         [SecuredOperation("Admin")]
         public IResultData<User> Register(UserForRegisterDto userForRegisterDto, string password)
@@ -74,10 +76,10 @@ namespace Bussines.Concrete
             return new SuccessResult();
         }
 
-        public IResultData<AccessToken> CreateAccessToken(User user)
+        public IResultData<AccessToken> CreateAccessToken(User user,int periotId)
         {
             var claims = _userService.GetClaims(user.Id);
-            var accessToken = _tokenHelper.CreateToken(user, claims);
+            var accessToken = _tokenHelper.CreateToken(user, claims,periotId);
             Result result =setRefreshToken(user.Id, accessToken.RefreshToken);
             if (result.IsValid)
             {
@@ -93,11 +95,12 @@ namespace Bussines.Concrete
             bool lastToken = _refreshToken.getRefreshTokenControl(userId, lastRefreshToken);
             return lastToken;
         }
-        public IResultData<AccessToken> setNewRefreshToken(int userId)
+        public IResultData<AccessToken> setNewRefreshToken(int userId,string periotId)
         {
           
             User user = _userService.GetUser(userId);
-            return CreateAccessToken(user);
+
+            return CreateAccessToken(user,Convert.ToInt32(periotId));
 
         }
         public Result setRefreshToken(int userId,string token)
@@ -114,5 +117,16 @@ namespace Bussines.Concrete
             }
            
         }
+        public IResultData<int> CurrentOrganizationId(int userId)
+        {
+
+            return _userService.CurrentOrganizationId(userId);
+        }
+        public IResultData<int> getRoleId(string roleName)
+        {
+            return new SuccessResultData<int>(_operationService.RoleId(roleName));
+        }
     }
+
+
 }

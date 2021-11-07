@@ -10,5 +10,7 @@ namespace Core.Entities.Concrete
   public partial  class Jop:IEntity
     {
         public int Id { get; set; }
+        public string Explanation { get; set; }
+        public int? parentId { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace TemelService.Controllers
                 return BadRequest(userToLogin.Message);
             }
 
-            var result = _authService.CreateAccessToken(userToLogin.Data);
+            var result = _authService.CreateAccessToken(userToLogin.Data, userForLoginDto.PeriotId);
             if (result.IsValid)
             {
                 return Ok(result.Data);
@@ -65,6 +65,7 @@ namespace TemelService.Controllers
         public ActionResult RefreshToken(string refreshToken)
         {
             var claim = HttpContext.User.ClaimNameIdentifier();
+            string periotId = HttpContext.User.ClaimPeriotId();
             if (claim.Count > 0)
             {
                 int userId = Convert.ToInt32(claim[0].ToString());
@@ -72,7 +73,7 @@ namespace TemelService.Controllers
                 if (lastToken)
                 {
 
-                    var result = _authService.setNewRefreshToken(userId);
+                    var result = _authService.setNewRefreshToken(userId, periotId);
                     if (result.IsValid)
                     {
                         return Ok(result.Data);

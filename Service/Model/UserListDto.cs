@@ -20,8 +20,8 @@ namespace Service.Model
         public string IsActive { get; set; }
         public DateTime InsertTime { get; set; }
         public virtual List<UserOperationClaim> UserOperationClaim { get; set; }
-        public virtual DAL.Model.Jop Jop { get; set; }
-        public virtual DAL.Model.Branch Branch { get; set; }
-        public virtual DAL.Model.Organization Organization { get; set; }
+        public virtual Jop Jop { get; set; }
+        public virtual Branch Branch { get; set; }
+        public virtual Organization Organization { get; set; }
     }
 }

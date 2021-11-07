@@ -17,7 +17,9 @@ namespace Bussines.Abstract
         IResultData<User> Login(UserForLoginDto userForLoginDto);
         IResult UserExists(string email);
         bool getRefreshTokenControl(int userId, string lastRefreshToken);
-        IResultData<AccessToken> CreateAccessToken(User user);
-        IResultData<AccessToken> setNewRefreshToken(int userId);
+        IResultData<AccessToken> CreateAccessToken(User user,int periotId );
+        IResultData<int> getRoleId(string roleName);
+        IResultData<int> CurrentOrganizationId(int userId);
+        IResultData<AccessToken> setNewRefreshToken(int userId,string periotId);
     }
 }

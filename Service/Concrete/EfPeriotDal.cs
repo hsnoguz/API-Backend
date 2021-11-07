@@ -35,5 +35,10 @@ namespace Service.Concrete
          
            return listPeriot;
         }
+
+        public Periot currentPeriot(int Id)
+        {
+            return _repository.Table.Where(x => x.Id == Id).FirstOrDefault();
+        }
     }
 }

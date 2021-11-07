@@ -13,5 +13,6 @@ public interface IPeriotManager
         public IResult createPeriot(string name, int startYear, int stopYear);
         public IResult editPeriot(int id, string name);
         public IResultData<List<Periot>> listPeriot();
+        public IResultData<Periot> currentPeriot(int Id);
     }
 }

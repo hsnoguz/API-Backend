@@ -27,9 +27,23 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Explanation")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int?>("parentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Branch");
+                    b.ToTable("Branchs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Explanation = "IT"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.Jop", b =>
@@ -39,9 +53,16 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Explanation")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int?>("parentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Jop");
+                    b.ToTable("Jops");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.OperationClaim", b =>
@@ -74,9 +95,16 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Explanation")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int?>("parentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Organization");
+                    b.ToTable("Organizations");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.RefreshToken", b =>
@@ -186,8 +214,8 @@ namespace DAL.Migrations
                             JopId = 0,
                             LastName = "Admin",
                             OrganizationId = 0,
-                            PasswordHash = new byte[] { 46, 184, 7, 154, 209, 169, 20, 123, 241, 210, 161, 252, 9, 8, 12, 18, 3, 122, 208, 14, 201, 3, 8, 216, 46, 250, 57, 24, 41, 17, 10, 127, 175, 77, 14, 171, 45, 12, 70, 27, 203, 85, 194, 159, 153, 154, 98, 37, 138, 48, 36, 32, 192, 58, 132, 110, 69, 177, 11, 84, 171, 52, 102, 146 },
-                            PasswordSalt = new byte[] { 39, 141, 58, 233, 72, 232, 174, 45, 175, 130, 150, 25, 108, 125, 132, 139, 154, 217, 1, 188, 252, 100, 43, 180, 216, 12, 227, 38, 176, 206, 250, 22, 19, 210, 42, 218, 5, 24, 207, 188, 181, 237, 91, 43, 148, 97, 105, 100, 244, 91, 116, 228, 20, 226, 43, 74, 111, 105, 228, 162, 215, 47, 106, 77, 196, 39, 15, 120, 74, 155, 240, 32, 191, 25, 39, 73, 223, 77, 50, 42, 255, 68, 8, 72, 13, 147, 117, 226, 182, 177, 128, 59, 129, 89, 229, 195, 9, 64, 202, 141, 196, 133, 187, 49, 173, 31, 94, 6, 154, 247, 142, 3, 106, 44, 47, 142, 100, 134, 225, 186, 191, 184, 29, 129, 181, 179, 87, 156 },
+                            PasswordHash = new byte[] { 80, 234, 65, 52, 206, 48, 209, 245, 84, 54, 29, 158, 198, 75, 84, 21, 141, 54, 34, 46, 17, 66, 1, 124, 255, 245, 143, 207, 4, 225, 207, 240, 5, 238, 69, 66, 101, 104, 204, 172, 0, 35, 236, 117, 86, 29, 204, 236, 86, 69, 180, 185, 202, 47, 193, 178, 120, 192, 194, 23, 224, 234, 245, 155 },
+                            PasswordSalt = new byte[] { 127, 168, 21, 26, 222, 91, 23, 207, 35, 111, 193, 114, 188, 3, 63, 129, 142, 19, 113, 10, 142, 148, 107, 49, 133, 172, 140, 246, 7, 190, 80, 227, 114, 238, 185, 94, 130, 71, 8, 153, 236, 44, 253, 89, 160, 42, 66, 63, 160, 168, 150, 206, 254, 83, 209, 63, 59, 25, 129, 110, 29, 210, 70, 69, 51, 220, 195, 143, 44, 154, 145, 231, 63, 128, 125, 203, 164, 253, 156, 116, 143, 136, 69, 249, 42, 65, 245, 8, 222, 158, 112, 176, 213, 210, 188, 41, 57, 143, 82, 70, 226, 197, 63, 178, 101, 61, 241, 149, 121, 145, 42, 214, 85, 215, 90, 97, 197, 212, 160, 236, 20, 162, 198, 197, 245, 173, 36, 225 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });
@@ -275,7 +303,71 @@ namespace DAL.Migrations
                     b.ToTable("Aims");
                 });
 
-            modelBuilder.Entity("DAL.Model.Branch", b =>
+            modelBuilder.Entity("DAL.Model.Performance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("BaseValue")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<string>("Explanation")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime?>("InsertTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PerformanceAimId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PerformancePeriotId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PerformanceTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PeriotId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StartDay")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StartMonth")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StartYear")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StopYear")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TargetValue")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("PerformanceAimId");
+
+                    b.HasIndex("PerformancePeriotId");
+
+                    b.HasIndex("PerformanceTypeId");
+
+                    b.HasIndex("PeriotId");
+
+                    b.ToTable("Performances");
+                });
+
+            modelBuilder.Entity("DAL.Model.PerformanceAim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -283,44 +375,65 @@ namespace DAL.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Explanation")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("parentId")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("InsertTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Branchs");
+                    b.ToTable("PerformanceAims");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Explanation = "IT"
+                            Explanation = "Yüzdesel Artış"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Explanation = "Rakamsal Artış"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Explanation = "Eşit"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Explanation = "Rakamsal Azalış"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Explanation = "Yüzdesel Artış"
                         });
                 });
 
-            modelBuilder.Entity("DAL.Model.Jop", b =>
+            modelBuilder.Entity("DAL.Model.PerformancePeriot", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Explanation")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                    b.Property<short>("Explanation")
+                        .HasMaxLength(50)
+                        .HasColumnType("smallint");
 
-                    b.Property<int?>("parentId")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("InsertTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("(getdate())");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Jops");
+                    b.ToTable("PerformancePeriots");
                 });
 
-            modelBuilder.Entity("DAL.Model.Organization", b =>
+            modelBuilder.Entity("DAL.Model.PerformanceType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -331,12 +444,71 @@ namespace DAL.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<int?>("parentId")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("InsertTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("(getdate())");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Organizations");
+                    b.ToTable("PerformanceTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Explanation = "kg"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Explanation = "m2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Explanation = "m3"
+                        });
+                });
+
+            modelBuilder.Entity("DAL.Model.Performance_Target_Result", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Explanation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("InsertTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<short>("MatchId")
+                        .HasColumnType("smallint");
+
+                    b.Property<int>("PerformanceId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Result")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("Target")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<int>("TargetActionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TargetTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PerformanceId");
+
+                    b.ToTable("Performance_Target_Results");
                 });
 
             modelBuilder.Entity("DAL.Model.Periot", b =>
@@ -655,6 +827,58 @@ namespace DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DAL.Model.Performance", b =>
+                {
+                    b.HasOne("Core.Entities.Concrete.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Model.PerformanceAim", "PerformanceAim")
+                        .WithMany()
+                        .HasForeignKey("PerformanceAimId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Model.PerformancePeriot", "PerformancePeriot")
+                        .WithMany()
+                        .HasForeignKey("PerformancePeriotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Model.PerformanceType", "PerformanceType")
+                        .WithMany()
+                        .HasForeignKey("PerformanceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Model.Periot", "Periot")
+                        .WithMany()
+                        .HasForeignKey("PeriotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("PerformanceAim");
+
+                    b.Navigation("PerformancePeriot");
+
+                    b.Navigation("PerformanceType");
+
+                    b.Navigation("Periot");
+                });
+
+            modelBuilder.Entity("DAL.Model.Performance_Target_Result", b =>
+                {
+                    b.HasOne("DAL.Model.Performance", null)
+                        .WithMany("Performance_Target_Results")
+                        .HasForeignKey("PerformanceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DAL.Model.Project", b =>
                 {
                     b.HasOne("DAL.Model.Periot", "Periot")
@@ -730,6 +954,11 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Model.Aim", b =>
                 {
                     b.Navigation("Targets");
+                });
+
+            modelBuilder.Entity("DAL.Model.Performance", b =>
+                {
+                    b.Navigation("Performance_Target_Results");
                 });
 
             modelBuilder.Entity("DAL.Model.Periot", b =>

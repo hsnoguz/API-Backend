@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bussines.Service.Abstract;
+using Core.Entities.Concrete;
+
 namespace Bussines.Service.Concrete
 {
     public class BranchService :ListService<Branch>, IBranchService

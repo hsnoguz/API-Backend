@@ -39,12 +39,44 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<EfQuestionVerticalDal>().As<IEfQuestionVerticalDal>();
             builder.RegisterType<EfTargetDal>().As<IEfTargetDal>();
 
+
+            builder.RegisterType<EfPerformanceDal>().As<IEfPerformanceDal>();
+            builder.RegisterType<EfPerformanceTargetResultDal>().As<IEfPerformanceTargetResultDal>();
+            builder.RegisterType<EfPeriotDal>().As<IEfPeriotDal>();
+
+
+            
+            builder.RegisterType<EfOrganizationServiceDal>().As<IEfOrganizationServiceDal>();
+            builder.RegisterType<EfOperationServiceDal>().As<IEfOperationServiceDal>();
+            builder.RegisterType<EfUserOperationClaimDal>().As<IEfUserOperationClaimDal>();
+            builder.RegisterType<EfPerformancePeriotDal>().As<IEfPerformancePeriotDal>();
+            builder.RegisterType<EfPerformanceTypeDal>().As<IEfPerformanceTypeDal>();
+            builder.RegisterType<EfPerformanceAimDal>().As<IEfPerformanceAimDal>();
+
+
+            builder.RegisterType<PerformanceManager>().As<IPerformanceManager>();
+          //  builder.RegisterType<CookieHelper>().As<ICookieHelper>();
+            builder.RegisterType<OperationService>().As<IOperationService>();
+            builder.RegisterType<PeriotManager>().As<IPeriotManager>();
+           // builder.RegisterType<LeftMenuManager>().As<ILeftMenuManager>();
+           // builder.RegisterType<AuthManager>().As<IAuthManager>();
+            builder.RegisterType<JopService>().As<IJopService>();
+            builder.RegisterType<UserOperationClaim>().As<IUserOperationClaim>();
+            builder.RegisterType<BranchService>().As<IBranchService>();
+            builder.RegisterType<OrganizationService>().As<IOrganizationService>();
+            builder.RegisterType<PerformanceAimService>().As<IPerformanceAimService>();
+            builder.RegisterType<PerformanceTypeService>().As<IPerformanceTypeService>();
+            builder.RegisterType<PerformancePeriotService>().As<IPerformancePeriotService>();
+
+
+
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<ProjectManager>().As<IProjectManager>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
             builder.RegisterType<PeriotManager>().As<IPeriotManager>();
             builder.RegisterType<BranchService>().As<IBranchService>();
             builder.RegisterType<JopService>().As<IJopService>();
+            builder.RegisterType<SignPeriotManager>().As<ISignPeriot>();
             builder.RegisterType<OrganizationService>().As<IOrganizationService>();
             builder.RegisterType<AimManager>().As<IAimManager>();
             builder.RegisterType<TargetManager>().As<ITargetManager>();

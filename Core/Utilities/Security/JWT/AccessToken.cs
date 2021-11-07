@@ -14,5 +14,6 @@ namespace Core.Utilities.Security.JWT
         public string Email { get; set; }
         public DateTime Expiration { get; set; }
         public string RefreshToken { get; set; }
+        public int PeriotId { get; set; }
     }
 }

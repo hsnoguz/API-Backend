@@ -14,6 +14,6 @@ namespace Service.Abstract
 
         public List<Periot> listPeriot();
 
-        
+        public Periot currentPeriot(int Id);
     }
 }

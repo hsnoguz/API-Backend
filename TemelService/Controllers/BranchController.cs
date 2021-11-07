@@ -1,5 +1,6 @@
 ﻿using Bussines.Abstract;
 using Bussines.Service.Abstract;
+using Core.Entities.Concrete;
 using Core.Results;
 using DAL.Model;
 using Microsoft.AspNetCore.Authorization;

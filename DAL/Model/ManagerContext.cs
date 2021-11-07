@@ -40,7 +40,11 @@ namespace DAL.Model
         public virtual DbSet<Target> Targets { get; set; }
         public virtual DbSet<Action> Actions { get; set; }
         public virtual DbSet<SubAction> SubActions{ get; set; }
-
+        public virtual DbSet<Performance> Performances { get; set; }
+        public virtual DbSet<PerformancePeriot> PerformancePeriots { get; set; }
+        public virtual DbSet<PerformanceAim> PerformanceAims { get; set; }
+        public virtual DbSet<Performance_Target_Result> Performance_Target_Results { get; set; }
+        public virtual DbSet<PerformanceType> PerformanceTypes { get; set; }
 
         public virtual DbSet<Organization> Organizations { get; set; }
 
@@ -88,7 +92,19 @@ namespace DAL.Model
             modelBuilder.Entity<User>().HasData(user);
             
             modelBuilder.Entity<UserOperationClaim>().HasData(new UserOperationClaim { Id = 1, UserId = 1, OperationClaimId = 1 });
-           
+
+            modelBuilder.Entity<PerformanceAim>().HasData(new PerformanceAim { Id = 1, Explanation = "Yüzdesel Artış" });
+            modelBuilder.Entity<PerformanceAim>().HasData(new PerformanceAim { Id = 2, Explanation = "Rakamsal Artış" });
+            modelBuilder.Entity<PerformanceAim>().HasData(new PerformanceAim { Id = 3, Explanation = "Eşit" });
+            modelBuilder.Entity<PerformanceAim>().HasData(new PerformanceAim { Id = 4, Explanation = "Rakamsal Azalış" });
+            modelBuilder.Entity<PerformanceAim>().HasData(new PerformanceAim { Id = 5, Explanation = "Yüzdesel Artış" });
+
+
+            modelBuilder.Entity<PerformanceType>().HasData(new PerformanceType { Id = 1, Explanation = "kg" });
+            modelBuilder.Entity<PerformanceType>().HasData(new PerformanceType { Id = 2, Explanation = "m2" });
+            modelBuilder.Entity<PerformanceType>().HasData(new PerformanceType { Id = 3, Explanation = "m3" });
+
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.UserName).HasMaxLength(100);
@@ -121,6 +137,8 @@ namespace DAL.Model
 
             });
 
+
+
             modelBuilder.Entity<Action>(entity =>
             {
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
@@ -132,6 +150,37 @@ namespace DAL.Model
             {
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
                 entity.Property(e => e.Explanation).HasMaxLength(700);
+
+            });
+
+            modelBuilder.Entity<Performance>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.Explanation).HasMaxLength(250);
+                entity.Property(e => e.TargetValue).HasColumnType("decimal(18,4)");
+                entity.Property(e => e.BaseValue).HasColumnType("decimal(18,4)");
+
+            });
+
+            modelBuilder.Entity<PerformancePeriot>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.Explanation).HasMaxLength(50);
+
+            });
+
+            modelBuilder.Entity<Performance_Target_Result>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.Target).HasColumnType("decimal(18,4)");
+                entity.Property(e => e.Result).HasColumnType("decimal(18,4)");
+
+            });
+
+            modelBuilder.Entity<PerformanceType>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.Explanation).HasMaxLength(150);
 
             });
 

@@ -18,5 +18,6 @@ namespace Bussines.Abstract
         User GetByMail(string email);
         User GetUser(int userId);
         IResultData<List<UserListDto>> GetUserList();
+        IResultData<int> CurrentOrganizationId(int userId);
     }
 }

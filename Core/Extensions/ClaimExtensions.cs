@@ -30,5 +30,11 @@ namespace Core.Extensions
         {
             roles.ToList().ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role)));
         }
+
+        public static void AddPeriotId(this ICollection<Claim> claims, string periotId)
+        {
+             claims.Add(new Claim("periotId", periotId.ToString()));
+        }
+
     }
 }

@@ -72,5 +72,11 @@ namespace Service.Concrete
             user.RefreshTokenId = refreshTokenId;
             this.Update(user);
         }
+
+        public int currentUserOrgizationId(int userId)
+        {
+            var Id = this.Table.Where(x => x.Id == userId).Select(c => c.OrganizationId).FirstOrDefault();
+            return Id;
+        }
     }
 }
