@@ -1,4 +1,5 @@
 ﻿using Bussines.Abstract;
+using Bussines.Service.Abstract;
 using Core.Results;
 using DAL.Model;
 using Microsoft.AspNetCore.Http;
@@ -15,30 +16,30 @@ namespace TemelService.Controllers
 
     [Route("[controller]")]
 
-    public class AimController : Controller
+    public class SignPeriotController : Controller
     {
-        private readonly IAimManager _aimManager;
-        public AimController(IAimManager aimManager)
+        private readonly ISignPeriot _signPeriotManager;
+        public SignPeriotController(ISignPeriot signPeriotManager)
         {
-            _aimManager = aimManager;
+            _signPeriotManager =signPeriotManager;
         }
 
-        [HttpGet("AimList")]
-        public IActionResult GetAimList(int periotId)
+        [HttpGet("SignPeriotList")]
+        public IActionResult GetSignPeriotList()
         {
-            var result = _aimManager.AimList(periotId);
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_signPeriotManager.getList().Data, jso));
+
         }
 
-        [HttpPost("AddAim")]
-        public IActionResult AddAim([FromBody] Aim aim)
+        [HttpPost("AddSignPeriot")]
+        public IActionResult AddSignPeriot([FromBody] SignPeriot signPeriot)
         {
-            var result = _aimManager.AddAim(aim);
+            var result = _signPeriotManager.AddSignPeriot(signPeriot);
             if (result.IsValid)
             {
-                return Ok(aim.Id);
+                return Ok();
             }
             else
             {
@@ -47,10 +48,10 @@ namespace TemelService.Controllers
                
         }
 
-        [HttpPost("EditAim/{id}")]
-        public IActionResult EditAim(int id, [FromBody] string explanation)
+        [HttpPost("EditSignPeriot/{id}")]
+        public IActionResult EditSignPeriot(int id, [FromBody] Int16 explanation)
         {
-            var result = _aimManager.EditAim(id,explanation);
+            var result = _signPeriotManager.UpdateSignPeriot(id,explanation);
             if (result.IsValid)
             {
                 return Ok();
@@ -61,10 +62,10 @@ namespace TemelService.Controllers
             }
         }
 
-            [HttpPost("DeleteAim")]
-        public IActionResult DeleteAim(int aimId)
+            [HttpPost("DeleteSignPeriot")]
+        public IActionResult DeleteSignPeriot(int signPeriotId)
         {
-            var result = _aimManager.DeleteAim(aimId);
+            var result = _signPeriotManager.Delete(signPeriotId);
             if (result.IsValid)
              return Ok();
             else

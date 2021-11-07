@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20211013181410_Sign_Table")]
+    partial class Sign_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,8 +188,8 @@ namespace DAL.Migrations
                             JopId = 0,
                             LastName = "Admin",
                             OrganizationId = 0,
-                            PasswordHash = new byte[] { 244, 245, 216, 217, 241, 108, 232, 33, 184, 64, 120, 64, 79, 56, 241, 120, 146, 197, 40, 138, 128, 6, 214, 173, 36, 60, 204, 181, 8, 189, 218, 191, 195, 67, 171, 15, 103, 163, 109, 208, 170, 239, 131, 206, 13, 154, 75, 161, 63, 222, 192, 115, 219, 32, 65, 97, 198, 98, 96, 96, 48, 221, 77, 210 },
-                            PasswordSalt = new byte[] { 74, 45, 143, 167, 35, 245, 114, 95, 8, 229, 96, 117, 39, 103, 230, 91, 227, 103, 45, 178, 106, 107, 65, 49, 164, 128, 137, 255, 252, 83, 177, 106, 231, 63, 30, 248, 70, 74, 25, 176, 227, 29, 232, 121, 114, 227, 149, 232, 58, 46, 217, 83, 243, 94, 181, 75, 120, 225, 215, 150, 198, 206, 45, 55, 6, 204, 74, 69, 255, 240, 7, 74, 46, 22, 129, 81, 124, 205, 143, 51, 71, 82, 70, 13, 51, 95, 44, 219, 216, 55, 238, 36, 150, 161, 177, 32, 119, 214, 73, 116, 16, 155, 211, 173, 98, 121, 38, 203, 180, 74, 107, 187, 151, 182, 135, 30, 208, 155, 171, 59, 174, 239, 192, 179, 243, 99, 207, 180 },
+                            PasswordHash = new byte[] { 176, 3, 98, 57, 163, 20, 148, 233, 110, 113, 3, 77, 31, 13, 224, 119, 249, 0, 184, 82, 15, 153, 47, 118, 167, 43, 165, 255, 105, 3, 4, 220, 95, 47, 155, 51, 197, 40, 242, 120, 31, 184, 142, 176, 25, 164, 168, 55, 0, 119, 16, 43, 2, 145, 171, 186, 36, 30, 173, 146, 65, 32, 101, 32 },
+                            PasswordSalt = new byte[] { 131, 153, 83, 73, 39, 101, 208, 164, 106, 65, 253, 119, 35, 38, 178, 123, 176, 226, 93, 224, 166, 186, 132, 217, 145, 235, 147, 139, 33, 14, 61, 182, 244, 151, 240, 65, 105, 230, 202, 75, 156, 72, 80, 98, 185, 104, 90, 203, 136, 4, 136, 190, 22, 33, 15, 60, 98, 173, 106, 224, 143, 83, 96, 212, 20, 22, 218, 206, 208, 124, 95, 174, 252, 81, 30, 176, 72, 127, 65, 238, 151, 27, 105, 84, 121, 58, 85, 26, 110, 31, 245, 228, 189, 45, 183, 77, 113, 56, 125, 230, 218, 67, 108, 59, 34, 238, 223, 170, 63, 73, 249, 239, 235, 1, 89, 142, 10, 25, 63, 70, 215, 36, 199, 80, 192, 13, 241, 166 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });
@@ -526,9 +528,9 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Model.SignPeriot", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("smallint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<short>("Explanation")
@@ -547,9 +549,9 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Model.SignType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("smallint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Explanation")

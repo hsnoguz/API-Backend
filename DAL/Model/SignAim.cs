@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Model
 {
-  public  class SingType
+  public  class SignAim
     {
-        public Int16 Id { get; set; }
+        public int Id { get; set; }
         public string Explanation { get; set; }
         public DateTime? InsertTime { get; set; }
     }

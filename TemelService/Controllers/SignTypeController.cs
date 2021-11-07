@@ -1,4 +1,5 @@
 ﻿using Bussines.Abstract;
+using Bussines.Service.Abstract;
 using Core.Results;
 using DAL.Model;
 using Microsoft.AspNetCore.Http;
@@ -15,30 +16,30 @@ namespace TemelService.Controllers
 
     [Route("[controller]")]
 
-    public class AimController : Controller
+    public class SignTypeController : Controller
     {
-        private readonly IAimManager _aimManager;
-        public AimController(IAimManager aimManager)
+        private readonly ISignTypeManager _SignTypeManager;
+        public SignTypeController(ISignTypeManager SignTypeManager)
         {
-            _aimManager = aimManager;
+            _SignTypeManager =SignTypeManager;
         }
 
-        [HttpGet("AimList")]
-        public IActionResult GetAimList(int periotId)
+        [HttpGet("SignTypeList")]
+        public IActionResult GetSignTypeList()
         {
-            var result = _aimManager.AimList(periotId);
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_SignTypeManager.getList().Data, jso));
+
         }
 
-        [HttpPost("AddAim")]
-        public IActionResult AddAim([FromBody] Aim aim)
+        [HttpPost("AddSignType")]
+        public IActionResult AddSignType([FromBody] SignType SignType)
         {
-            var result = _aimManager.AddAim(aim);
+            var result = _SignTypeManager.Add(SignType);
             if (result.IsValid)
             {
-                return Ok(aim.Id);
+                return Ok();
             }
             else
             {
@@ -47,10 +48,10 @@ namespace TemelService.Controllers
                
         }
 
-        [HttpPost("EditAim/{id}")]
-        public IActionResult EditAim(int id, [FromBody] string explanation)
+        [HttpPost("EditSignType/{id}")]
+        public IActionResult EditSignType(int id, [FromBody] string explanation)
         {
-            var result = _aimManager.EditAim(id,explanation);
+            var result = _SignTypeManager.UpdateSignType(id,explanation);
             if (result.IsValid)
             {
                 return Ok();
@@ -61,10 +62,10 @@ namespace TemelService.Controllers
             }
         }
 
-            [HttpPost("DeleteAim")]
-        public IActionResult DeleteAim(int aimId)
+            [HttpPost("DeleteSignType")]
+        public IActionResult DeleteSignType(int SignTypeId)
         {
-            var result = _aimManager.DeleteAim(aimId);
+            var result = _SignTypeManager.Delete(SignTypeId);
             if (result.IsValid)
              return Ok();
             else

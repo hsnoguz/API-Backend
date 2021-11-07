@@ -40,7 +40,8 @@ namespace DAL.Model
         public virtual DbSet<Target> Targets { get; set; }
         public virtual DbSet<Action> Actions { get; set; }
         public virtual DbSet<SubAction> SubActions{ get; set; }
-
+        public virtual DbSet<SignPeriot> SignPeriots { get; set; }
+        public virtual DbSet<SignType> SignTypes { get; set; }
 
         public virtual DbSet<Organization> Organizations { get; set; }
 
@@ -132,6 +133,20 @@ namespace DAL.Model
             {
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
                 entity.Property(e => e.Explanation).HasMaxLength(700);
+
+            });
+
+            modelBuilder.Entity<SignPeriot>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.Explanation).HasMaxLength(50);
+
+            });
+
+            modelBuilder.Entity<SignType>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.Explanation).HasMaxLength(150);
 
             });
 

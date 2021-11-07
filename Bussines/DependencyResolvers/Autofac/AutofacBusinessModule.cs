@@ -45,6 +45,7 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<PeriotManager>().As<IPeriotManager>();
             builder.RegisterType<BranchService>().As<IBranchService>();
             builder.RegisterType<JopService>().As<IJopService>();
+            builder.RegisterType<SignPeriotManager>().As<ISignPeriot>();
             builder.RegisterType<OrganizationService>().As<IOrganizationService>();
             builder.RegisterType<AimManager>().As<IAimManager>();
             builder.RegisterType<TargetManager>().As<ITargetManager>();

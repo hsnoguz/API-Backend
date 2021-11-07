@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20211013193636_SignTables3")]
+    partial class SignTables3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,8 +188,8 @@ namespace DAL.Migrations
                             JopId = 0,
                             LastName = "Admin",
                             OrganizationId = 0,
-                            PasswordHash = new byte[] { 244, 245, 216, 217, 241, 108, 232, 33, 184, 64, 120, 64, 79, 56, 241, 120, 146, 197, 40, 138, 128, 6, 214, 173, 36, 60, 204, 181, 8, 189, 218, 191, 195, 67, 171, 15, 103, 163, 109, 208, 170, 239, 131, 206, 13, 154, 75, 161, 63, 222, 192, 115, 219, 32, 65, 97, 198, 98, 96, 96, 48, 221, 77, 210 },
-                            PasswordSalt = new byte[] { 74, 45, 143, 167, 35, 245, 114, 95, 8, 229, 96, 117, 39, 103, 230, 91, 227, 103, 45, 178, 106, 107, 65, 49, 164, 128, 137, 255, 252, 83, 177, 106, 231, 63, 30, 248, 70, 74, 25, 176, 227, 29, 232, 121, 114, 227, 149, 232, 58, 46, 217, 83, 243, 94, 181, 75, 120, 225, 215, 150, 198, 206, 45, 55, 6, 204, 74, 69, 255, 240, 7, 74, 46, 22, 129, 81, 124, 205, 143, 51, 71, 82, 70, 13, 51, 95, 44, 219, 216, 55, 238, 36, 150, 161, 177, 32, 119, 214, 73, 116, 16, 155, 211, 173, 98, 121, 38, 203, 180, 74, 107, 187, 151, 182, 135, 30, 208, 155, 171, 59, 174, 239, 192, 179, 243, 99, 207, 180 },
+                            PasswordHash = new byte[] { 192, 152, 23, 4, 25, 237, 144, 212, 239, 235, 185, 191, 72, 19, 186, 157, 208, 181, 131, 161, 106, 11, 60, 99, 94, 212, 103, 145, 171, 85, 53, 61, 15, 243, 139, 187, 151, 238, 167, 210, 203, 83, 96, 171, 49, 200, 167, 249, 255, 52, 65, 34, 238, 140, 240, 55, 49, 103, 253, 154, 37, 169, 113, 56 },
+                            PasswordSalt = new byte[] { 38, 9, 87, 32, 203, 52, 92, 105, 19, 146, 163, 221, 95, 71, 82, 58, 198, 185, 232, 225, 25, 43, 85, 143, 54, 64, 137, 177, 169, 239, 254, 157, 0, 238, 178, 72, 0, 255, 229, 41, 237, 175, 92, 80, 84, 32, 145, 205, 44, 145, 228, 134, 24, 147, 214, 25, 65, 103, 129, 70, 193, 239, 184, 39, 177, 254, 110, 199, 86, 28, 220, 209, 101, 215, 60, 107, 214, 164, 141, 206, 103, 56, 118, 224, 1, 185, 110, 70, 225, 160, 205, 55, 160, 138, 132, 7, 104, 141, 18, 219, 17, 1, 27, 137, 143, 249, 72, 215, 252, 33, 45, 219, 31, 152, 60, 49, 24, 204, 224, 18, 119, 166, 9, 23, 169, 157, 152, 110 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });

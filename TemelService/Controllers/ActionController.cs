@@ -40,7 +40,7 @@ namespace TemelService.Controllers
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
         }
-        [HttpGet("EditTarget/{id}")]
+        [HttpPost("EditTarget/{id}")]
         public IActionResult EditTarget(int id, int targetId) {
             var result = _ActionManager.EditTarget(id,targetId);
             if (result.IsValid)
@@ -53,7 +53,7 @@ namespace TemelService.Controllers
             }
         }
 
-        [HttpGet("EditAction/{id}/{targetId}")]
+        [HttpPost("EditAction/{id}/{targetId}")]
         public IActionResult EditAction(int id, int targetId, [FromBody] string explanation) {
             var result = _ActionManager.EditAction(id,targetId,explanation);
             if (result.IsValid)
@@ -73,7 +73,7 @@ namespace TemelService.Controllers
             var result = _ActionManager.AddAction(Action);
             if (result.IsValid)
             {
-                return Ok();
+                return Ok(Action.Id);
             }
             else
             {

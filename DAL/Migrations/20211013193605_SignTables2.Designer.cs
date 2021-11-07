@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20211013193605_SignTables2")]
+    partial class SignTables2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,8 +188,8 @@ namespace DAL.Migrations
                             JopId = 0,
                             LastName = "Admin",
                             OrganizationId = 0,
-                            PasswordHash = new byte[] { 244, 245, 216, 217, 241, 108, 232, 33, 184, 64, 120, 64, 79, 56, 241, 120, 146, 197, 40, 138, 128, 6, 214, 173, 36, 60, 204, 181, 8, 189, 218, 191, 195, 67, 171, 15, 103, 163, 109, 208, 170, 239, 131, 206, 13, 154, 75, 161, 63, 222, 192, 115, 219, 32, 65, 97, 198, 98, 96, 96, 48, 221, 77, 210 },
-                            PasswordSalt = new byte[] { 74, 45, 143, 167, 35, 245, 114, 95, 8, 229, 96, 117, 39, 103, 230, 91, 227, 103, 45, 178, 106, 107, 65, 49, 164, 128, 137, 255, 252, 83, 177, 106, 231, 63, 30, 248, 70, 74, 25, 176, 227, 29, 232, 121, 114, 227, 149, 232, 58, 46, 217, 83, 243, 94, 181, 75, 120, 225, 215, 150, 198, 206, 45, 55, 6, 204, 74, 69, 255, 240, 7, 74, 46, 22, 129, 81, 124, 205, 143, 51, 71, 82, 70, 13, 51, 95, 44, 219, 216, 55, 238, 36, 150, 161, 177, 32, 119, 214, 73, 116, 16, 155, 211, 173, 98, 121, 38, 203, 180, 74, 107, 187, 151, 182, 135, 30, 208, 155, 171, 59, 174, 239, 192, 179, 243, 99, 207, 180 },
+                            PasswordHash = new byte[] { 143, 133, 183, 3, 0, 178, 128, 205, 91, 231, 136, 53, 211, 10, 199, 82, 38, 2, 160, 199, 211, 70, 232, 249, 125, 0, 72, 161, 156, 134, 152, 5, 114, 88, 12, 214, 121, 9, 81, 228, 240, 177, 72, 230, 25, 106, 61, 167, 33, 116, 170, 67, 46, 47, 74, 30, 250, 69, 161, 120, 0, 97, 239, 0 },
+                            PasswordSalt = new byte[] { 211, 172, 222, 119, 214, 109, 48, 49, 199, 7, 229, 23, 95, 183, 157, 124, 148, 53, 7, 93, 24, 189, 212, 99, 132, 229, 36, 26, 144, 110, 40, 41, 87, 12, 18, 162, 178, 9, 91, 115, 150, 26, 247, 145, 145, 6, 69, 72, 185, 7, 83, 206, 2, 196, 110, 39, 214, 60, 179, 44, 83, 44, 236, 160, 65, 146, 102, 63, 205, 200, 127, 46, 14, 242, 198, 244, 114, 30, 26, 98, 122, 88, 239, 101, 62, 199, 94, 62, 129, 224, 70, 247, 66, 39, 249, 94, 223, 178, 207, 238, 15, 5, 167, 51, 232, 41, 231, 9, 72, 248, 52, 190, 61, 126, 147, 180, 111, 121, 28, 13, 140, 57, 131, 13, 15, 81, 241, 158 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });
@@ -542,7 +544,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SignPeriots");
+                    b.ToTable("SignPeriot");
                 });
 
             modelBuilder.Entity("DAL.Model.SignType", b =>
@@ -563,7 +565,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SignTypes");
+                    b.ToTable("SignType");
                 });
 
             modelBuilder.Entity("DAL.Model.SubAction", b =>

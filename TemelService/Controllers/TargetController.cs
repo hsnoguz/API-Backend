@@ -41,7 +41,7 @@ namespace TemelService.Controllers
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
         }
 
-        [HttpGet("EditAim/{id}/{aimId}")]
+        [HttpPost("EditAim/{id}/{aimId}")]
         public IActionResult EditAim(int id, int aimId) {
             var result = _TargetManager.EditAim(id,aimId);
             if (result.IsValid)
@@ -54,7 +54,7 @@ namespace TemelService.Controllers
             }
         }
 
-        [HttpGet("EditTarget/{id}/{aimId}")]
+        [HttpPost("EditTarget/{id}/{aimId}")]
         public IActionResult EditTarget(int id, int aimId, [FromBody] string explanation) {
             var result = _TargetManager.EditTarget(id,aimId,explanation);
             if (result.IsValid)
@@ -75,7 +75,7 @@ namespace TemelService.Controllers
             var result = _TargetManager.AddTarget(Target);
             if (result.IsValid)
             {
-                return Ok();
+                return Ok(Target.Id);
             }
             else
             {
