@@ -47,7 +47,9 @@ namespace DAL.Model
         public virtual DbSet<PerformanceType> PerformanceTypes { get; set; }
 
         public virtual DbSet<Organization> Organizations { get; set; }
-
+        public virtual DbSet<Match> Matchs { get; set; }
+        public virtual DbSet<PerformanceMatchTarget> PerformanceMatchTargets { get; set; }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -59,15 +61,16 @@ namespace DAL.Model
             base.OnConfiguring(optionsBuilder);
         }
 
-        public static readonly ILoggerFactory CustomerLoggerFactory
-       = LoggerFactory.Create(builder =>
-       {
-           /* builder
+         public static readonly ILoggerFactory CustomerLoggerFactory= LoggerFactory.Create(builder =>
+         {
+             builder
                  .AddFilter((category, level) =>
                      category == DbLoggerCategory.Database.Command.Name
                      && level == LogLevel.Information)
-                 .AddDebug();*/
-       });
+                 .AddDebug();
+         });
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -92,13 +95,27 @@ namespace DAL.Model
             modelBuilder.Entity<User>().HasData(user);
             
             modelBuilder.Entity<UserOperationClaim>().HasData(new UserOperationClaim { Id = 1, UserId = 1, OperationClaimId = 1 });
-
+            modelBuilder.Entity<Match>().HasData(new Match { Id = 1, Explanation = "Hedef" });
+            modelBuilder.Entity<Match>().HasData(new Match { Id = 2, Explanation = "Faaliyet" });
+            modelBuilder.Entity<Match>().HasData(new Match { Id = 3, Explanation = "Alt Faaliyet" });
             modelBuilder.Entity<PerformanceAim>().HasData(new PerformanceAim { Id = 1, Explanation = "Yüzdesel Artış" });
             modelBuilder.Entity<PerformanceAim>().HasData(new PerformanceAim { Id = 2, Explanation = "Rakamsal Artış" });
             modelBuilder.Entity<PerformanceAim>().HasData(new PerformanceAim { Id = 3, Explanation = "Eşit" });
             modelBuilder.Entity<PerformanceAim>().HasData(new PerformanceAim { Id = 4, Explanation = "Rakamsal Azalış" });
             modelBuilder.Entity<PerformanceAim>().HasData(new PerformanceAim { Id = 5, Explanation = "Yüzdesel Artış" });
-
+            
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 1, Explanation =  1 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 2, Explanation =  2 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 3, Explanation =  3 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 4, Explanation =  4 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 5, Explanation =  5 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 6, Explanation =  6 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 7, Explanation =  7 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 8, Explanation =  8 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 9, Explanation = 9 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 10, Explanation = 10 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 11, Explanation = 11 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 12, Explanation = 12 });
 
             modelBuilder.Entity<PerformanceType>().HasData(new PerformanceType { Id = 1, Explanation = "kg" });
             modelBuilder.Entity<PerformanceType>().HasData(new PerformanceType { Id = 2, Explanation = "m2" });
@@ -120,6 +137,11 @@ namespace DAL.Model
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
                 entity.Property(e => e.IsUsing).HasDefaultValue(false);
                 entity.Property(e => e.Token).HasMaxLength(255);
+            });
+            
+            modelBuilder.Entity<PerformanceMatchTarget>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<Aim>(entity =>
@@ -169,6 +191,12 @@ namespace DAL.Model
 
             });
 
+            modelBuilder.Entity<Match>(entity =>
+            {
+                entity.Property(e => e.Explanation).HasMaxLength(100);
+
+            });
+
             modelBuilder.Entity<Performance_Target_Result>(entity =>
             {
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
@@ -180,6 +208,12 @@ namespace DAL.Model
             modelBuilder.Entity<PerformanceType>(entity =>
             {
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.Explanation).HasMaxLength(150);
+            });
+
+            modelBuilder.Entity<Match>(entity =>
+            {
+   
                 entity.Property(e => e.Explanation).HasMaxLength(150);
 
             });

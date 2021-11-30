@@ -11,5 +11,7 @@ namespace Service.Abstract
     {
         public string TypeValue(int Id);
         public List<PerformanceType> PerformanceTypeList();
+        public void EditPerformanceType(PerformanceType performanceType);
+        public void InsertPerformanceType(PerformanceType performanceType);
     }
 }

@@ -14,6 +14,19 @@ namespace Service.Enum
         Rakamsal_Azalis = 4,
         Yuzdesel_Azalis = 5
     }
+    enum MatchType
+    {
+        Hedef = 1,
+        Faaliliyet = 2,
+        Alt_Faaliyet = 3
+    }
 
-    
+    enum QuestionType
+    {
+        SingleMatris,
+        Single,
+        Multi,
+        MultiMatris
+    }
+
 }

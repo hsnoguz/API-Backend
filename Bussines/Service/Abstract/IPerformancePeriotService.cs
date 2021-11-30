@@ -11,5 +11,6 @@ namespace Bussines.Service.Abstract
   public  interface IPerformancePeriotService
     {
         public IResultData<List<PerformancePeriot>> PeriotList();
+        
     }
 }

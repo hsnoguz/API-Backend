@@ -14,20 +14,22 @@ namespace Service.Concrete
 {
     public class EfPerformanceDal : IEfPerformanceDal
     {
+       
         IRepository<Performance> _repository;
         IEfPerformancePeriotDal _PerformancePeriot;
         IEfOperationServiceDal _efOperationServiceDal;
         IEfOrganizationServiceDal _efOrganizationServiceDal;
-        IEfPerformanceTargetResultDal _iEfPerformanceTargetResultDal;
+
         ManagerContext _context;
-        public EfPerformanceDal(IRepository<Performance> repository, ManagerContext context, IEfOrganizationServiceDal efOrganizationServiceDal, IEfOperationServiceDal efOperationServiceDal, IEfPerformancePeriotDal PerformancePeriot, IEfPerformanceTargetResultDal iEfPerformanceTargetResultDal)
+        public EfPerformanceDal(IRepository<Performance> repository, ManagerContext context, IEfOrganizationServiceDal efOrganizationServiceDal, IEfOperationServiceDal efOperationServiceDal, IEfPerformancePeriotDal PerformancePeriot)
         {
             _repository = repository;
             _PerformancePeriot = PerformancePeriot;
             _context = context;
-            _iEfPerformanceTargetResultDal = iEfPerformanceTargetResultDal;
+         //   _iEfPerformanceTargetResultDal = iEfPerformanceTargetResultDal;
             _efOperationServiceDal = efOperationServiceDal;
             _efOrganizationServiceDal = efOrganizationServiceDal;
+            
         }
 
         public List<Performance> PerformanceList(int organizationId, int roleId)
@@ -36,12 +38,17 @@ namespace Service.Concrete
             List<int> organizationIdList = new();
             organizationIdList=_efOrganizationServiceDal.OrganizationDalList(organizationId);
 
-           return _repository.Table.Include(x=>x.PerformanceAim).Include(x => x.PerformanceType).Include(x=>x.PerformancePeriot).Where(x => roleId == AdminRoleID || organizationIdList.Contains(x.OrganizationId)).ToList();
+           return _repository.Table.Include(x=>x.PerformanceAim).Include(x => x.PerformanceType).Include(x=>x.PerformancePeriot).Where(x => roleId == AdminRoleID /*|| organizationIdList.Contains(x.OrganizationId)*/).ToList();
         }
 
         public List<Performance> PerformancePeriot(int PerformanceId)
         {
             return _repository.Table.Include(x => x.Performance_Target_Results).Include(x => x.PerformanceAim).Include(x => x.PerformanceType).Include(x => x.PerformancePeriot).Where(x => x.Id==PerformanceId).ToList();
+        }
+
+        public Performance getPerformance(int Id)
+        {
+            return _repository.Table.Include(x => x.PerformanceAim).Include(x => x.PerformanceType).Include(x => x.PerformancePeriot).FirstOrDefault();
         }
 
         public List<Performance> PerformancePeriotList(int organizationId, int roleId)
@@ -50,7 +57,7 @@ namespace Service.Concrete
             List<int> organizationIdList = new();
             organizationIdList = _efOrganizationServiceDal.OrganizationDalList(organizationId);
 
-            return _repository.Table.Include(x => x.Performance_Target_Results).Include(x => x.PerformanceAim).Include(x => x.PerformanceType).Include(x => x.PerformancePeriot).Where(x => roleId == AdminRoleID || organizationIdList.Contains(x.OrganizationId)).ToList();
+            return _repository.Table.Include(x => x.Performance_Target_Results).Include(x => x.PerformanceAim).Include(x => x.PerformanceType).Include(x => x.PerformancePeriot).Where(x => roleId == AdminRoleID /*|| organizationIdList.Contains(x.OrganizationId)*/).ToList();
         }
 
         public void InsertPerformance(Performance Performance)
@@ -98,31 +105,6 @@ namespace Service.Concrete
          
         }
 
-        public decimal PeriotTargetValue(int PerformanceAimId, decimal tempValue, decimal targetValue)
-        {
-            decimal result = 0;
-            switch (PerformanceAimId)
-            {
-                case (int)EnumPerformanceAim.Yuzdesel_Artis:
-                    result= tempValue + ((tempValue * targetValue) / 100);
-                    break;
-                case (int)EnumPerformanceAim.Yuzdesel_Azalis:
-                    result = tempValue - ((tempValue * targetValue) / 100);
-                    break;
-                case (int)EnumPerformanceAim.Rakamsal_Artis:
-                    result = tempValue + targetValue;
-                    break;
-                case (int)EnumPerformanceAim.Rakamsal_Azalis:
-                    result = tempValue - targetValue;
-                    break;
-                default:
-                    tempValue = targetValue;
-                    break;
-            }
-
-            return result;
-
-
-        }
+     
     }
 }

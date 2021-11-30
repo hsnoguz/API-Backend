@@ -52,8 +52,9 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<EfPerformancePeriotDal>().As<IEfPerformancePeriotDal>();
             builder.RegisterType<EfPerformanceTypeDal>().As<IEfPerformanceTypeDal>();
             builder.RegisterType<EfPerformanceAimDal>().As<IEfPerformanceAimDal>();
+            builder.RegisterType<EfPerformanceMatchTargetDal>().As<IEfPerformanceMatchTargetDal>();
 
-
+            builder.RegisterType<PerformanceMatchTargetManager>().As<IPerformanceMatchTarget>();
             builder.RegisterType<PerformanceManager>().As<IPerformanceManager>();
           //  builder.RegisterType<CookieHelper>().As<ICookieHelper>();
             builder.RegisterType<OperationService>().As<IOperationService>();

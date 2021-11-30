@@ -26,5 +26,13 @@ namespace Service.Concrete
         {
             return _repository.Table.Where(x => x.Id == Id).Select(x=>x.Explanation).FirstOrDefault();
         }
+
+   /*     public void EditPerformanceAim(PerformanceAim performanceAim)
+        {
+            PerformanceAim _performanceAim= _repository.GetById(performanceAim.Id);
+            _performanceAim.Explanation = performanceAim.Explanation;
+            
+            _repository.Update(performanceAim);
+        }*/
     }
 }

@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20211121172000_MatchChange2g")]
+    partial class MatchChange2g
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,8 +216,8 @@ namespace DAL.Migrations
                             JopId = 0,
                             LastName = "Admin",
                             OrganizationId = 0,
-                            PasswordHash = new byte[] { 99, 51, 129, 182, 102, 97, 181, 123, 120, 50, 35, 26, 18, 60, 185, 183, 16, 186, 94, 60, 127, 213, 171, 115, 69, 207, 149, 235, 13, 117, 120, 133, 224, 22, 137, 24, 112, 45, 129, 60, 86, 75, 47, 244, 94, 27, 220, 232, 186, 239, 130, 117, 96, 159, 94, 243, 209, 211, 198, 122, 168, 5, 159, 58 },
-                            PasswordSalt = new byte[] { 91, 125, 125, 196, 140, 185, 192, 78, 168, 137, 177, 201, 24, 95, 226, 75, 189, 211, 240, 244, 238, 15, 51, 137, 15, 229, 119, 154, 65, 242, 204, 113, 189, 187, 152, 159, 218, 238, 47, 22, 149, 77, 39, 45, 213, 46, 200, 111, 91, 156, 44, 147, 87, 252, 37, 203, 217, 6, 192, 78, 78, 222, 157, 14, 131, 147, 154, 147, 12, 179, 121, 40, 222, 193, 114, 201, 122, 250, 220, 149, 160, 140, 153, 134, 88, 148, 228, 14, 6, 106, 253, 8, 229, 89, 7, 5, 61, 200, 105, 182, 26, 146, 161, 65, 204, 182, 53, 241, 213, 72, 240, 239, 255, 194, 45, 125, 77, 194, 154, 223, 6, 155, 94, 54, 125, 187, 12, 96 },
+                            PasswordHash = new byte[] { 215, 197, 25, 243, 200, 190, 95, 19, 23, 203, 167, 185, 130, 174, 177, 82, 94, 103, 106, 192, 179, 18, 89, 27, 143, 92, 66, 62, 125, 246, 42, 48, 125, 34, 37, 242, 150, 225, 143, 130, 81, 202, 45, 96, 221, 129, 18, 160, 240, 21, 232, 134, 64, 79, 215, 110, 6, 96, 43, 191, 52, 108, 149, 48 },
+                            PasswordSalt = new byte[] { 188, 88, 67, 59, 38, 245, 169, 27, 198, 50, 147, 73, 73, 87, 82, 66, 146, 161, 117, 215, 83, 164, 79, 227, 82, 48, 190, 57, 20, 164, 33, 239, 156, 37, 44, 33, 114, 80, 144, 159, 173, 87, 79, 252, 134, 240, 221, 155, 212, 191, 43, 178, 146, 169, 77, 192, 125, 155, 29, 114, 25, 153, 71, 157, 251, 182, 136, 106, 8, 127, 131, 154, 108, 96, 248, 185, 74, 216, 160, 36, 24, 78, 49, 226, 43, 56, 238, 9, 213, 23, 106, 144, 134, 242, 206, 126, 228, 158, 40, 30, 176, 149, 211, 38, 78, 229, 128, 228, 123, 150, 195, 108, 25, 199, 94, 229, 80, 115, 127, 252, 86, 125, 130, 46, 219, 103, 136, 149 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });
@@ -316,23 +318,23 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Matchs");
+                    b.ToTable("Match");
 
                     b.HasData(
                         new
                         {
                             Id = (short)1,
-                            Explanation = "Hedef"
+                            Explanation = "Target"
                         },
                         new
                         {
                             Id = (short)2,
-                            Explanation = "Faaliyet"
+                            Explanation = "Action"
                         },
                         new
                         {
                             Id = (short)3,
-                            Explanation = "Alt Faaliyet"
+                            Explanation = "SubAction"
                         });
                 });
 
@@ -492,68 +494,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PerformancePeriots");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Explanation = (short)1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Explanation = (short)2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Explanation = (short)3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Explanation = (short)4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Explanation = (short)5
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Explanation = (short)6
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Explanation = (short)7
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Explanation = (short)8
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Explanation = (short)9
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Explanation = (short)10
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Explanation = (short)11
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Explanation = (short)12
-                        });
                 });
 
             modelBuilder.Entity("DAL.Model.PerformanceType", b =>
@@ -609,6 +549,9 @@ namespace DAL.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
+                    b.Property<short>("MatchId")
+                        .HasColumnType("smallint");
+
                     b.Property<int>("PerformanceId")
                         .HasColumnType("int");
 
@@ -617,6 +560,9 @@ namespace DAL.Migrations
 
                     b.Property<decimal>("Target")
                         .HasColumnType("decimal(18,4)");
+
+                    b.Property<int>("TargetActionId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("TargetTime")
                         .HasColumnType("datetime2");

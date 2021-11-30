@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20211116174131_MatchTable")]
+    partial class MatchTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,8 +216,8 @@ namespace DAL.Migrations
                             JopId = 0,
                             LastName = "Admin",
                             OrganizationId = 0,
-                            PasswordHash = new byte[] { 99, 51, 129, 182, 102, 97, 181, 123, 120, 50, 35, 26, 18, 60, 185, 183, 16, 186, 94, 60, 127, 213, 171, 115, 69, 207, 149, 235, 13, 117, 120, 133, 224, 22, 137, 24, 112, 45, 129, 60, 86, 75, 47, 244, 94, 27, 220, 232, 186, 239, 130, 117, 96, 159, 94, 243, 209, 211, 198, 122, 168, 5, 159, 58 },
-                            PasswordSalt = new byte[] { 91, 125, 125, 196, 140, 185, 192, 78, 168, 137, 177, 201, 24, 95, 226, 75, 189, 211, 240, 244, 238, 15, 51, 137, 15, 229, 119, 154, 65, 242, 204, 113, 189, 187, 152, 159, 218, 238, 47, 22, 149, 77, 39, 45, 213, 46, 200, 111, 91, 156, 44, 147, 87, 252, 37, 203, 217, 6, 192, 78, 78, 222, 157, 14, 131, 147, 154, 147, 12, 179, 121, 40, 222, 193, 114, 201, 122, 250, 220, 149, 160, 140, 153, 134, 88, 148, 228, 14, 6, 106, 253, 8, 229, 89, 7, 5, 61, 200, 105, 182, 26, 146, 161, 65, 204, 182, 53, 241, 213, 72, 240, 239, 255, 194, 45, 125, 77, 194, 154, 223, 6, 155, 94, 54, 125, 187, 12, 96 },
+                            PasswordHash = new byte[] { 17, 110, 150, 156, 145, 207, 196, 247, 29, 42, 113, 96, 65, 132, 49, 230, 206, 241, 252, 251, 150, 13, 53, 124, 110, 107, 26, 1, 107, 117, 56, 88, 61, 32, 182, 21, 25, 79, 107, 107, 160, 72, 246, 55, 106, 124, 70, 123, 8, 192, 41, 76, 116, 53, 8, 88, 93, 101, 97, 149, 78, 218, 146, 48 },
+                            PasswordSalt = new byte[] { 136, 217, 75, 213, 202, 179, 220, 105, 13, 26, 190, 176, 232, 72, 52, 120, 26, 35, 65, 211, 68, 123, 74, 191, 227, 109, 234, 135, 138, 32, 209, 234, 98, 154, 69, 34, 240, 30, 192, 131, 159, 124, 221, 253, 44, 157, 194, 245, 70, 225, 151, 61, 223, 6, 81, 26, 26, 118, 243, 46, 154, 219, 100, 60, 82, 161, 245, 230, 21, 153, 163, 118, 161, 253, 11, 45, 96, 79, 113, 72, 171, 114, 81, 16, 68, 55, 172, 81, 147, 229, 245, 129, 2, 49, 9, 65, 227, 51, 91, 112, 39, 162, 126, 202, 223, 104, 26, 135, 107, 236, 70, 11, 43, 1, 118, 100, 198, 211, 232, 221, 170, 145, 116, 159, 132, 238, 17, 34 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });
@@ -316,23 +318,23 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Matchs");
+                    b.ToTable("Match");
 
                     b.HasData(
                         new
                         {
                             Id = (short)1,
-                            Explanation = "Hedef"
+                            Explanation = "Target"
                         },
                         new
                         {
                             Id = (short)2,
-                            Explanation = "Faaliyet"
+                            Explanation = "Action"
                         },
                         new
                         {
                             Id = (short)3,
-                            Explanation = "Alt Faaliyet"
+                            Explanation = "SubAction"
                         });
                 });
 
@@ -354,6 +356,9 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("int");
 
                     b.Property<int>("PerformanceAimId")
                         .HasColumnType("int");
@@ -383,6 +388,8 @@ namespace DAL.Migrations
                         .HasColumnType("decimal(18,4)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
 
                     b.HasIndex("PerformanceAimId");
 
@@ -440,39 +447,6 @@ namespace DAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DAL.Model.PerformanceMatchTarget", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("InsertTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.Property<short>("MatchId")
-                        .HasColumnType("smallint");
-
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PerformanceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TargetId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.HasIndex("PerformanceId");
-
-                    b.ToTable("PerformanceMatchTargets");
-                });
-
             modelBuilder.Entity("DAL.Model.PerformancePeriot", b =>
                 {
                     b.Property<int>("Id")
@@ -492,68 +466,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PerformancePeriots");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Explanation = (short)1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Explanation = (short)2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Explanation = (short)3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Explanation = (short)4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Explanation = (short)5
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Explanation = (short)6
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Explanation = (short)7
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Explanation = (short)8
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Explanation = (short)9
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Explanation = (short)10
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Explanation = (short)11
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Explanation = (short)12
-                        });
                 });
 
             modelBuilder.Entity("DAL.Model.PerformanceType", b =>
@@ -609,6 +521,9 @@ namespace DAL.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
+                    b.Property<short>("MatchId")
+                        .HasColumnType("smallint");
+
                     b.Property<int>("PerformanceId")
                         .HasColumnType("int");
 
@@ -617,6 +532,9 @@ namespace DAL.Migrations
 
                     b.Property<decimal>("Target")
                         .HasColumnType("decimal(18,4)");
+
+                    b.Property<int>("TargetActionId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("TargetTime")
                         .HasColumnType("datetime2");
@@ -946,6 +864,12 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Model.Performance", b =>
                 {
+                    b.HasOne("Core.Entities.Concrete.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DAL.Model.PerformanceAim", "PerformanceAim")
                         .WithMany()
                         .HasForeignKey("PerformanceAimId")
@@ -970,6 +894,8 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Organization");
+
                     b.Navigation("PerformanceAim");
 
                     b.Navigation("PerformancePeriot");
@@ -977,25 +903,6 @@ namespace DAL.Migrations
                     b.Navigation("PerformanceType");
 
                     b.Navigation("Periot");
-                });
-
-            modelBuilder.Entity("DAL.Model.PerformanceMatchTarget", b =>
-                {
-                    b.HasOne("Core.Entities.Concrete.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DAL.Model.Performance", "Performance")
-                        .WithMany()
-                        .HasForeignKey("PerformanceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Organization");
-
-                    b.Navigation("Performance");
                 });
 
             modelBuilder.Entity("DAL.Model.Performance_Target_Result", b =>

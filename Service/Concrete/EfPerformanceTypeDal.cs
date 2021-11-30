@@ -26,5 +26,17 @@ namespace Service.Concrete
         {
             return _repository.Table.Where(x => x.Id == Id).Select(x=>x.Explanation).FirstOrDefault();
         }
+
+        public void EditPerformanceType(PerformanceType performanceType)
+        {
+            PerformanceType _performanceType = _repository.GetById(performanceType.Id);
+            _performanceType.Explanation = performanceType.Explanation;
+            _repository.Update(_performanceType);
+        }
+
+        public void InsertPerformanceType(PerformanceType performanceType)
+        {
+            _repository.Insert(performanceType);
+        }
     }
 }

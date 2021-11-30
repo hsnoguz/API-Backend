@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Enums
+namespace DAL.Model
 {
-     enum QuestionType
+   public class Match
     {
-        SingleMatris,
-        Single,
-        Multi,
-        MultiMatris
+        public Int16 Id { get; set; }
+        public string Explanation { get; set; }
     }
 }

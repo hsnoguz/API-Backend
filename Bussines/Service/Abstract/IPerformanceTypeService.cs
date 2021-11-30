@@ -11,5 +11,7 @@ namespace Bussines.Service.Abstract
    public interface IPerformanceTypeService
     {
         public IResultData<List<PerformanceType>> PerformanceTypeList();
+        public IResult EditPerformanceType(PerformanceType performanceType);
+        public IResult InsertPerformanceType(PerformanceType performanceType);
     }
 }

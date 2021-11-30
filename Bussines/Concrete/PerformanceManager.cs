@@ -41,6 +41,7 @@ namespace Bussines.Concrete
         }
         public IResult InsertPerformance(Performance Performance)
         {
+
             _efPerformanceDal.InsertPerformance(Performance);
  
             return new SuccessResult();
@@ -86,6 +87,16 @@ namespace Bussines.Concrete
         public IResultData<List<Performance>> PerformanceTarget(int PerformanceId)
         {
             return new SuccessResultData<List<Performance>>(_efPerformanceDal.PerformancePeriot(PerformanceId));
+        }
+
+        public IResult EditPerformanceType(PerformanceType performanceType)
+        {
+            return _performanceTypeService.EditPerformanceType(performanceType);
+        }
+
+        public IResult InsertPerformanceType(PerformanceType performanceType)
+        {
+            return _performanceTypeService.InsertPerformanceType(performanceType);
         }
     }
 }

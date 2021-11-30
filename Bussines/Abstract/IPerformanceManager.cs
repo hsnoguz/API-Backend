@@ -22,6 +22,9 @@ namespace Bussines.Service.Abstract
 
         public IResultData<List<PerformancePeriot>> PerformancePeriotList();
         public IResultData<List<PerformanceType>> PerformanceTypeList();
+        public IResult EditPerformanceType(PerformanceType performanceType);
+        public IResult InsertPerformanceType(PerformanceType performanceType);
+
         public IResultData<Periot> CurrentPeriot(int Id);
     }
 }

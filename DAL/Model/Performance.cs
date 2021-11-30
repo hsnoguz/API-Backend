@@ -15,7 +15,7 @@ namespace DAL.Model
         public int PerformancePeriotId { get; set; }
         public int PerformanceTypeId { get; set; }
         public int PerformanceAimId { get; set; } //Artış-Azalış-Aynı Seviye
-   //     public int OrganizationId { get; set; }
+      //  public int OrganizationId { get; set; } Sorumlu Birim
         public int StartYear { get; set; }
         public int StopYear { get; set; }
         public int StartMonth { get; set; } //Gerçekleşmenin girileceği ay
@@ -26,9 +26,9 @@ namespace DAL.Model
         public virtual Periot Periot { get; set; }
         public virtual PerformanceType PerformanceType { get; set; }
         public virtual PerformanceAim PerformanceAim { get; set; }
-        public virtual Organization Organization { get; set; }
+        //public virtual Organization Organization { get; set; }
         public virtual PerformancePeriot PerformancePeriot { get; set; }
         public virtual List<Performance_Target_Result> Performance_Target_Results { get; set; }
-
+     //   public virtual List<PerformanceMatchTarget> PerformanceMatchTargets { get; set; }
     }
 }

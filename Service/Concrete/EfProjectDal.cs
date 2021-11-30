@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity.Core.Objects;
 using Microsoft.Data.SqlClient;
-using Service.Enums;
+using Service.Enum;
 
 namespace Service.Concrete
 {

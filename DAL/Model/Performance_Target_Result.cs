@@ -10,12 +10,11 @@ namespace DAL.Model
     {
         public int Id { get; set; }
         public int PerformanceId { get; set; }
-        public Int16 MatchId { get; set; }
-        public int TargetActionId { get; set; }
         public decimal Target { get; set; }
         public decimal Result { get; set; }
         public string Explanation { get; set; }
         public DateTime TargetTime { get; set; }
         public DateTime? InsertTime { get; set; }
+
     }
 }

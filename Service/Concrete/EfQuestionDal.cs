@@ -25,7 +25,7 @@ namespace Service.Concrete
 
         public void addQuestion(Question question)
         {
-            if (question.Type == Enums.QuestionType.SingleMatris.ToString())
+            if (question.Type == Enum.QuestionType.SingleMatris.ToString())
             { 
                 
             }
