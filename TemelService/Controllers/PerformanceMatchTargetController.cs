@@ -31,6 +31,15 @@ namespace TemelService.Controllers
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
             return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.MatchList().Data, jso));
+        }
+
+        [HttpGet("MatchPriceList")]
+        public IActionResult MatchPriceList()
+        {
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.MatchPriceList().Data, jso));
 
         }
 

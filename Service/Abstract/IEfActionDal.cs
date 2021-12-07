@@ -11,10 +11,12 @@ namespace Service.Abstract
     {
         public List<DAL.Model.Action> ActionListFull();
         public void EditTarget(int id, int targetId);
-        public void EditAction(int id, int targetId, string explanation);
-
+        public void EditAction(DAL.Model.Action action);
         public List<DAL.Model.Action> ActionList(int periotId);
         public void AddAction(DAL.Model.Action action);
+        public int GetActionTargetId(int actionId);
+        public int GetOrganizationId(int actionId);
+        public int GetActionAimId(int targetId);
         public void DeleteAction(int id);
         
     }

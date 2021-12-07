@@ -60,12 +60,22 @@ namespace Service.Concrete
                     DateTime targetTime = new DateTime();//= new DateTime(Performance.StartYear,Performance.StartMonth,Performance.StartDay);
                     decimal tempValue = performance.BaseValue;
 
+                    PerformanceMatchTarget match = new PerformanceMatchTarget();
+                    match.PerformanceId = performance.Id;
+                    match.MatchId = performanceMatch.MatchId;
+                    match.TargetId = performanceMatch.TargetId;
+                    //     match.ActionId = match.ActionId;
+                    match.OrganizationId = performanceMatch.OrganizationId;
+                    //     match.SubActionId = match.SubActionId;
+                    _repository.Insert(match);
+
                     for (Int16 i = 0; i < timeRange; i++)
                     {
                         var target_result = new Performance_Target_Result();
                         target_result.PerformanceId = performance.Id;
 
-
+                        target_result.PerformanceMatchId = match.Id;
+                        target_result.OrganizationId = performanceMatch.OrganizationId;
                         tempValue = PeriotTargetValue(performance.PerformanceAimId, tempValue, performance.TargetValue);
                         target_result.Target = tempValue;
                         if (i == 0)
@@ -82,14 +92,7 @@ namespace Service.Concrete
 
                     }
 
-                    PerformanceMatchTarget match = new PerformanceMatchTarget();
-                    match.PerformanceId = performance.Id;
-                    match.MatchId = performanceMatch.MatchId;
-                    match.TargetId = performanceMatch.TargetId;
-               //     match.ActionId = match.ActionId;
-                    match.OrganizationId = performanceMatch.OrganizationId;
-               //     match.SubActionId = match.SubActionId;
-                    _repository.Insert(match);
+                    
 
                     transaction.Commit();
                 }
@@ -340,7 +343,11 @@ namespace Service.Concrete
         {
             return _matchList.Table.ToList();
         }
-
+        public List<Match> MatchPriceList()
+        {
+            string[] FaaliyetList = { "Faaliyet", "Alt Faaliyet" };
+            return _matchList.Table.Where(x=> FaaliyetList.Contains(x.Explanation)).ToList();
+        }
         public decimal PeriotTargetValue(int PerformanceAimId, decimal tempValue, decimal targetValue)
         {
             decimal result = 0;
@@ -368,6 +375,12 @@ namespace Service.Concrete
 
         }
 
-   
+        public void EditOrganizationId(int matchId, int targetId, int organizationId)
+        {
+            PerformanceMatchTarget performanceMatchTarget = _repository.Table.Where(x => x.MatchId == matchId && x.TargetId == x.TargetId).FirstOrDefault();
+            performanceMatchTarget.OrganizationId = organizationId;
+            _repository.Update(performanceMatchTarget);
+            _iEfPerformanceTargetResultDal.EditOrganizationId(performanceMatchTarget.Id, organizationId);
+        }
     }
 }

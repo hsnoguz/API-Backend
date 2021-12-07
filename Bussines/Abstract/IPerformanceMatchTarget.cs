@@ -14,7 +14,7 @@ namespace Bussines.Abstract
         public IResult InsertPerformanceMatch(PerformanceMatchTarget performanceMatch);
         public IResultData<List<PerformanceMatchDto>> ListPerformanceMatch(string roleName,int userId);
         public IResultData<List<Match>> MatchList();
-
+        public IResultData<List<Match>> MatchPriceList();
 
         public IResultData<List<PerformanceMatchDto>> ListPerformanceMatchTarget(string roleName, int userId);
         public IResultData<List<PerformanceMatchDto>> ListPerformanceMatchAction(string roleName, int userId);

@@ -13,7 +13,6 @@ namespace Bussines.Abstract
         public List<Target> TargetListFull();
         public IResult EditAim(int id, int aimId);
         public IResult EditTarget(int id, int aimId, string explanation);
-
         public List<Target> TargetList(int aimId);
         public IResult AddTarget(Target target);
         public IResult DeleteTarget( int id);

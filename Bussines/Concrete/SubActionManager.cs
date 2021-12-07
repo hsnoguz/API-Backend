@@ -50,11 +50,11 @@ namespace Bussines.Concrete
 
             return result;
         }
-        public IResult EditSubAction(int id, int actionId, string explanation) {
+        public IResult EditSubAction(SubAction subAction) {
             IResult result;
             try
             {
-                _efSubActionDal.EditSubAction(id, actionId,explanation);
+                _efSubActionDal.EditSubAction(subAction);
                 result = new SuccessResult();
             }
             catch (Exception ex)
@@ -88,6 +88,11 @@ namespace Bussines.Concrete
 
                 return new ErrorResult(ex.Message);
             }
+        }
+
+        public IResultData<int> GetOrganizationId(int subActionId)
+        {
+            return new SuccessResultData<int>(_efSubActionDal.GetOrganizationId(subActionId));
         }
     }
 }

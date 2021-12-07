@@ -53,12 +53,12 @@ namespace Bussines.Concrete
 
         }
 
-        public IResult EditAction(int id, int targetId, string explanation)
+        public IResult EditAction(DAL.Model.Action action)
         {
             IResult result;
             try
             {
-                _efActionDal.EditAction(id, targetId, explanation);
+                _efActionDal.EditAction(action);
                 result = new SuccessResult();
             }
             catch (Exception ex)
@@ -93,6 +93,11 @@ namespace Bussines.Concrete
 
                 return new ErrorResult(ex.Message);
             }
+        }
+
+        public IResultData<int> GetOrganizationId(int actionId)
+        {
+            return new SuccessResultData<int>( _efActionDal.GetOrganizationId(actionId));
         }
     }
 }

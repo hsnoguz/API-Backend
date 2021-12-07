@@ -12,6 +12,7 @@ namespace Service.Concrete
     public class EfTargetDal : IEfTargetDal
     {
         private readonly IRepository<Target> _repository;
+
         public EfTargetDal(IRepository<Target> repository)
         {
             _repository = repository;
@@ -20,12 +21,19 @@ namespace Service.Concrete
         public void AddTarget(Target Target)
         {
             _repository.Insert(Target);
+            setTargetId(Target);
         }
 
         public List<Target> TargetListFull()
         {
             var TargetList = _repository.Table.ToList();
             return TargetList;
+        }
+
+        public void setTargetId(Target target)
+        {
+            target.TargetId = target.AimId.ToString() + "." +   target.Id.ToString();
+            _repository.Update(target);
         }
 
         public List<Target> TargetList(int aimId)
@@ -37,10 +45,13 @@ namespace Service.Concrete
 
         public void EditAim(int id, int aimId)
         {
-            var action = _repository.Table.Where(x => x.Id == id).FirstOrDefault();
-            if (action != null)
+            var target = _repository.Table.Where(x => x.Id == id).FirstOrDefault();
+            if (target != null)
             {
-                action.AimId = aimId;
+                target.AimId = aimId;
+                
+                _repository.Update(target);
+                setTargetId(target);
             }
             else
             {
@@ -51,18 +62,21 @@ namespace Service.Concrete
 
         public void EditTarget(int id, int aimId, string explanation)
         {
-            var action = _repository.Table.Where(x => x.Id == id).FirstOrDefault();
+            var target = _repository.Table.Where(x => x.Id == id).FirstOrDefault();
 
-            if (action != null)
+            if (target != null)
             {
-                action.AimId = aimId;
-                action.Explanation = explanation;
+                target.AimId = aimId;
+                target.Explanation = explanation;
+                _repository.Update(target);
+                setTargetId(target);
             }
             else
             {
                 throw new Exception("Not Found SubAction");
             }
         }
+
 
         public void DeleteTarget( int id)
         {
@@ -75,10 +89,12 @@ namespace Service.Concrete
             {
                 throw new Exception("Not Found Target");
             }
-
-
-
             
+        }
+
+        public int GetTargetAimId(int targetId)
+        {
+            return _repository.GetById(targetId).AimId;
         }
     }
 }

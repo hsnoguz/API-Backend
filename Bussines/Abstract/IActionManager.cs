@@ -13,11 +13,12 @@ namespace Bussines.Abstract
         public List<DAL.Model.Action> ActionListFull();
 
         public IResult EditTarget(int id, int targetId);
-        public IResult EditAction(int id, int targetId, string explanation);
+        public IResult EditAction(DAL.Model.Action action);
 
         public List<DAL.Model.Action> ActionList(int targetId);
         public IResult AddAction(DAL.Model.Action Action);
         public IResult DeleteAction( int id);
+        public IResultData<int> GetOrganizationId(int id);
 
     }
 }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Action = DAL.Model.Action;
 
 namespace TemelService.Controllers
 {
@@ -40,6 +41,16 @@ namespace TemelService.Controllers
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
         }
+
+        [HttpGet("GetAction_OrganizationId/{actionId}")]
+        public IActionResult GetAction_OrganizationId(int actionId)
+        {
+            var result = _ActionManager.GetOrganizationId(actionId).Data;
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+        }
+
         [HttpPost("EditTarget/{id}")]
         public IActionResult EditTarget(int id, int targetId) {
             var result = _ActionManager.EditTarget(id,targetId);
@@ -53,9 +64,9 @@ namespace TemelService.Controllers
             }
         }
 
-        [HttpPost("EditAction/{id}/{targetId}")]
-        public IActionResult EditAction(int id, int targetId, [FromBody] string explanation) {
-            var result = _ActionManager.EditAction(id,targetId,explanation);
+        [HttpPost("EditAction")]
+        public IActionResult EditAction([FromBody] Action action) {
+            var result = _ActionManager.EditAction(action);
             if (result.IsValid)
             {
                 return Ok();

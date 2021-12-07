@@ -54,10 +54,20 @@ namespace TemelService.Controllers
             }
         }
 
-        [HttpPost("EditSubAction/id/actionId/")]
-        public IActionResult EditSubAction(int id, int actionId, [FromBody] string explanation)
+
+        [HttpGet("GetSubAction_OrganizationId/{subActionId}")]
+        public IActionResult GetSubAction_OrganizationId(int subActionId)
         {
-            var result = _SubActionManager.EditSubAction(id, actionId,explanation);
+            var result = _SubActionManager.GetOrganizationId(subActionId).Data;
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+        }
+
+        [HttpPost("EditSubAction")]
+        public IActionResult EditSubAction([FromBody] SubAction subAction)
+        {
+            var result = _SubActionManager.EditSubAction(subAction);
             if (result.IsValid)
             {
                 return Ok();

@@ -19,7 +19,8 @@ namespace Service.Abstract
         public List<PerformancePeriotMatchDto> ListPerformancePeriotMatchTarget(int roleId, int organizationId);
         public List<PerformancePeriotMatchDto> ListPerformanceMatchPeriotAction(int roleId, int organizationId);
         public List<PerformancePeriotMatchDto> ListPerformanceMatchPeriotSubAction(int roleId, int organizationId);
-
+        public void EditOrganizationId(int matchId, int targetId, int organizationId);
         public List<Match> MatchList();
+        public List<Match> MatchPriceList();
     }
 }

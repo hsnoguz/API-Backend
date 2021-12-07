@@ -6,20 +6,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Action = DAL.Model.Action;
 
 namespace Service.Concrete
 {
     public class EfActionDal : IEfActionDal
     {
         private readonly IRepository<DAL.Model.Action> _repository;
-        public EfActionDal(IRepository<DAL.Model.Action> repository)
+        IEfTargetDal _efTargetDal;
+        
+        IEfPerformanceMatchTargetDal _efPerformanceMatchTargetDal;
+        ManagerContext _context;
+        public EfActionDal(IRepository<DAL.Model.Action> repository, ManagerContext context, IEfTargetDal efTargetDal, IEfPerformanceMatchTargetDal efPerformanceMatchTargetDal)
         {
             _repository = repository;
+            _efTargetDal = efTargetDal;
+            _efPerformanceMatchTargetDal = efPerformanceMatchTargetDal;
+            _context= context;
         }
 
         public void AddAction(DAL.Model.Action action)
         {
             _repository.Insert(action);
+            setActionId(action);
         }
 
         public List<DAL.Model.Action> ActionList(int targetId)
@@ -28,12 +37,21 @@ namespace Service.Concrete
             return ActionList;
         }
 
+        public void setActionId(DAL.Model.Action action)
+        {
+            int aimId = GetActionAimId(action.TargetId);
+            action.ActionId = aimId.ToString() + "." + action.TargetId.ToString() + "." + action.Id.ToString();
+            _repository.Update(action);
+        }
+
         public void EditTarget(int id, int targetId)
         {
             var action = _repository.Table.Where(x => x.Id == id).FirstOrDefault();
             if (action != null)
             {
                 action.TargetId = targetId;
+                _repository.Update(action);
+                setActionId(action);
             }
             else
             {
@@ -42,18 +60,29 @@ namespace Service.Concrete
 
         }
 
-        public void EditAction(int id, int targetId, string explanation)
+        public void EditAction(Action action)
         {
-            var action = _repository.Table.Where(x => x.Id == id).FirstOrDefault();
-
-            if (action != null)
+            var _action = _repository.Table.Where(x => x.Id == action.Id).FirstOrDefault();
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                action.TargetId = targetId;
-                action.Explanation = explanation;
-            }
-            else
-            {
-                throw new Exception("Not Found SubAction");
+                if (action != null)
+                {
+                    if (_action.OrganizationId != action.OrganizationId)
+                    {
+                        var MatchId= _efPerformanceMatchTargetDal.MatchList().Where(x => x.Explanation == "Faaliyet").Select(x=>x.Id).FirstOrDefault();
+                        _efPerformanceMatchTargetDal.EditOrganizationId(MatchId, action.Id, action.OrganizationId);
+                    }
+                    _action.TargetId = action.TargetId;
+                    _action.Explanation = action.Explanation;
+                    _repository.Update(_action);
+                    setActionId(_action);
+                    transaction.Commit();
+                }
+                else
+                {
+                    transaction.Rollback();
+                    throw new Exception("Not Found SubAction");
+                }
             }
         }
 
@@ -75,9 +104,22 @@ namespace Service.Concrete
                 throw new Exception("Not Found Action");
             }
 
+        }
 
+        public int GetActionTargetId(int actionId)
+        {
+            return _repository.GetById(actionId).TargetId;
+        }
 
-            
+        public int GetActionAimId(int targetId)
+        {
+            return _efTargetDal.GetTargetAimId(targetId);
+        }
+
+        public int GetOrganizationId(int actionId)
+        {
+            return _repository.GetById(actionId).OrganizationId;
         }
     }
 }
+

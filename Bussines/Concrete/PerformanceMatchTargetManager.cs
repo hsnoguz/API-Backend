@@ -90,5 +90,10 @@ namespace Bussines.Concrete
         {
             return new SuccessResultData<List<Match>>(_efPerformanceMatchTargetDal.MatchList());
         }
+
+        public IResultData<List<Match>> MatchPriceList()
+        {
+            return new SuccessResultData<List<Match>>(_efPerformanceMatchTargetDal.MatchPriceList());
+        }
     }
 }

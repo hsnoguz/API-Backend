@@ -17,6 +17,8 @@ namespace Service.Abstract
         public List<Target> TargetList(int periotId);
         public void AddTarget( Target Target);
         public void DeleteTarget(int id);
+
+        public int GetTargetAimId(int targetId);
         
     }
 }

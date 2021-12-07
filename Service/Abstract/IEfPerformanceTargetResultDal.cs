@@ -10,6 +10,7 @@ namespace Service.Abstract
     public interface IEfPerformanceTargetResultDal
     {
         public void InsertPerformanceTargetResult(Performance_Target_Result performanceTragetResult);
-
+   
+        public void EditOrganizationId(int performanceMatchId, int organizationId);
     }
 }

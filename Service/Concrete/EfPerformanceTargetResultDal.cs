@@ -19,7 +19,15 @@ namespace Service.Concrete
   
         }
 
-
+        public void EditOrganizationId(int performanceMatchId, int organizationId)
+        {
+            List<Performance_Target_Result> performance_Target_Results = _repository.Table.Where(x => x.PerformanceMatchId == performanceMatchId && x.Result== null).ToList();
+            foreach (var item in performance_Target_Results)
+            {
+                item.OrganizationId = organizationId;
+                _repository.Update(item);
+            }
+        }
 
         void IEfPerformanceTargetResultDal.InsertPerformanceTargetResult(Performance_Target_Result PerformanceTragetResult)
         {
