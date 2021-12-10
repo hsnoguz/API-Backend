@@ -24,9 +24,9 @@ namespace Service.Concrete
             setTargetId(Target);
         }
 
-        public List<Target> TargetListFull()
+        public List<Target> TargetListFull(int periotId)
         {
-            var TargetList = _repository.Table.ToList();
+            var TargetList = _repository.Table.Where(x=>x.Aim.PeriotId==periotId).ToList();
             return TargetList;
         }
 

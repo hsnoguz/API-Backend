@@ -13,7 +13,7 @@ namespace DAL.Model
         public int PeriotId { get; set; }
         public DateTime? InsertTime { get; set; }
         public virtual List<Target> Targets { get; set; }
-
+        public virtual Periot Periot { get; set; }
 
     }
 }

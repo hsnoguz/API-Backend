@@ -69,9 +69,9 @@ namespace Bussines.Concrete
 
 
 
-        public List<Target> TargetListFull()
+        public List<Target> TargetListFull(int periotId)
         {
-            return _efTargetDal.TargetListFull();
+            return _efTargetDal.TargetListFull(periotId);
         }
 
         public List<Target> TargetList(int aimId)

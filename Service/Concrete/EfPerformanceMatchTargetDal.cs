@@ -106,12 +106,12 @@ namespace Service.Concrete
   
         }
 
-        public List<PerformanceMatchDto> ListPerformanceMatch(int roleId, int organizationId)
+        public List<PerformanceMatchDto> ListPerformanceMatch(int roleId, int organizationId,int periotId)
         {
             int AdminRoleId = _efOperationServiceDal.RoleId("Admin");
             List<int> organizationIdList = new();
             organizationIdList = _efOrganizationServiceDal.OrganizationDalList(organizationId);
-            List<PerformanceMatchDto> matchList = (from PM in _context.PerformanceMatchTargets where roleId == AdminRoleId || organizationIdList.Contains(organizationId)
+            List<PerformanceMatchDto> matchList = (from PM in _context.PerformanceMatchTargets where ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.Performance.PeriotId==periotId)
                                                    join M in _context.Matchs on PM.MatchId equals M.Id
                                                    join T in _context.Targets.DefaultIfEmpty() 
                                                         on new { Id= PM.TargetId, key2=M.Explanation }
@@ -157,13 +157,13 @@ namespace Service.Concrete
 
         }
 
-        public List<PerformanceMatchDto> ListPerformanceMatchTarget(int roleId, int organizationId)
+        public List<PerformanceMatchDto> ListPerformanceMatchTarget(int roleId, int organizationId,int periotId)
         {
             int AdminRoleId = _efOperationServiceDal.RoleId("Admin");
             List<int> organizationIdList = new();
             organizationIdList = _efOrganizationServiceDal.OrganizationDalList(organizationId);
             List<PerformanceMatchDto> matchList = (from PM in _context.PerformanceMatchTargets
-                                                   where roleId == AdminRoleId || organizationIdList.Contains(organizationId)
+                                                   where  ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.Performance.PeriotId == periotId)
                                                    join M in _context.Matchs on PM.MatchId equals M.Id
                                                    join T in _context.Targets.DefaultIfEmpty()
                                                         on new { Id = PM.TargetId, key2 = M.Explanation }
@@ -187,13 +187,13 @@ namespace Service.Concrete
             return matchList;
         }
 
-        public List<PerformanceMatchDto> ListPerformanceMatchAction(int roleId, int organizationId)
+        public List<PerformanceMatchDto> ListPerformanceMatchAction(int roleId, int organizationId,int periotId)
         {
             int AdminRoleId = _efOperationServiceDal.RoleId("Admin");
             List<int> organizationIdList = new();
             organizationIdList = _efOrganizationServiceDal.OrganizationDalList(organizationId);
             List<PerformanceMatchDto> matchList = (from PM in _context.PerformanceMatchTargets
-                                                   where roleId == AdminRoleId || organizationIdList.Contains(organizationId)
+                                                   where ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.Performance.PeriotId == periotId)
                                                    join M in _context.Matchs on PM.MatchId equals M.Id
                                                    join A in _context.Actions.DefaultIfEmpty()
                                                        on new { Id = PM.TargetId, key2 = M.Explanation }
@@ -219,13 +219,13 @@ namespace Service.Concrete
         }
 
 
-        public List<PerformanceMatchDto> ListPerformanceMatchSubAction(int roleId, int organizationId)
+        public List<PerformanceMatchDto> ListPerformanceMatchSubAction(int roleId, int organizationId,int periotId)
         {
             int AdminRoleId = _efOperationServiceDal.RoleId("Admin");
             List<int> organizationIdList = new();
             organizationIdList = _efOrganizationServiceDal.OrganizationDalList(organizationId);
             List<PerformanceMatchDto> matchList = (from PM in _context.PerformanceMatchTargets
-                                                   where roleId == AdminRoleId || organizationIdList.Contains(organizationId)
+                                                   where ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.Performance.PeriotId == periotId)
                                                    join M in _context.Matchs on PM.MatchId equals M.Id
                                                    join SA in _context.SubActions.DefaultIfEmpty()
                                                       on new { Id = PM.TargetId, key2 = M.Explanation }
@@ -252,15 +252,22 @@ namespace Service.Concrete
 
 
 
-        public List<PerformancePeriotMatchDto> ListPerformancePeriotMatchTarget(int roleId, int organizationId)
+        public List<PerformancePeriotMatchDto> ListPerformancePeriotMatchTarget(int roleId, int organizationId,int periotId)
         {
+            int AdminRoleId = _efOperationServiceDal.RoleId("Admin");
+            List<int> organizationIdList = new();
+            organizationIdList = _efOrganizationServiceDal.OrganizationDalList(organizationId);
+
             var performansPeriotList = (from PP in _context.Performance_Target_Results
                                         join P in _context.Performances
+
                                              on PP.PerformanceId equals P.Id
                                         /*   join PA in _context.PerformanceAims
                                                 on P.PerformanceAimId equals PA.Id*/
                                         join PM in _context.PerformanceMatchTargets
+
                                             on P.Id equals PM.PerformanceId
+                                        where ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.Performance.PeriotId == periotId)
                                         join M in (_context.Matchs)
                                             on PM.MatchId equals M.Id
                                         where M.Explanation == "Hedef"
@@ -281,8 +288,12 @@ namespace Service.Concrete
             return performansPeriotList;
         }
 
-        public List<PerformancePeriotMatchDto> ListPerformanceMatchPeriotAction(int roleId, int organizationId)
+        public List<PerformancePeriotMatchDto> ListPerformanceMatchPeriotAction(int roleId, int organizationId,int periotId)
         {
+            int AdminRoleId = _efOperationServiceDal.RoleId("Admin");
+            List<int> organizationIdList = new();
+            organizationIdList = _efOrganizationServiceDal.OrganizationDalList(organizationId);
+
             var performansPeriotList = (from PP in _context.Performance_Target_Results
                                         join P in _context.Performances
                                              on PP.PerformanceId equals P.Id
@@ -290,6 +301,7 @@ namespace Service.Concrete
                                                 on P.PerformanceAimId equals PA.Id*/
                                         join PM in _context.PerformanceMatchTargets
                                             on P.Id equals PM.PerformanceId
+                                        where ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.Performance.PeriotId == periotId)
                                         join M in (_context.Matchs)
                                             on PM.MatchId equals M.Id
                                         where M.Explanation == "Faaliyet"
@@ -310,8 +322,12 @@ namespace Service.Concrete
             return performansPeriotList;
         }
 
-        public List<PerformancePeriotMatchDto> ListPerformanceMatchPeriotSubAction(int roleId, int organizationId)
+        public List<PerformancePeriotMatchDto> ListPerformanceMatchPeriotSubAction(int roleId, int organizationId,int periotId)
         {
+            int AdminRoleId = _efOperationServiceDal.RoleId("Admin");
+            List<int> organizationIdList = new();
+            organizationIdList = _efOrganizationServiceDal.OrganizationDalList(organizationId);
+
             var performansPeriotList = (from PP in _context.Performance_Target_Results
                                         join P in _context.Performances
                                              on PP.PerformanceId equals P.Id
@@ -319,6 +335,8 @@ namespace Service.Concrete
                                                 on P.PerformanceAimId equals PA.Id*/
                                         join PM in _context.PerformanceMatchTargets
                                             on P.Id equals PM.PerformanceId
+                                        where ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.Performance.PeriotId == periotId)
+
                                         join M in (_context.Matchs)
                                             on PM.MatchId equals M.Id
                                         where M.Explanation == "Alt Faaliyet"

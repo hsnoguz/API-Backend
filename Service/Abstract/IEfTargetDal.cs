@@ -9,7 +9,7 @@ namespace Service.Abstract
 {
  public  interface IEfTargetDal
     {
-        public List<Target> TargetListFull();
+        public List<Target> TargetListFull(int periotId);
 
         public void EditAim(int id, int aimId);
         public void EditTarget(int id, int aimId, string explanation);

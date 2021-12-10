@@ -10,7 +10,7 @@ namespace Bussines.Abstract
 {
    public interface ITargetManager
     {
-        public List<Target> TargetListFull();
+        public List<Target> TargetListFull(int periotId);
         public IResult EditAim(int id, int aimId);
         public IResult EditTarget(int id, int aimId, string explanation);
         public List<Target> TargetList(int aimId);

@@ -49,7 +49,8 @@ namespace DAL.Model
         public virtual DbSet<Organization> Organizations { get; set; }
         public virtual DbSet<Match> Matchs { get; set; }
         public virtual DbSet<PerformanceMatchTarget> PerformanceMatchTargets { get; set; }
-        
+        public virtual DbSet<ActionPrice> ActionPrices { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -143,6 +144,14 @@ namespace DAL.Model
             {
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
             });
+
+            modelBuilder.Entity<ActionPrice>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.TargetValue).HasColumnType("decimal(18,4)");
+                entity.Property(e => e.ResultValue).HasColumnType("decimal(18,4)");
+            });
+
 
             modelBuilder.Entity<Aim>(entity =>
             {

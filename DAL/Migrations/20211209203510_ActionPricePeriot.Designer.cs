@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20211209203510_ActionPricePeriot")]
+    partial class ActionPricePeriot
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,8 +216,8 @@ namespace DAL.Migrations
                             JopId = 0,
                             LastName = "Admin",
                             OrganizationId = 0,
-                            PasswordHash = new byte[] { 80, 197, 21, 196, 188, 8, 182, 239, 30, 96, 79, 133, 186, 91, 234, 245, 23, 226, 116, 233, 53, 158, 170, 96, 60, 143, 119, 74, 177, 100, 95, 192, 217, 26, 30, 86, 60, 124, 173, 140, 214, 57, 149, 229, 8, 161, 160, 211, 122, 18, 183, 124, 222, 227, 67, 123, 74, 255, 209, 38, 78, 72, 165, 53 },
-                            PasswordSalt = new byte[] { 247, 143, 55, 22, 6, 72, 103, 242, 130, 14, 75, 70, 104, 21, 182, 240, 99, 44, 222, 16, 165, 2, 79, 185, 145, 49, 23, 22, 11, 119, 177, 50, 18, 196, 194, 169, 34, 151, 221, 250, 217, 95, 182, 244, 94, 208, 116, 20, 155, 160, 201, 187, 150, 30, 149, 151, 175, 172, 116, 66, 198, 40, 38, 198, 233, 193, 60, 130, 8, 76, 54, 72, 88, 185, 122, 145, 45, 132, 101, 100, 114, 242, 156, 232, 98, 124, 162, 191, 213, 118, 199, 227, 43, 247, 46, 184, 75, 102, 255, 59, 3, 161, 133, 167, 42, 116, 42, 171, 63, 207, 162, 70, 176, 58, 204, 122, 103, 193, 86, 143, 170, 204, 241, 197, 93, 177, 242, 183 },
+                            PasswordHash = new byte[] { 19, 134, 241, 54, 175, 44, 34, 241, 53, 120, 6, 223, 225, 156, 213, 191, 5, 126, 55, 129, 175, 135, 208, 84, 147, 124, 46, 56, 169, 182, 167, 63, 150, 126, 234, 211, 105, 207, 209, 85, 42, 144, 251, 241, 43, 217, 63, 19, 50, 161, 10, 105, 99, 116, 7, 212, 185, 37, 91, 91, 170, 221, 44, 39 },
+                            PasswordSalt = new byte[] { 49, 147, 25, 6, 203, 124, 144, 62, 201, 37, 142, 137, 196, 96, 218, 212, 139, 84, 150, 187, 53, 127, 26, 101, 143, 81, 99, 245, 92, 27, 225, 51, 115, 128, 15, 126, 156, 3, 86, 39, 204, 56, 188, 0, 109, 53, 176, 181, 131, 4, 44, 144, 218, 161, 186, 34, 253, 102, 58, 210, 117, 225, 17, 123, 228, 145, 196, 193, 142, 142, 227, 136, 227, 249, 195, 128, 34, 198, 161, 55, 151, 183, 120, 154, 62, 29, 67, 93, 69, 176, 0, 213, 76, 132, 219, 243, 89, 122, 78, 145, 72, 51, 67, 86, 146, 23, 153, 55, 192, 85, 232, 143, 183, 76, 252, 110, 96, 243, 29, 171, 162, 5, 95, 197, 235, 159, 103, 74 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });
@@ -1003,15 +1005,13 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Model.Target", "Target")
+                    b.HasOne("DAL.Model.Target", null)
                         .WithMany("Actions")
                         .HasForeignKey("TargetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Organization");
-
-                    b.Navigation("Target");
                 });
 
             modelBuilder.Entity("DAL.Model.ActionPrice", b =>
@@ -1165,24 +1165,20 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Model.SubAction", b =>
                 {
-                    b.HasOne("DAL.Model.Action", "Action")
+                    b.HasOne("DAL.Model.Action", null)
                         .WithMany("SubActions")
                         .HasForeignKey("ActionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Action");
                 });
 
             modelBuilder.Entity("DAL.Model.Target", b =>
                 {
-                    b.HasOne("DAL.Model.Aim", "Aim")
+                    b.HasOne("DAL.Model.Aim", null)
                         .WithMany("Targets")
                         .HasForeignKey("AimId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Aim");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>

@@ -10,7 +10,7 @@ namespace Bussines.Abstract
 {
    public interface IActionManager
     {
-        public List<DAL.Model.Action> ActionListFull();
+        public List<DAL.Model.Action> ActionListFull(int periotId);
 
         public IResult EditTarget(int id, int targetId);
         public IResult EditAction(DAL.Model.Action action);

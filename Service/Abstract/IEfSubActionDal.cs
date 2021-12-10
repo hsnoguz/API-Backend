@@ -9,7 +9,7 @@ namespace Service.Abstract
 {
  public  interface IEfSubActionDal
     {
-        public List<DAL.Model.SubAction> SubActionListFull();
+        public List<DAL.Model.SubAction> SubActionListFull(int periotId);
 
         public void EditAction(int id, int newActionId);
         public void EditSubAction(SubAction action);

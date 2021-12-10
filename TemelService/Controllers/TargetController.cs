@@ -1,4 +1,5 @@
 ﻿using Bussines.Abstract;
+using Core.Extensions;
 using Core.Results;
 using DAL.Model;
 using Microsoft.AspNetCore.Http;
@@ -33,9 +34,9 @@ namespace TemelService.Controllers
         }
 
         [HttpGet("TargetListFull")]
-        public IActionResult TargetListFull(int aimId)
+        public IActionResult TargetListFull()
         {
-            var result = _TargetManager.TargetListFull();
+            var result = _TargetManager.TargetListFull(Convert.ToInt32(User.ClaimPeriotId()[0]));
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));

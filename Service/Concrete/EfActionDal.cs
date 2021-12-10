@@ -1,4 +1,5 @@
 ﻿using DAL.Model;
+using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Abstract;
 using System;
@@ -86,9 +87,10 @@ namespace Service.Concrete
             }
         }
 
-        public List<DAL.Model.Action> ActionListFull()
+        public List<DAL.Model.Action> ActionListFull(int periotId)
         {
-            var ActionList = _repository.Table.ToList();
+            
+            var ActionList = _repository.Table.Where(x=>x.Target.Aim.PeriotId == periotId).ToList();
             return ActionList;
         }
 

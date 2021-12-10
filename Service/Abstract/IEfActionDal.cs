@@ -9,7 +9,7 @@ namespace Service.Abstract
 {
  public  interface IEfActionDal
     {
-        public List<DAL.Model.Action> ActionListFull();
+        public List<DAL.Model.Action> ActionListFull(int periotId);
         public void EditTarget(int id, int targetId);
         public void EditAction(DAL.Model.Action action);
         public List<DAL.Model.Action> ActionList(int periotId);

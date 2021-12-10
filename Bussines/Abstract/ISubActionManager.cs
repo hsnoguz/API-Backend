@@ -10,7 +10,7 @@ namespace Bussines.Abstract
 {
    public interface ISubActionManager
     {
-        public List<DAL.Model.SubAction> SubActionListFull();
+        public List<DAL.Model.SubAction> SubActionListFull(int periotId);
         public IResult EditAction(int id, int newActionId);
         public IResult EditSubAction(SubAction subAction);
 

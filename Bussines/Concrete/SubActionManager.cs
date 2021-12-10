@@ -66,9 +66,9 @@ namespace Bussines.Concrete
             return result;
         }
 
-        public List<DAL.Model.SubAction> SubActionListFull()
+        public List<DAL.Model.SubAction> SubActionListFull(int periotId)
         {
-            return _efSubActionDal.SubActionListFull();
+            return _efSubActionDal.SubActionListFull(periotId);
         }
 
         public List<DAL.Model.SubAction> SubActionList(int actionId)

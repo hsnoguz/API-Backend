@@ -71,9 +71,9 @@ namespace Bussines.Concrete
 
         }
 
-        public List<DAL.Model.Action> ActionListFull()
+        public List<DAL.Model.Action> ActionListFull(int periotId)
         {
-            return _efActionDal.ActionListFull();
+            return _efActionDal.ActionListFull(periotId);
         }
 
         public List<DAL.Model.Action> ActionList(int targetId)

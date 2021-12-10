@@ -1,4 +1,5 @@
 ﻿using Bussines.Abstract;
+using Core.Extensions;
 using Core.Results;
 using DAL.Model;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +25,7 @@ namespace TemelService.Controllers
             _ActionManager = ActionManager;
         }
 
-        [HttpGet("ActionList")]
+        [HttpGet("ActionList/{targetId}")]
         public IActionResult GetActionList(int targetId)
         {
             var result = _ActionManager.ActionList(targetId);
@@ -34,9 +35,9 @@ namespace TemelService.Controllers
         }
 
         [HttpGet("ActionListFull")]
-        public IActionResult ActionListFull()
+        public IActionResult ActionListFull(int periotId)
         {
-            var result = _ActionManager.ActionListFull();
+            var result = _ActionManager.ActionListFull(Convert.ToInt32(User.ClaimPeriotId()[0]));
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));

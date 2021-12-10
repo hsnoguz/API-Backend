@@ -37,53 +37,53 @@ namespace Bussines.Concrete
        
         }
 
-        public IResultData<List<PerformanceMatchDto>> ListPerformanceMatch(string roleName,int userId)
+        public IResultData<List<PerformanceMatchDto>> ListPerformanceMatch(string roleName,int userId,int periotId)
         {
            int organizationId= _authService.CurrentOrganizationId(userId).Data;
             int roleId = _authService.getRoleId(roleName).Data;
-            return new SuccessResultData<List<PerformanceMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatch(roleId, organizationId));
+            return new SuccessResultData<List<PerformanceMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatch(roleId, organizationId, periotId));
         }
 
-        public IResultData<List<PerformanceMatchDto>> ListPerformanceMatchAction(string roleName, int userId)
+        public IResultData<List<PerformanceMatchDto>> ListPerformanceMatchAction(string roleName, int userId, int periotId)
         {
             int organizationId = _authService.CurrentOrganizationId(userId).Data;
             int roleId = _authService.getRoleId(roleName).Data;
-            return new SuccessResultData<List<PerformanceMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchAction(roleId, organizationId));
+            return new SuccessResultData<List<PerformanceMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchAction(roleId, organizationId, periotId));
         }
 
-        public IResultData<List<PerformancePeriotMatchDto>> ListPerformanceMatchPeriotAction(string roleName, int userId)
+        public IResultData<List<PerformancePeriotMatchDto>> ListPerformanceMatchPeriotAction(string roleName, int userId, int periotId)
         {
             int organizationId = _authService.CurrentOrganizationId(userId).Data;
             int roleId = _authService.getRoleId(roleName).Data;
-            return new SuccessResultData<List<PerformancePeriotMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchPeriotAction(roleId, organizationId));
+            return new SuccessResultData<List<PerformancePeriotMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchPeriotAction(roleId, organizationId, periotId));
         }
 
-        public IResultData<List<PerformancePeriotMatchDto>> ListPerformanceMatchPeriotSubAction(string roleName, int userId)
+        public IResultData<List<PerformancePeriotMatchDto>> ListPerformanceMatchPeriotSubAction(string roleName, int userId, int periotId)
         {
             int organizationId = _authService.CurrentOrganizationId(userId).Data;
             int roleId = _authService.getRoleId(roleName).Data;
-            return new SuccessResultData<List<PerformancePeriotMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchPeriotSubAction(roleId, organizationId));
+            return new SuccessResultData<List<PerformancePeriotMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchPeriotSubAction(roleId, organizationId, periotId));
         }
 
-        public IResultData<List<PerformanceMatchDto>> ListPerformanceMatchSubAction(string roleName, int userId)
+        public IResultData<List<PerformanceMatchDto>> ListPerformanceMatchSubAction(string roleName, int userId, int periotId)
         {
             int organizationId = _authService.CurrentOrganizationId(userId).Data;
             int roleId = _authService.getRoleId(roleName).Data;
-            return new SuccessResultData<List<PerformanceMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchSubAction(roleId, organizationId));
+            return new SuccessResultData<List<PerformanceMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchSubAction(roleId, organizationId, periotId));
         }
 
-        public IResultData<List<PerformanceMatchDto>> ListPerformanceMatchTarget(string roleName, int userId)
+        public IResultData<List<PerformanceMatchDto>> ListPerformanceMatchTarget(string roleName, int userId, int periotId)
         {
             int organizationId = _authService.CurrentOrganizationId(userId).Data;
             int roleId = _authService.getRoleId(roleName).Data;
-            return new SuccessResultData<List<PerformanceMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchTarget(roleId, organizationId));
+            return new SuccessResultData<List<PerformanceMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchTarget(roleId, organizationId, periotId));
         }
 
-        public IResultData<List<PerformancePeriotMatchDto>> ListPerformancePeriotMatchTarget(string roleName, int userId)
+        public IResultData<List<PerformancePeriotMatchDto>> ListPerformancePeriotMatchTarget(string roleName, int userId, int periotId)
         {
             int organizationId = _authService.CurrentOrganizationId(userId).Data;
             int roleId = _authService.getRoleId(roleName).Data;
-            return new SuccessResultData<List<PerformancePeriotMatchDto>>(_efPerformanceMatchTargetDal.ListPerformancePeriotMatchTarget(roleId, organizationId));
+            return new SuccessResultData<List<PerformancePeriotMatchDto>>(_efPerformanceMatchTargetDal.ListPerformancePeriotMatchTarget(roleId, organizationId,periotId));
         }
 
         public IResultData<List<Match>> MatchList()

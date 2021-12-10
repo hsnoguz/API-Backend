@@ -43,9 +43,9 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<EfPerformanceDal>().As<IEfPerformanceDal>();
             builder.RegisterType<EfPerformanceTargetResultDal>().As<IEfPerformanceTargetResultDal>();
             builder.RegisterType<EfPeriotDal>().As<IEfPeriotDal>();
+            builder.RegisterType<EfActionPriceDal>().As<IEfActionPriceDal>();
 
 
-            
             builder.RegisterType<EfOrganizationServiceDal>().As<IEfOrganizationServiceDal>();
             builder.RegisterType<EfOperationServiceDal>().As<IEfOperationServiceDal>();
             builder.RegisterType<EfUserOperationClaimDal>().As<IEfUserOperationClaimDal>();
@@ -68,7 +68,7 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<PerformanceAimService>().As<IPerformanceAimService>();
             builder.RegisterType<PerformanceTypeService>().As<IPerformanceTypeService>();
             builder.RegisterType<PerformancePeriotService>().As<IPerformancePeriotService>();
-
+            builder.RegisterType<ActionPriceManager>().As<IActionPriceManager>();
 
 
             builder.RegisterType<AuthManager>().As<IAuthService>();

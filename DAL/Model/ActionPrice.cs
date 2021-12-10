@@ -7,17 +7,18 @@ using System.Threading.Tasks;
 
 namespace DAL.Model
 {
-  public  class ActionMatchPrice
+  public  class ActionPrice
     {
         public int Id { get; set; }
-        
-        public Int16 MatchId { get; set; }
+        public int PeriotId { get; set; }
+        public int MatchId { get; set; }
         public int ActionId { get; set; }
-
-        public int OrganizationId { get; set; }
+        public decimal TargetValue { get; set; }
+        public decimal ResultValue { get; set; }
         public DateTime? InsertTime { get; set; }
 
         public virtual Organization Organization { get; set; }
-        public virtual Performance Performance { get; set; }
+        public virtual Match Match { get; set; }
+        public virtual Periot Periot { get; set; }
     }
 }

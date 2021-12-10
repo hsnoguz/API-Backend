@@ -10,6 +10,7 @@ namespace DAL.Model
   public  class PerformanceMatchTarget
     {
         public int Id { get; set; }
+
         public int PerformanceId { get; set; }
         public Int16 MatchId { get; set; }
         public int TargetId { get; set; }
@@ -19,5 +20,6 @@ namespace DAL.Model
 
         public virtual Organization Organization { get; set; }
         public virtual Performance Performance { get; set; }
+
     }
 }

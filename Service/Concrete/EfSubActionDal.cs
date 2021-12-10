@@ -1,4 +1,5 @@
 ﻿using DAL.Model;
+using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Abstract;
 using System;
@@ -29,9 +30,9 @@ namespace Service.Concrete
             setSubActionId(SubAction);
         }
 
-        public List<DAL.Model.SubAction> SubActionListFull()
+        public List<DAL.Model.SubAction> SubActionListFull(int periotId)
         {
-            var SubActionList = _repository.Table.ToList();
+            var SubActionList = _repository.Table.Where(x=>x.Action.Target.Aim.PeriotId==periotId).ToList();
             return SubActionList;
         }
 
