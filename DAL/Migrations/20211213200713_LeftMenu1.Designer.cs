@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20211213200713_LeftMenu1")]
+    partial class LeftMenu1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,8 +216,8 @@ namespace DAL.Migrations
                             JopId = 0,
                             LastName = "Admin",
                             OrganizationId = 0,
-                            PasswordHash = new byte[] { 173, 235, 107, 214, 231, 218, 186, 25, 3, 102, 31, 245, 3, 124, 221, 174, 123, 84, 70, 57, 253, 126, 23, 231, 24, 196, 200, 234, 178, 183, 143, 133, 244, 223, 19, 98, 87, 246, 186, 90, 204, 61, 14, 205, 70, 200, 177, 207, 151, 243, 194, 208, 5, 37, 214, 183, 31, 221, 108, 125, 136, 44, 73, 48 },
-                            PasswordSalt = new byte[] { 119, 158, 102, 8, 174, 177, 240, 15, 115, 190, 116, 130, 166, 13, 38, 19, 203, 229, 142, 167, 127, 114, 123, 187, 115, 10, 218, 199, 230, 112, 55, 163, 221, 14, 232, 101, 58, 84, 87, 216, 29, 82, 52, 188, 25, 91, 116, 192, 234, 61, 121, 102, 10, 158, 131, 190, 150, 75, 69, 68, 189, 39, 217, 255, 159, 11, 10, 123, 135, 81, 253, 47, 41, 96, 8, 226, 121, 191, 114, 255, 247, 75, 166, 236, 227, 141, 196, 164, 66, 254, 85, 90, 167, 141, 107, 119, 82, 91, 96, 180, 86, 64, 147, 45, 89, 173, 62, 130, 238, 178, 182, 105, 170, 101, 232, 194, 46, 17, 172, 46, 236, 107, 164, 97, 92, 115, 47, 107 },
+                            PasswordHash = new byte[] { 71, 170, 18, 34, 233, 144, 147, 102, 58, 59, 138, 75, 119, 172, 126, 113, 118, 98, 141, 9, 22, 203, 93, 79, 70, 210, 183, 104, 29, 71, 23, 41, 33, 126, 177, 106, 246, 15, 143, 63, 89, 174, 88, 16, 163, 184, 132, 48, 117, 66, 30, 82, 68, 117, 142, 172, 66, 69, 216, 57, 107, 238, 119, 4 },
+                            PasswordSalt = new byte[] { 194, 88, 213, 23, 135, 170, 153, 47, 113, 146, 50, 184, 83, 135, 117, 164, 35, 147, 3, 210, 191, 47, 180, 30, 164, 129, 18, 236, 4, 119, 6, 142, 87, 136, 112, 201, 73, 119, 241, 199, 228, 121, 188, 31, 17, 211, 110, 247, 15, 70, 246, 236, 7, 86, 50, 198, 89, 171, 108, 99, 72, 20, 68, 57, 131, 12, 57, 15, 30, 147, 242, 120, 231, 151, 41, 71, 145, 118, 194, 4, 10, 145, 252, 177, 108, 82, 153, 195, 193, 226, 34, 132, 91, 83, 199, 142, 250, 124, 38, 193, 74, 237, 62, 217, 247, 40, 61, 94, 146, 213, 98, 200, 137, 66, 66, 222, 69, 62, 126, 66, 43, 116, 35, 102, 124, 120, 214, 42 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });
@@ -416,11 +418,6 @@ namespace DAL.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(250)");
 
-                    b.Property<bool>("isActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-
                     b.HasKey("Id")
                         .HasName("PK_Left_Menu")
                         .IsClustered(false);
@@ -434,8 +431,7 @@ namespace DAL.Migrations
                             Description = "Kullanıcı İşlemleri",
                             ImageUrl = "fa fa-user",
                             MenuId = (short)0,
-                            Src = "/user",
-                            isActive = false
+                            Src = "/user"
                         });
                 });
 

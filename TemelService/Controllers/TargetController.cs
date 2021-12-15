@@ -24,7 +24,7 @@ namespace TemelService.Controllers
             _TargetManager = TargetManager;
         }
 
-        [HttpGet("TargetList")]
+        [HttpGet("TargetList/{aimId}")]
         public IActionResult GetTargetList(int aimId)
         {
             var result = _TargetManager.TargetList(aimId);
@@ -85,7 +85,7 @@ namespace TemelService.Controllers
                
         }
 
-        [HttpPost("DeleteTarget")]
+        [HttpPost("DeleteTarget/{TargetId}")]
         public IActionResult GetProjectList(int TargetId)
         {
             var result = _TargetManager.DeleteTarget(TargetId);

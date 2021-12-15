@@ -38,7 +38,7 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<EfQuestionHorizontalDal>().As<IEfQuestionHorizontalDal>();
             builder.RegisterType<EfQuestionVerticalDal>().As<IEfQuestionVerticalDal>();
             builder.RegisterType<EfTargetDal>().As<IEfTargetDal>();
-
+            builder.RegisterType<EfUserLeftMenuClaimDal>().As<IEfUserLeftMenuClaimDal>();
 
             builder.RegisterType<EfPerformanceDal>().As<IEfPerformanceDal>();
             builder.RegisterType<EfPerformanceTargetResultDal>().As<IEfPerformanceTargetResultDal>();
@@ -53,6 +53,7 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<EfPerformanceTypeDal>().As<IEfPerformanceTypeDal>();
             builder.RegisterType<EfPerformanceAimDal>().As<IEfPerformanceAimDal>();
             builder.RegisterType<EfPerformanceMatchTargetDal>().As<IEfPerformanceMatchTargetDal>();
+            builder.RegisterType<EfLeftMenuDal>().As<IEfLeftMenuDal>();
 
             builder.RegisterType<PerformanceMatchTargetManager>().As<IPerformanceMatchTarget>();
             builder.RegisterType<PerformanceManager>().As<IPerformanceManager>();
@@ -69,8 +70,8 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<PerformanceTypeService>().As<IPerformanceTypeService>();
             builder.RegisterType<PerformancePeriotService>().As<IPerformancePeriotService>();
             builder.RegisterType<ActionPriceManager>().As<IActionPriceManager>();
-
-
+            builder.RegisterType<LeftMenuManager>().As<ILeftMenuManager>();
+            builder.RegisterType<UserLeftMenuClaimManager>().As<IUserLeftMenuClaim>();
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<ProjectManager>().As<IProjectManager>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();

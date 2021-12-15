@@ -50,6 +50,9 @@ namespace DAL.Model
         public virtual DbSet<Match> Matchs { get; set; }
         public virtual DbSet<PerformanceMatchTarget> PerformanceMatchTargets { get; set; }
         public virtual DbSet<ActionPrice> ActionPrices { get; set; }
+        public virtual DbSet<LeftMenu> LeftMenus { get; set; }
+        public virtual DbSet<UserLeftMenuClaim> UserLeftMenuClaims { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -132,6 +135,10 @@ namespace DAL.Model
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
 
             });
+
+            modelBuilder.Entity<LeftMenu>().HasData(new LeftMenu { Id = 1, Description="Kullanıcı İşlemleri",Src= "/user",MenuId=0,ImageUrl= "fa fa-user" });
+
+       //     modelBuilder.Entity<UserLeftMenuClaim>().HasData(new UserLeftMenuClaim { Id = 1, OperationClaimId = 1, LeftMenuId = 1 });
 
             modelBuilder.Entity<RefreshToken>(entity =>
             {
@@ -297,6 +304,38 @@ namespace DAL.Model
             {
                 entity.Property(e => e.Name).HasMaxLength(100);
             });
+
+            modelBuilder.Entity<LeftMenu>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                    .HasName("PK_Left_Menu")
+                    .IsClustered(false);
+
+                entity.ToTable("LeftMenu");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ImageUrl)
+                    .HasMaxLength(1500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ImageUrl2)
+                    .HasMaxLength(1500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.OnClick)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Src)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+                entity.Property(e => e.isActive).HasDefaultValue(true);
+            });
+
+
             base.OnModelCreating(modelBuilder);
         }
         //  partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
