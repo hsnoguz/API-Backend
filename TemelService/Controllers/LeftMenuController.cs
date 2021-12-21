@@ -66,7 +66,7 @@ namespace TemelService.Controllers
             //     return View(_leftMenu.GetLeftMenu(Convert.ToInt32(roleId), Convert.ToInt32(userId)).Data);
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(_leftMenu.GetLeftMenu(User.ClaimRoles()[0], Convert.ToInt32(User.ClaimNameIdentifier()[0])).Data);
+            return Ok(_leftMenu.GetLeftMenu(User.ClaimRoles().ToString(), Convert.ToInt32(User.ClaimNameIdentifier().ToString())).Data);
         }
     }
 }

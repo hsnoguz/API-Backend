@@ -49,7 +49,7 @@ namespace TemelService.Controllers
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
-            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatch(User.ClaimRoles()[0], Convert.ToInt32(User.ClaimNameIdentifier()[0]),Convert.ToInt32(User.ClaimPeriotId()[0])), jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatch(User.ClaimRoles().ToString(), Convert.ToInt32(User.ClaimNameIdentifier().ToString()),Convert.ToInt32(User.ClaimPeriotId().ToString())), jso));
 
         }
 
@@ -59,7 +59,7 @@ namespace TemelService.Controllers
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
-            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatchAction(User.ClaimRoles()[0], Convert.ToInt32(User.ClaimNameIdentifier()[0]), Convert.ToInt32(User.ClaimPeriotId()[0])), jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatchAction(User.ClaimRoles().ToString(), Convert.ToInt32(User.ClaimNameIdentifier().ToString()), Convert.ToInt32(User.ClaimPeriotId().ToString())), jso));
         }
 
         [HttpGet("ListPerformanceMatchPeriotAction")]
@@ -68,7 +68,7 @@ namespace TemelService.Controllers
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
-            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatchPeriotAction(User.ClaimRoles()[0], Convert.ToInt32(User.ClaimNameIdentifier()[0]), Convert.ToInt32(User.ClaimPeriotId()[0])), jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatchPeriotAction(User.ClaimRoles().ToString(), Convert.ToInt32(User.ClaimNameIdentifier().ToString()), Convert.ToInt32(User.ClaimPeriotId().ToString())), jso));
         }
 
         [HttpGet("ListPerformanceMatchPeriotSubAction")]
@@ -77,7 +77,7 @@ namespace TemelService.Controllers
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
-            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatchPeriotSubAction(User.ClaimRoles()[0], Convert.ToInt32(User.ClaimNameIdentifier()[0]), Convert.ToInt32(User.ClaimPeriotId()[0])), jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatchPeriotSubAction(User.ClaimRoles().ToString(), Convert.ToInt32(User.ClaimNameIdentifier().ToString()), Convert.ToInt32(User.ClaimPeriotId().ToString())), jso));
         }
 
         [HttpGet("ListPerformanceMatchSubAction")]
@@ -85,7 +85,7 @@ namespace TemelService.Controllers
         {
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatchSubAction(User.ClaimRoles()[0], Convert.ToInt32(User.ClaimNameIdentifier()[0]), Convert.ToInt32(User.ClaimPeriotId()[0])), jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatchSubAction(User.ClaimRoles().ToString(), Convert.ToInt32(User.ClaimNameIdentifier().ToString()), Convert.ToInt32(User.ClaimPeriotId().ToString())), jso));
         }
 
         [HttpGet("ListPerformanceMatchTarget")]
@@ -93,7 +93,7 @@ namespace TemelService.Controllers
         {
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatchTarget(User.ClaimRoles()[0], Convert.ToInt32(User.ClaimNameIdentifier()[0]), Convert.ToInt32(User.ClaimPeriotId()[0])), jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatchTarget(User.ClaimRoles().ToString(), Convert.ToInt32(User.ClaimNameIdentifier().ToString()), Convert.ToInt32(User.ClaimPeriotId().ToString())), jso));
         }
 
         [HttpGet("ListPerformancePeriotMatchTarget")]
@@ -101,7 +101,7 @@ namespace TemelService.Controllers
         {
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformancePeriotMatchTarget(User.ClaimRoles()[0], Convert.ToInt32(User.ClaimNameIdentifier()[0]), Convert.ToInt32(User.ClaimPeriotId()[0])), jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformancePeriotMatchTarget(User.ClaimRoles().ToString(), Convert.ToInt32(User.ClaimNameIdentifier().ToString()), Convert.ToInt32(User.ClaimPeriotId().ToString())), jso));
         }
 
 

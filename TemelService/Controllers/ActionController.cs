@@ -37,7 +37,7 @@ namespace TemelService.Controllers
         [HttpGet("ActionListFull")]
         public IActionResult ActionListFull(int periotId)
         {
-            var result = _ActionManager.ActionListFull(Convert.ToInt32(User.ClaimPeriotId()[0]));
+            var result = _ActionManager.ActionListFull(Convert.ToInt32(User.ClaimPeriotId().ToString()));
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));

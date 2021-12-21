@@ -54,6 +54,7 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<EfPerformanceAimDal>().As<IEfPerformanceAimDal>();
             builder.RegisterType<EfPerformanceMatchTargetDal>().As<IEfPerformanceMatchTargetDal>();
             builder.RegisterType<EfLeftMenuDal>().As<IEfLeftMenuDal>();
+            builder.RegisterType<EfOperationClaimDal>().As<IEfOperationClaimDal>();
 
             builder.RegisterType<PerformanceMatchTargetManager>().As<IPerformanceMatchTarget>();
             builder.RegisterType<PerformanceManager>().As<IPerformanceManager>();
@@ -84,6 +85,8 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<TargetManager>().As<ITargetManager>();
             builder.RegisterType<ActionManager>().As<IActionManager>();
             builder.RegisterType<SubActionManager>().As<ISubActionManager>();
+            builder.RegisterType<OperationClaimManager>().As<IOperationClaimManager>();
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
