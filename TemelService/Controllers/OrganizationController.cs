@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace TemelService.Controllers
 {
     
-    [Route("Organization/[controller]")]
+    [Route("[controller]")]
 
     public class OrganizationController : Controller
     {

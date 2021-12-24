@@ -1,6 +1,7 @@
 ﻿using DAL.Model;
 using Repository;
 using Service.Abstract;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,5 +74,33 @@ namespace Service.Concrete
             */
             return menu;
         }
+
+        public List<LeftMenuClaimDto> GetLeftMenuFull()
+        {
+
+                var menu = (from leftMenu in _context.LeftMenus
+                            join claim in _context.UserLeftMenuClaims.DefaultIfEmpty()
+                      on leftMenu.Id equals claim.LeftMenuId 
+
+                            into leftMenuClaim
+                            from resultMenu in leftMenuClaim.DefaultIfEmpty()
+                            where leftMenu.isActive == true
+                  
+                      
+                         
+                            select new LeftMenuClaimDto()
+                            {
+                                Id = leftMenu.Id,
+                                MenuId = leftMenu.MenuId,
+                                OnClick = leftMenu.OnClick,
+                                Src = leftMenu.Src,
+                                ImageUrl = leftMenu.ImageUrl,
+                                Description = leftMenu.Description,
+                                MenuIndex = leftMenu.MenuIndex,
+                                ClaimId = resultMenu.OperationClaim!=null? resultMenu.OperationClaim.Id:0,
+                                ClaimName= resultMenu.OperationClaim != null ? resultMenu.OperationClaim.Name:null,
+                            }).ToList();
+                return menu;
+            }
     }
 }

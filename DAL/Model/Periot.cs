@@ -13,7 +13,7 @@ namespace DAL.Model
         public string Name { get; set; }
         public int StartYear { get; set; }
         public int StopYear { get; set; }
-        public DateTime InsertTime { get; set; }
+        public DateTime? InsertTime { get; set; }
         public virtual List<Aim> Aims { get; set; }
      
     }

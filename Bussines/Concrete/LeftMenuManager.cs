@@ -2,6 +2,7 @@
 using Core.Results;
 using DAL.Model;
 using Service.Abstract;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,10 @@ namespace Bussines.Concrete
             _leftMenuDal = leftMenuDal;
             _efActionPriceDal = efActionMatchPriceDal;
             _authService = authService;
+        }
+
+        public IResultData<List<LeftMenuClaimDto>> GetLeftMenuFull() {
+            return new SuccessResultData<List<LeftMenuClaimDto>>(_leftMenuDal.GetLeftMenuFull());
         }
 
         public IResult AddLeftMenu(LeftMenu leftMenu)

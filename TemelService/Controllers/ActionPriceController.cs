@@ -81,7 +81,7 @@ namespace TemelService.Controllers
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
-            return Ok(System.Text.Json.JsonSerializer.Serialize(_actionPriceManager.ListActionSubActionPrice(User.ClaimRoles().ToString(), Convert.ToInt32(User.ClaimNameIdentifier().ToString()), Convert.ToInt32(User.ClaimPeriotId().ToString())), jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_actionPriceManager.ListActionSubActionPrice(User.ClaimRoles()[0], Convert.ToInt32(User.ClaimNameIdentifier()[0]), Convert.ToInt32(User.ClaimPeriotId().ToString())), jso));
         }
 
         [HttpGet("ListActionPrice")]
@@ -90,7 +90,7 @@ namespace TemelService.Controllers
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
-            return Ok(System.Text.Json.JsonSerializer.Serialize(_actionPriceManager.ListActionPrice(User.ClaimRoles().ToString(), Convert.ToInt32(User.ClaimNameIdentifier().ToString()), Convert.ToInt32(User.ClaimPeriotId().ToString())), jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_actionPriceManager.ListActionPrice(User.ClaimRoles()[0], Convert.ToInt32(User.ClaimNameIdentifier()[0]), Convert.ToInt32(User.ClaimPeriotId().ToString())), jso));
         }
 
         [HttpGet("ListSubActionPrice")]
@@ -98,7 +98,7 @@ namespace TemelService.Controllers
         {
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(_actionPriceManager.ListSubActionPrice(User.ClaimRoles().ToString(), Convert.ToInt32(User.ClaimNameIdentifier().ToString()), Convert.ToInt32(User.ClaimPeriotId().ToString())), jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_actionPriceManager.ListSubActionPrice(User.ClaimRoles()[0], Convert.ToInt32(User.ClaimNameIdentifier()[0]), Convert.ToInt32(User.ClaimPeriotId().ToString())), jso));
         }
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    [Migration("20211209204248_PeriotAdd")]
-    partial class PeriotAdd
+    [Migration("20211224185752_ProjectDbStart1")]
+    partial class ProjectDbStart1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,6 +65,13 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Jops");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Explanation = "Genel Müdür"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.OperationClaim", b =>
@@ -107,6 +114,13 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Organizations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Explanation = "IT"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.RefreshToken", b =>
@@ -198,8 +212,6 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
-
                     b.HasIndex("JopId");
 
                     b.HasIndex("OrganizationId");
@@ -210,17 +222,37 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            BranchId = 0,
+                            BranchId = 1,
                             Email = "admin@arastirmaturk.com",
                             FirstName = "Admin",
-                            JopId = 0,
+                            JopId = 1,
                             LastName = "Admin",
-                            OrganizationId = 0,
-                            PasswordHash = new byte[] { 80, 197, 21, 196, 188, 8, 182, 239, 30, 96, 79, 133, 186, 91, 234, 245, 23, 226, 116, 233, 53, 158, 170, 96, 60, 143, 119, 74, 177, 100, 95, 192, 217, 26, 30, 86, 60, 124, 173, 140, 214, 57, 149, 229, 8, 161, 160, 211, 122, 18, 183, 124, 222, 227, 67, 123, 74, 255, 209, 38, 78, 72, 165, 53 },
-                            PasswordSalt = new byte[] { 247, 143, 55, 22, 6, 72, 103, 242, 130, 14, 75, 70, 104, 21, 182, 240, 99, 44, 222, 16, 165, 2, 79, 185, 145, 49, 23, 22, 11, 119, 177, 50, 18, 196, 194, 169, 34, 151, 221, 250, 217, 95, 182, 244, 94, 208, 116, 20, 155, 160, 201, 187, 150, 30, 149, 151, 175, 172, 116, 66, 198, 40, 38, 198, 233, 193, 60, 130, 8, 76, 54, 72, 88, 185, 122, 145, 45, 132, 101, 100, 114, 242, 156, 232, 98, 124, 162, 191, 213, 118, 199, 227, 43, 247, 46, 184, 75, 102, 255, 59, 3, 161, 133, 167, 42, 116, 42, 171, 63, 207, 162, 70, 176, 58, 204, 122, 103, 193, 86, 143, 170, 204, 241, 197, 93, 177, 242, 183 },
+                            OrganizationId = 1,
+                            PasswordHash = new byte[] { 229, 34, 201, 114, 89, 155, 205, 55, 251, 174, 184, 10, 252, 222, 96, 91, 118, 245, 89, 190, 2, 188, 89, 157, 168, 183, 110, 90, 102, 13, 209, 2, 7, 150, 127, 231, 234, 37, 0, 82, 198, 193, 125, 213, 5, 204, 22, 113, 57, 155, 206, 79, 149, 89, 254, 250, 236, 73, 88, 17, 67, 179, 157, 208 },
+                            PasswordSalt = new byte[] { 254, 73, 57, 153, 36, 224, 46, 87, 62, 159, 213, 94, 26, 33, 79, 229, 44, 129, 189, 215, 212, 109, 7, 176, 35, 215, 225, 58, 9, 42, 166, 1, 227, 131, 201, 171, 38, 30, 136, 119, 38, 55, 222, 244, 187, 246, 177, 64, 35, 240, 175, 176, 218, 25, 113, 170, 205, 11, 108, 198, 167, 114, 80, 247, 101, 43, 176, 126, 94, 105, 219, 20, 74, 97, 92, 238, 154, 168, 40, 181, 67, 181, 223, 26, 41, 55, 87, 209, 106, 21, 92, 58, 252, 137, 152, 172, 243, 233, 164, 91, 245, 158, 133, 161, 26, 213, 0, 104, 213, 184, 52, 220, 100, 201, 83, 58, 21, 151, 2, 232, 212, 129, 77, 169, 37, 109, 146, 14 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });
+                });
+
+            modelBuilder.Entity("Core.Entities.Concrete.UserLeftMenuClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("LeftMenuId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OperationClaimId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OperationClaimId");
+
+                    b.ToTable("UserLeftMenuClaims");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.UserOperationClaim", b =>
@@ -355,6 +387,70 @@ namespace DAL.Migrations
                     b.HasIndex("PeriotId");
 
                     b.ToTable("Aims");
+                });
+
+            modelBuilder.Entity("DAL.Model.LeftMenu", b =>
+                {
+                    b.Property<short>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<short?>("AccessRank")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(1500)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(1500)");
+
+                    b.Property<string>("ImageUrl2")
+                        .HasMaxLength(1500)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(1500)");
+
+                    b.Property<short?>("MenuId")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("MenuIndex")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("OnClick")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Src")
+                        .HasMaxLength(250)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<bool>("isActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.HasKey("Id")
+                        .HasName("PK_Left_Menu")
+                        .IsClustered(false);
+
+                    b.ToTable("LeftMenu");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = (short)1,
+                            Description = "Kullanıcı İşlemleri",
+                            ImageUrl = "fa fa-user",
+                            MenuId = (short)0,
+                            Src = "/user",
+                            isActive = false
+                        });
                 });
 
             modelBuilder.Entity("DAL.Model.Match", b =>
@@ -955,12 +1051,6 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>
                 {
-                    b.HasOne("Core.Entities.Concrete.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Core.Entities.Concrete.Jop", "Jop")
                         .WithMany()
                         .HasForeignKey("JopId")
@@ -973,11 +1063,20 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Branch");
-
                     b.Navigation("Jop");
 
                     b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Core.Entities.Concrete.UserLeftMenuClaim", b =>
+                {
+                    b.HasOne("Core.Entities.Concrete.OperationClaim", "OperationClaim")
+                        .WithMany()
+                        .HasForeignKey("OperationClaimId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OperationClaim");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.UserOperationClaim", b =>

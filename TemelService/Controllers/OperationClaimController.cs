@@ -35,7 +35,7 @@ namespace TemelService.Controllers
         }
 
         [HttpPost("AddOperationClaim")]
-        public IActionResult AddOperationClaim(string name)
+        public IActionResult AddOperationClaim([FromBody]string name)
         {
             return Ok(_operationClaimManager.AddOperationClaim(name));
         }

@@ -63,6 +63,13 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Jops");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Explanation = "Genel Müdür"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.OperationClaim", b =>
@@ -105,6 +112,13 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Organizations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Explanation = "IT"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.RefreshToken", b =>
@@ -196,8 +210,6 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
-
                     b.HasIndex("JopId");
 
                     b.HasIndex("OrganizationId");
@@ -208,14 +220,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            BranchId = 0,
+                            BranchId = 1,
                             Email = "admin@arastirmaturk.com",
                             FirstName = "Admin",
-                            JopId = 0,
+                            JopId = 1,
                             LastName = "Admin",
-                            OrganizationId = 0,
-                            PasswordHash = new byte[] { 173, 235, 107, 214, 231, 218, 186, 25, 3, 102, 31, 245, 3, 124, 221, 174, 123, 84, 70, 57, 253, 126, 23, 231, 24, 196, 200, 234, 178, 183, 143, 133, 244, 223, 19, 98, 87, 246, 186, 90, 204, 61, 14, 205, 70, 200, 177, 207, 151, 243, 194, 208, 5, 37, 214, 183, 31, 221, 108, 125, 136, 44, 73, 48 },
-                            PasswordSalt = new byte[] { 119, 158, 102, 8, 174, 177, 240, 15, 115, 190, 116, 130, 166, 13, 38, 19, 203, 229, 142, 167, 127, 114, 123, 187, 115, 10, 218, 199, 230, 112, 55, 163, 221, 14, 232, 101, 58, 84, 87, 216, 29, 82, 52, 188, 25, 91, 116, 192, 234, 61, 121, 102, 10, 158, 131, 190, 150, 75, 69, 68, 189, 39, 217, 255, 159, 11, 10, 123, 135, 81, 253, 47, 41, 96, 8, 226, 121, 191, 114, 255, 247, 75, 166, 236, 227, 141, 196, 164, 66, 254, 85, 90, 167, 141, 107, 119, 82, 91, 96, 180, 86, 64, 147, 45, 89, 173, 62, 130, 238, 178, 182, 105, 170, 101, 232, 194, 46, 17, 172, 46, 236, 107, 164, 97, 92, 115, 47, 107 },
+                            OrganizationId = 1,
+                            PasswordHash = new byte[] { 55, 28, 186, 175, 213, 126, 7, 117, 225, 115, 38, 143, 165, 146, 98, 196, 194, 250, 112, 208, 251, 121, 137, 135, 2, 169, 122, 30, 3, 169, 30, 146, 80, 89, 176, 104, 20, 28, 220, 88, 56, 140, 234, 144, 217, 1, 46, 192, 229, 199, 163, 185, 152, 57, 136, 57, 9, 1, 178, 63, 205, 123, 79, 68 },
+                            PasswordSalt = new byte[] { 160, 144, 13, 164, 162, 242, 18, 235, 8, 113, 140, 234, 57, 163, 56, 46, 87, 172, 217, 250, 36, 101, 195, 183, 215, 123, 187, 84, 115, 129, 211, 183, 91, 32, 151, 250, 185, 4, 216, 236, 111, 7, 122, 87, 250, 164, 80, 87, 31, 122, 231, 224, 196, 68, 139, 196, 10, 26, 95, 147, 197, 44, 165, 176, 49, 194, 103, 182, 204, 245, 63, 171, 176, 190, 115, 139, 221, 114, 115, 19, 74, 147, 149, 220, 160, 97, 127, 224, 131, 212, 88, 245, 33, 171, 112, 229, 192, 35, 137, 96, 24, 205, 92, 124, 40, 229, 229, 240, 11, 105, 105, 159, 69, 247, 147, 141, 3, 75, 4, 10, 220, 160, 141, 147, 53, 58, 16, 7 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });
@@ -779,7 +791,7 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("InsertTime")
+                    b.Property<DateTime?>("InsertTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -1037,12 +1049,6 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>
                 {
-                    b.HasOne("Core.Entities.Concrete.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Core.Entities.Concrete.Jop", "Jop")
                         .WithMany()
                         .HasForeignKey("JopId")
@@ -1054,8 +1060,6 @@ namespace DAL.Migrations
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Branch");
 
                     b.Navigation("Jop");
 

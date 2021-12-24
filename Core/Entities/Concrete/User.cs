@@ -29,7 +29,7 @@ namespace Core.Entities.Concrete
         public DateTime? InsertTime { get; set; }
         public virtual List<UserOperationClaim> UserOperationClaim { get; set; }
         public virtual Jop Jop { get; set; }
-        public virtual Branch Branch { get; set; }
+ 
         public virtual Organization Organization { get; set; }
        
 

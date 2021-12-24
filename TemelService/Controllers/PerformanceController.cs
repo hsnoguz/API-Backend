@@ -28,7 +28,7 @@ namespace TemelService.Controllers
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
-            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceManager.PerformanceList(Convert.ToInt32(User.ClaimNameIdentifier().ToString()), User.ClaimRoles().ToString()), jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceManager.PerformanceList(Convert.ToInt32(User.ClaimNameIdentifier()[0]), User.ClaimRoles()[0]), jso));
 
         }
 
@@ -107,7 +107,7 @@ namespace TemelService.Controllers
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
 
-            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceManager.PerformanceTargetList(Convert.ToInt32(User.ClaimNameIdentifier().ToString()), User.ClaimRoles().ToString()), jso));
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceManager.PerformanceTargetList(Convert.ToInt32(User.ClaimNameIdentifier()[0]), User.ClaimRoles()[0]), jso));
 
         }
 

@@ -59,7 +59,7 @@ namespace DAL.Model
             if (!optionsBuilder.IsConfigured)
             {
                          // optionsBuilder.UseSqlServer("Data Source= DESKTOP-FSJ8JLM\\SQLEXPRESS;Initial Catalog=ManagerDb;User ID=sa;Password=nasah;MultipleActiveResultSets=True");
-                   optionsBuilder.UseSqlServer("Server=89.252.181.210\\MSSQLSERVER2019;Database=arastirma_ManagerDb;User Id=arastirma_service;Password=AraTara05*;MultipleActiveResultSets=True");
+                   optionsBuilder.UseSqlServer("Server=176.53.65.202\\MSSQLSERVER2019;Database=arastirma_ManagerDb;User Id=arastirma_service;Password=AraTara051*;MultipleActiveResultSets=True");
             }
             base.OnConfiguring(optionsBuilder.UseLoggerFactory(CustomerLoggerFactory));
             base.OnConfiguring(optionsBuilder);
@@ -82,6 +82,10 @@ namespace DAL.Model
             modelBuilder.HasAnnotation("Relational:Collation", "Turkish_CI_AS");
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash("S1425p", out passwordHash, out passwordSalt);
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, Explanation = "IT" });
+            modelBuilder.Entity<Organization>().HasData(new Organization { Id = 1, Explanation = "IT" });
+            modelBuilder.Entity<Jop>().HasData(new Jop { Id = 1, Explanation = "Genel Müdür" });
+            modelBuilder.Entity<OperationClaim>().HasData(new OperationClaim { Id = 1, Name = "Admin" });
             var user = new User
             {
                 Id = 1,
@@ -91,11 +95,14 @@ namespace DAL.Model
                 LastName = "Admin",
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Status = true
+                Status = true,
+                BranchId=1,
+                JopId=1,
+                OrganizationId=1
             };
 
-            modelBuilder.Entity<Branch>().HasData(new Branch { Id=1,Explanation="IT"});
-            modelBuilder.Entity<OperationClaim>().HasData(new OperationClaim { Id = 1, Name = "Admin" });
+          //  modelBuilder.Entity<Branch>().HasData(new Branch { Id=1,Explanation="IT"});
+      //      modelBuilder.Entity<OperationClaim>().HasData(new OperationClaim { Id = 1, Name = "Admin" });
             modelBuilder.Entity<User>().HasData(user);
             
             modelBuilder.Entity<UserOperationClaim>().HasData(new UserOperationClaim { Id = 1, UserId = 1, OperationClaimId = 1 });
