@@ -20,6 +20,13 @@ namespace Service.Enum
         Faaliliyet = 2,
         Alt_Faaliyet = 3
     }
+    enum EnumQuestionTextType
+    {
+        Amac = 1,
+        Hedef = 2,
+        Soru = 3,
+        Pestle_Sorusu = 9,
+    }
 
     enum QuestionType
     {

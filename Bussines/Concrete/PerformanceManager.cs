@@ -41,11 +41,35 @@ namespace Bussines.Concrete
         }
         public IResult InsertPerformance(Performance Performance)
         {
+            try
+            {
+                _efPerformanceDal.InsertPerformance(Performance);
+                return new SuccessResult();
+            }
+            catch (Exception ex)
+            {
 
-            _efPerformanceDal.InsertPerformance(Performance);
+                return new ErrorResult(ex.Message); 
+            }
+         
  
-            return new SuccessResult();
+      
         }
+
+        public IResult DeletePerformance(int Id)
+        {
+            try
+            {
+                _efPerformanceDal.DeletePerformance(Id);
+                return new SuccessResult();
+            }
+            catch (Exception ex)
+            {
+
+                return new ErrorResult(ex.Message);
+            }
+        }
+
 
         public IResultData<List<Organization>> Organizationlist()
         {

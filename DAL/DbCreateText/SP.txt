@@ -1,0 +1,107 @@
+﻿USE [arastirma_ManagerDb]
+GO
+/****** Object:  StoredProcedure [arastirma_service].[sp_AddColumn]    Script Date: 26.12.2021 11:23:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [arastirma_service].[sp_AddColumn](@table varchar(250),@columnName varchar(250),@type varchar(250))
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	   declare @str varchar(max);
+	
+	if not(exists(SELECT 1 as AA FROM sys.columns c	where c.object_id = OBJECT_ID(@table) and [name]=@columnName))
+	begin
+		set @str='alter table ' + @table + ' add ' + @columnName+  ' ' + @type;
+		execute(@str);
+	end
+
+
+END
+GO
+/****** Object:  StoredProcedure [arastirma_service].[sp_CreateProjectTable]    Script Date: 26.12.2021 11:23:14 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--sp_CreateProjectTable 0
+CREATE PROCEDURE [arastirma_service].[sp_CreateProjectTable](@Id int)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    declare @str varchar(max);
+	set @str='
+	create table P' + cast(@Id as varchar(50))+ '
+	(
+		[Id] [int] IDENTITY(1,1) NOT NULL,
+		[Guid] [varchar](150),
+		[Statu] [smallint],
+		[InsertTime] [datetime]
+		 CONSTRAINT [PK_P' + cast(@Id as varchar(50))+'] PRIMARY KEY CLUSTERED 
+		(
+			[Id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+		) ON [PRIMARY]
+		ALTER TABLE [P' + cast(@Id as varchar(50))+ '] ADD DEFAULT (0) FOR [Statu];
+		ALTER TABLE [P' + cast(@Id as varchar(50))+ '] ADD DEFAULT (newID()) FOR [Guid];
+		ALTER TABLE [arastirma_service].[P' + cast(@Id as varchar(50))+ '] ADD  DEFAULT (getdate()) FOR [InsertTime]
+	'
+	print @str;
+	execute(@str);
+END
+GO
+/****** Object:  StoredProcedure [arastirma_service].[sp_InsertSurvey]    Script Date: 26.12.2021 11:23:14 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [arastirma_service].[sp_InsertSurvey] (@table varchar(250),@result int output)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	declare @str  NVARCHAR(max);
+	set @str=N'insert into [' + @table + '] (statu) select 0; SELECT @result=SCOPE_IDENTITY()'; 
+	print @str;
+	EXEC sys.sp_executesql @str, N'@result INT OUT', @result OUT;
+
+
+END
+
+--EXEC  sp_InsertSurvey 'p4',null
+GO
+/****** Object:  StoredProcedure [arastirma_service].[sp_TableColumnControl]    Script Date: 26.12.2021 11:23:14 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [arastirma_service].[sp_TableColumnControl](@table varchar(250),@columnName varchar(250),@result int output)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	if exists(SELECT 1 as AA FROM sys.columns c	where c.object_id = OBJECT_ID(@table) and [name]=@columnName)
+	begin
+		select @result=1;
+	end
+	else
+	begin
+		select @result=0;
+	end
+END
+
+
+--sp_TableColumnControl 'P0','Id1'
+GO

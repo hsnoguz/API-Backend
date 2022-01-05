@@ -46,6 +46,11 @@ namespace Service.Concrete
             return _repository.Table.Include(x => x.Performance_Target_Results).Include(x => x.PerformanceAim).Include(x => x.PerformanceType).Include(x => x.PerformancePeriot).Where(x => x.Id==PerformanceId).ToList();
         }
 
+        public void DeletePerformance(int performanceId)
+        {
+            var performance = _repository.GetById(performanceId);
+            _repository.Delete(performance);
+        }
         public Performance getPerformance(int Id)
         {
             return _repository.Table.Include(x => x.PerformanceAim).Include(x => x.PerformanceType).Include(x => x.PerformancePeriot).FirstOrDefault();
@@ -57,7 +62,9 @@ namespace Service.Concrete
             List<int> organizationIdList = new();
             organizationIdList = _efOrganizationServiceDal.OrganizationDalList(organizationId);
 
-            return _repository.Table.Include(x => x.Performance_Target_Results).Include(x => x.PerformanceAim).Include(x => x.PerformanceType).Include(x => x.PerformancePeriot).Where(x => roleId == AdminRoleID /*|| organizationIdList.Contains(x.OrganizationId)*/).ToList();
+            return _repository.Table.Include(x => x.Performance_Target_Results).Include
+
+                (x => x.PerformanceAim).Include(x => x.PerformanceType).Include(x => x.PerformancePeriot).Where(x => roleId == AdminRoleID /*|| organizationIdList.Contains(x.OrganizationId)*/).ToList();
         }
 
         public void InsertPerformance(Performance Performance)

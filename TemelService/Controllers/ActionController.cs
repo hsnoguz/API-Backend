@@ -29,27 +29,32 @@ namespace TemelService.Controllers
         public IActionResult GetActionList(int targetId)
         {
             var result = _ActionManager.ActionList(targetId);
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+
+            return Ok(result);
         }
 
         [HttpGet("ActionListFull")]
-        public IActionResult ActionListFull(int periotId)
+        public IActionResult ActionListFull()
         {
             var result = _ActionManager.ActionListFull(Convert.ToInt32(User.ClaimPeriotId().ToString()));
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+
+            return Ok(result);
+        }
+
+        [HttpGet("ActionTargetAimList")]
+        public IActionResult ActionTargetAimList()
+        {
+            var result = _ActionManager.ActionTargetAimList(Convert.ToInt32(User.ClaimPeriotId().ToString()));
+
+            return Ok(result);
         }
 
         [HttpGet("GetAction_OrganizationId/{actionId}")]
         public IActionResult GetAction_OrganizationId(int actionId)
         {
             var result = _ActionManager.GetOrganizationId(actionId).Data;
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+
+            return Ok(result);
         }
 
         [HttpPost("EditTarget/{id}")]
@@ -94,7 +99,7 @@ namespace TemelService.Controllers
                
         }
 
-        [HttpPost("DeleteAction")]
+        [HttpPost("DeleteAction/{ActionId}")]
         public IActionResult GetProjectList(int ActionId)
         {
             var result = _ActionManager.DeleteAction(ActionId);

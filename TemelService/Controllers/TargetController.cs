@@ -28,18 +28,22 @@ namespace TemelService.Controllers
         public IActionResult GetTargetList(int aimId)
         {
             var result = _TargetManager.TargetList(aimId);
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+
+            return Ok(result);
         }
 
         [HttpGet("TargetListFull")]
         public IActionResult TargetListFull()
         {
             var result = _TargetManager.TargetListFull(Convert.ToInt32(User.ClaimPeriotId().ToString()));
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+            return Ok(result);
+        }
+
+        [HttpGet("TargetAimList")]
+        public IActionResult TargetAimnList()
+        {
+            var result = _TargetManager.TargetAimList(Convert.ToInt32(User.ClaimPeriotId().ToString()));
+            return Ok(result);
         }
 
         [HttpPost("EditAim/{id}/{aimId}")]

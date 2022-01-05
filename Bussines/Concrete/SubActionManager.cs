@@ -2,6 +2,7 @@
 using Core.Results;
 using DAL.Model;
 using Service.Abstract;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,6 +94,16 @@ namespace Bussines.Concrete
         public IResultData<int> GetOrganizationId(int subActionId)
         {
             return new SuccessResultData<int>(_efSubActionDal.GetOrganizationId(subActionId));
+        }
+
+        public List<SubAction> ListFullPlan(int periotId)
+        {
+            return _efSubActionDal.ListFullPlan(periotId);
+        }
+
+        public List<SubActionDto> SubActionActionTargetAimList(int periotId)
+        {
+            return _efSubActionDal.SubActionActionTargetAimListFull(periotId);
         }
     }
 }

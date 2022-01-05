@@ -11,6 +11,7 @@ namespace Service.Abstract
     {
         public List<Aim> AimList(int periotId);
 
+        public List<Aim> FullPlan(int periotId);
         public void EditAim(int Id,string explanation);
 
         public void AddAim( Aim aim);

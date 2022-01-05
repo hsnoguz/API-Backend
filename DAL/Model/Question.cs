@@ -12,8 +12,9 @@ namespace DAL.Model
     {
 
         public int Id { get; set; }
-
+    //+    public int TargetQuestionId { get; set; }
         public int ProjectId { get; set; }
+    //    public int QuestionTextTypeId { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public string Text { get; set; }
@@ -24,6 +25,8 @@ namespace DAL.Model
         public List<QuestionHorizontal> QuestionHorizontals { get; set; }
    
         public List<QuestionVertical> QuestionVerticals { get; set; }
+    //    public QuestionTextType QuestionTextType { get; set; }
+
         [JsonIgnore]
         public virtual Project Project { get; set; }
     }

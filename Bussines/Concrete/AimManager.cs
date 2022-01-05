@@ -70,5 +70,10 @@ namespace Bussines.Concrete
                 return new ErrorResult(ex.Message);
             }
         }
+
+        public List<Aim> FullList(int periotId)
+        {
+            return _efAimDal.FullPlan(periotId);
+        }
     }
 }

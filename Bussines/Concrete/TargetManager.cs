@@ -2,6 +2,7 @@
 using Core.Results;
 using DAL.Model;
 using Service.Abstract;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,6 +75,10 @@ namespace Bussines.Concrete
             return _efTargetDal.TargetListFull(periotId);
         }
 
+        public List<TargetDto> TargetAimList(int periotId)
+        {
+            return _efTargetDal.TargetAimList(periotId);
+        }
         public List<Target> TargetList(int aimId)
         {
             return _efTargetDal.TargetList(aimId);

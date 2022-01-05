@@ -81,6 +81,7 @@ namespace TemelService.Controllers
             //return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceManager.InsertPerformanceType(performanceType), jso)); ;
         }
 
+
         [HttpGet("Organizationlist")]
         public IActionResult Organizationlist()
         {
@@ -128,5 +129,22 @@ namespace TemelService.Controllers
           
 
         }
-     }
+
+
+        [HttpPost("DeletePerformance/{Id}")]
+        public IActionResult DeletePerformance(int Id)
+        {
+
+            IResult result = _performanceManager.DeletePerformance(Id);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+            //return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceManager.InsertPerformanceType(performanceType), jso)); ;
+        }
+    }
 }

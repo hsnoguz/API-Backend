@@ -14,5 +14,6 @@ namespace Service.Abstract
         public List<Performance> PerformancePeriotList(int organizationId, int roleId);
         public Performance getPerformance(int Id);
         public List<Performance> PerformancePeriot(int indicatorId);
+        public void DeletePerformance(int performanceId);
     }
 }

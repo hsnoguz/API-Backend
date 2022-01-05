@@ -2,6 +2,7 @@
 using Core.Results;
 using DAL.Model;
 using Service.Abstract;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,6 +99,11 @@ namespace Bussines.Concrete
         public IResultData<int> GetOrganizationId(int actionId)
         {
             return new SuccessResultData<int>( _efActionDal.GetOrganizationId(actionId));
+        }
+
+        public List<ActionDto> ActionTargetAimList(int periotId)
+        {
+            return _efActionDal.ActionTargetAimList(periotId);
         }
     }
 }

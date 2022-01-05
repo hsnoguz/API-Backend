@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Model
 {
- public  class Performance
+ public  class Performance                  
     {
         public int Id { get; set; }
         public string Explanation { get; set; }

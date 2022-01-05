@@ -13,9 +13,14 @@ namespace Service.Abstract
 
         public List<Project> Projects(int periotID);
         public Project GetProjectQuestion(int projectID);
+      //  public List<Question> getAimList(int projectId);
+        public List<QuestionHorizontal> getTargetList(int questionId);
+ //       public List<Question> getProjectTargetList(int projectId);
+
         public Project GetProjectQuestionGuid(string guid);
         public void CreateProject(CustomProjectDto project);
-        public void AddProjectQuestion(Question question);
+        public int AddProjectQuestion(Question question);
+        public int AddProjectQuestionHorizantal(QuestionHorizontal questionHorizontal);
         public void SetColumnValue(ProjectColumnValueDto projectColumnValue);
         public void EditQuestionIndex(List<EditProjectIndexDto> editProjectIndexDtos);
         public void EditQuestion(Question question);

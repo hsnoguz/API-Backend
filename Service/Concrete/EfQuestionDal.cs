@@ -1,6 +1,7 @@
 ﻿using DAL.Model;
 using Repository;
 using Service.Abstract;
+using Service.Enum;
 using Service.Model;
 using System;
 using System.Collections.Generic;
@@ -16,20 +17,23 @@ namespace Service.Concrete
         IRepository<Question> _repository;
         public IEfQuestionHorizontalDal _efQuestionHorizontalDal;
         public IEfQuestionVerticalDal _efQuestionVertical;
-        public EfQuestionDal(IRepository<Question> repository, IEfQuestionHorizontalDal efQuestionHorizontalDal, IEfQuestionVerticalDal efQuestionVertical)
+        public IEfQuestionTextTypeDal _efQuestionTextTypeDal;
+        public EfQuestionDal(IRepository<Question> repository, IEfQuestionHorizontalDal efQuestionHorizontalDal, IEfQuestionVerticalDal efQuestionVertical, IEfQuestionTextTypeDal efQuestionTextTypeDal)
         {
             _repository = repository;
             _efQuestionHorizontalDal = efQuestionHorizontalDal;
             _efQuestionVertical = efQuestionVertical;
+            _efQuestionTextTypeDal = efQuestionTextTypeDal;
         }
 
-        public void addQuestion(Question question)
+        public int addQuestion(Question question)
         {
             if (question.Type == Enum.QuestionType.SingleMatris.ToString())
             { 
                 
             }
             _repository.Insert(question);
+            return question.Id;
         }
 
 
@@ -112,5 +116,35 @@ namespace Service.Concrete
 
         }
 
+        /*  public List<Question> getAimList(int projectId)
+          {
+              return _repository.Table.Where(x => x.QuestionTextTypeId == ((int)EnumQuestionTextType.Amac) && x.ProjectId==projectId).ToList();
+          }
+        */
+
+          public List<QuestionHorizontal> getTargetList(int questionId)
+           {
+            return _efQuestionHorizontalDal.getQuestionHorizontal(questionId);
+
+            /*  List<Question> aimList = getAimList(projectId);
+              List<int> aimIdList= aimList.Select(x => x.Id).Distinct().ToList();
+              return _repository.Table.Where(x => x.QuestionTextTypeId == ((int)EnumQuestionTextType.Hedef) && aimIdList.Contains(x.ParentId) && x.ProjectId == projectId).ToList();
+           */
+          }
+
+        public int addQuestionHorizontal(QuestionHorizontal questionHorizontal)
+        {
+            _efQuestionHorizontalDal.HorizantalInsert(questionHorizontal);
+            return questionHorizontal.Id;
+
+        }
+
+
+
+        /*
+         public List<Question> getProjectTargetList(int projectId)
+         {
+             return _repository.Table.Where(x => x.QuestionTextTypeId == ((int)EnumQuestionTextType.Amac)).ToList();
+         }*/
     }
 }

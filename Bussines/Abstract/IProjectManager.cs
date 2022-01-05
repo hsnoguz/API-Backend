@@ -15,8 +15,16 @@ namespace Bussines.Abstract
         public IResultData<List<Project>> Projects(int periotID);
         public IResultData<Project> GetProjectQuestionGuid(string guid);
         public IResultData<Project> GetProjectQuestion(int Id);
+        public IResultData<List<QuestionHorizontal>> getTargetList(int questionId);
+        public IResultData<int> addQuestionHorizantalAdd(QuestionHorizontal questionHorizontal);
+
+        /*   public IResultData<List<Question>> getAimList(int projectId);
+           public IResultData<List<Question>> getTargetList(int projectId, int aimId);
+           public IResultData<List<Question>> getProjectTargetList(int projectId);
+        */
+
         public IResult CreateProject(CustomProjectDto project);
-        public IResult AddProject(Question question);
+        public IResultData<int> AddProjectQuestion(Question question);
         public IResult SetColumnValue(ProjectColumnValueDto projectColumnValue);
         public IResultData<int> insertSurvey(string guid);
         public IResult EditQuestionIndex(List<EditProjectIndexDto> editProjectIndexDtos);

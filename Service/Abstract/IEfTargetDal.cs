@@ -1,4 +1,5 @@
 ﻿using DAL.Model;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,9 @@ namespace Service.Abstract
         public void EditAim(int id, int aimId);
         public void EditTarget(int id, int aimId, string explanation);
 
-        public List<Target> TargetList(int periotId);
+        public List<Target> TargetList(int aimId);
+        public List<TargetDto> TargetAimList(int periotId);
+
         public void AddTarget( Target Target);
         public void DeleteTarget(int id);
 

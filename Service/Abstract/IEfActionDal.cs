@@ -1,4 +1,5 @@
 ﻿using DAL.Model;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,10 @@ namespace Service.Abstract
  public  interface IEfActionDal
     {
         public List<DAL.Model.Action> ActionListFull(int periotId);
+        public List<ActionDto> ActionTargetAimList(int periotId);
         public void EditTarget(int id, int targetId);
         public void EditAction(DAL.Model.Action action);
-        public List<DAL.Model.Action> ActionList(int periotId);
+        public List<DAL.Model.Action> ActionList(int targetId);
         public void AddAction(DAL.Model.Action action);
         public int GetActionTargetId(int actionId);
         public int GetOrganizationId(int actionId);

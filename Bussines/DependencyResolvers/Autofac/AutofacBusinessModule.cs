@@ -44,8 +44,8 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<EfPerformanceTargetResultDal>().As<IEfPerformanceTargetResultDal>();
             builder.RegisterType<EfPeriotDal>().As<IEfPeriotDal>();
             builder.RegisterType<EfActionPriceDal>().As<IEfActionPriceDal>();
-
-
+            builder.RegisterType<EfQuestionTextTypeDal>().As<IEfQuestionTextTypeDal>();
+            
             builder.RegisterType<EfOrganizationServiceDal>().As<IEfOrganizationServiceDal>();
             builder.RegisterType<EfOperationServiceDal>().As<IEfOperationServiceDal>();
             builder.RegisterType<EfUserOperationClaimDal>().As<IEfUserOperationClaimDal>();
@@ -55,7 +55,9 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<EfPerformanceMatchTargetDal>().As<IEfPerformanceMatchTargetDal>();
             builder.RegisterType<EfLeftMenuDal>().As<IEfLeftMenuDal>();
             builder.RegisterType<EfOperationClaimDal>().As<IEfOperationClaimDal>();
-
+            builder.RegisterType<EfOperationClaimDal>().As<IEfOperationClaimDal>();
+            builder.RegisterType<PerformanceTargetResultManager>().As<IPerformanceTargetResultManager>();
+            
             builder.RegisterType<PerformanceMatchTargetManager>().As<IPerformanceMatchTarget>();
             builder.RegisterType<PerformanceManager>().As<IPerformanceManager>();
           //  builder.RegisterType<CookieHelper>().As<ICookieHelper>();
@@ -86,7 +88,8 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<ActionManager>().As<IActionManager>();
             builder.RegisterType<SubActionManager>().As<ISubActionManager>();
             builder.RegisterType<OperationClaimManager>().As<IOperationClaimManager>();
-
+            builder.RegisterType<QuestionTextTypeService>().As<IQuestionTextTypeService>();
+            
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

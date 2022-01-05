@@ -32,6 +32,25 @@ namespace TemelService.Controllers
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
         }
 
+/*
+        [HttpGet("getAimList/{projectId}")]
+        public IActionResult getAimList(int projectId)
+        {
+            var result = _projectManager.getAimList(projectId);
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+        }*/
+
+        [HttpGet("getTargetList/{questionId}")]
+        public IActionResult getTargetList(int questionId)
+        {
+            var result = _projectManager.getTargetList(questionId);
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+        }
+
         [HttpGet("GetProjectGuid/{guid}")]
         public IActionResult GetProjectGuid(string guid)
         {
@@ -85,10 +104,11 @@ namespace TemelService.Controllers
         public IActionResult AddProjectQuestion([FromBody] Question question)
         {
             //  var result = System.Text.Json.JsonSerializer.Deserialize<Project>(json);
-            IResult result = _projectManager.AddProject(question);
+            IResultData<int> result = _projectManager.AddProjectQuestion(question);
+
             if (result.IsValid)
             {
-                return Ok();
+                return Ok(result.Data);
             }
             else
             {
@@ -105,7 +125,23 @@ namespace TemelService.Controllers
               }*/
         }
 
-        [HttpPost("EditQuestion")]
+
+
+        [HttpPost("AddProjectQuestionHorizontal")]
+        public IActionResult AddProjectQuestionHorizontal([FromBody] QuestionHorizontal question)
+        {
+            //  var result = System.Text.Json.JsonSerializer.Deserialize<Project>(json);
+            IResultData<int> result = _projectManager.addQuestionHorizantalAdd(question);
+            if (result.IsValid)
+            {
+                return Ok(result.Data);
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+        }
+            [HttpPost("EditQuestion")]
         public IActionResult EditQuestion([FromBody] Question question)
         {
 

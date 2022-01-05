@@ -1,5 +1,6 @@
 ﻿using Core.Results;
 using DAL.Model;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,10 @@ namespace Bussines.Abstract
    public interface ISubActionManager
     {
         public List<DAL.Model.SubAction> SubActionListFull(int periotId);
+        public List<DAL.Model.SubAction> ListFullPlan(int periotId);
+
+        public List<SubActionDto> SubActionActionTargetAimList(int periotId);
+
         public IResult EditAction(int id, int newActionId);
         public IResult EditSubAction(SubAction subAction);
 

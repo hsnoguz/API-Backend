@@ -58,11 +58,21 @@ namespace Bussines.Concrete
             return new SuccessResultData<List<PerformancePeriotMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchPeriotAction(roleId, organizationId, periotId));
         }
 
+        public IResultData<List<PerformancePeriotMatchDto>> ListPerformanceMatchPeriotActionSingle(int performanceID)
+        {
+            return new SuccessResultData<List<PerformancePeriotMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchPeriotActionSingle(performanceID));
+        }
+
         public IResultData<List<PerformancePeriotMatchDto>> ListPerformanceMatchPeriotSubAction(string roleName, int userId, int periotId)
         {
             int organizationId = _authService.CurrentOrganizationId(userId).Data;
             int roleId = _authService.getRoleId(roleName).Data;
             return new SuccessResultData<List<PerformancePeriotMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchPeriotSubAction(roleId, organizationId, periotId));
+        }
+
+        public IResultData<List<PerformancePeriotMatchDto>> ListPerformanceMatchPeriotSubActionSingle(int performanceID)
+        {
+            return new SuccessResultData<List<PerformancePeriotMatchDto>>(_efPerformanceMatchTargetDal.ListPerformanceMatchPeriotSubActionSingle(performanceID));
         }
 
         public IResultData<List<PerformanceMatchDto>> ListPerformanceMatchSubAction(string roleName, int userId, int periotId)
@@ -84,6 +94,12 @@ namespace Bussines.Concrete
             int organizationId = _authService.CurrentOrganizationId(userId).Data;
             int roleId = _authService.getRoleId(roleName).Data;
             return new SuccessResultData<List<PerformancePeriotMatchDto>>(_efPerformanceMatchTargetDal.ListPerformancePeriotMatchTarget(roleId, organizationId,periotId));
+        }
+
+        public IResultData<List<PerformancePeriotMatchDto>> ListPerformancePeriotMatchTargetSingle(int performanceID)
+        {
+
+            return new SuccessResultData<List<PerformancePeriotMatchDto>>(_efPerformanceMatchTargetDal.ListPerformancePeriotMatchTargetSingle(performanceID));
         }
 
         public IResultData<List<Match>> MatchList()

@@ -17,8 +17,11 @@ namespace Service.Abstract
         public List<PerformanceMatchDto> ListPerformanceMatchSubAction(int roleId, int organizationId, int periotId);
 
         public List<PerformancePeriotMatchDto> ListPerformancePeriotMatchTarget(int roleId, int organizationId, int periotId);
+        public List<PerformancePeriotMatchDto> ListPerformancePeriotMatchTargetSingle(int performanceId);
         public List<PerformancePeriotMatchDto> ListPerformanceMatchPeriotAction(int roleId, int organizationId, int periotId);
+        public List<PerformancePeriotMatchDto> ListPerformanceMatchPeriotActionSingle(int actionId);
         public List<PerformancePeriotMatchDto> ListPerformanceMatchPeriotSubAction(int roleId, int organizationId, int periotId);
+        public List<PerformancePeriotMatchDto> ListPerformanceMatchPeriotSubActionSingle(int subActionId);
         public void EditOrganizationId(int matchId, int targetId, int organizationId);
         public List<Match> MatchList();
         public List<Match> MatchPriceList();

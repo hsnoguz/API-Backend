@@ -1,5 +1,6 @@
 ﻿using Core.Results;
 using DAL.Model;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Bussines.Abstract
    public interface IActionManager
     {
         public List<DAL.Model.Action> ActionListFull(int periotId);
-
+        public List<ActionDto> ActionTargetAimList(int periotId);
         public IResult EditTarget(int id, int targetId);
         public IResult EditAction(DAL.Model.Action action);
 

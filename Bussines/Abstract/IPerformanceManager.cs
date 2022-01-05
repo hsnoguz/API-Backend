@@ -13,6 +13,7 @@ namespace Bussines.Service.Abstract
     {
         
         public IResult InsertPerformance(Performance Performance);
+        public IResult DeletePerformance(int Id);
         public IResultData<List<Performance>> PerformanceList(int userId,string roleName);
         public IResultData<List<Organization>> Organizationlist();
         public IResultData<List<PerformanceAim>> PerformanceAimList();

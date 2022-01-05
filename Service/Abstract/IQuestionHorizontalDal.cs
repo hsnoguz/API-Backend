@@ -10,5 +10,7 @@ namespace Service.Abstract
  public  interface IEfQuestionHorizontalDal
     {
         public List<QuestionHorizontal> getQuestionHorizontal( int questionId);
+        public List<QuestionHorizontal> getQuestionHorizontalTarget(int questionId);
+        public void HorizantalInsert(QuestionHorizontal questionHorizontal);
     }
 }

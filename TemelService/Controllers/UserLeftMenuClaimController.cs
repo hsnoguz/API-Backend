@@ -21,6 +21,7 @@ namespace TemelService.Controllers
         [HttpPost("AddUserLeftMenuClaim/{roleId}/{leftmenuId}")]
         public IActionResult AddUserLeftMenuClaim(int roleId,int leftmenuId)
         {
+            
             var result = _userLeftMenuClaim.AddUserLeftMenuClaim(roleId,leftmenuId);
             if (result.IsValid)
             {

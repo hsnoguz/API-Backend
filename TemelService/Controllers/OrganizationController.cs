@@ -37,7 +37,7 @@ namespace TemelService.Controllers
 
         
         [HttpPost("organizorganizationAddationDelete")]
-        public IActionResult OrganizationAdd(Organization Organization)
+        public IActionResult OrganizationAdd([FromBody] Organization Organization)
         {
             IResult result = _OrganizationService.Add(Organization);
             if (result.IsValid)

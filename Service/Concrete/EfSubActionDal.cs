@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Abstract;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,8 +33,46 @@ namespace Service.Concrete
 
         public List<DAL.Model.SubAction> SubActionListFull(int periotId)
         {
-            var SubActionList = _repository.Table.Where(x=>x.Action.Target.Aim.PeriotId==periotId).ToList();
+            var SubActionList = (
+                                    from S in _context.SubActions
+                                    join A in _context.Actions
+                                           on S.ActionId equals A.Id
+                                    join T in _context.Targets
+                                            on A.TargetId equals T.Id
+                                    join AP in _context.Aims
+                                            on T.AimId equals AP.Id
+                                    where AP.PeriotId == periotId
+                                    select S
+                              ).ToList();
+
+            //_repository.Table.Where(x=>x.Actionaa.Target.Aim.PeriotId==periotId).ToList();
             return SubActionList;
+        }
+
+        public List<SubActionDto> SubActionActionTargetAimListFull(int periotId)
+        {
+            var ActionList = (from S in _context.SubActions
+                              join A in _context.Actions
+                                     on S.ActionId equals A.Id
+                              join T in _context.Targets
+                                      on A.TargetId equals T.Id
+                              join AP in _context.Aims
+                                      on T.AimId equals AP.Id
+                              join O in _context.Organizations
+                                       on S.OrganizationId equals O.Id
+                              where AP.PeriotId == periotId
+                              select new SubActionDto()
+                              {
+                                  Id = S.Id,
+                                  SubActionId = S.SubActionId,
+                                  Explanation = S.Explanation,
+                                  ActionExplanation = A.Explanation,
+                                  TargetExplanation = T.Explanation,
+                                  AimExplanation = AP.Explanation,
+                                  OrganizationExplanation = O.Explanation
+                              }
+                           ).ToList();
+            return ActionList;
         }
 
         public List<DAL.Model.SubAction> SubActionList(int actionId)
@@ -108,6 +147,25 @@ namespace Service.Concrete
         public int GetOrganizationId(int subActionId)
         {
             return _repository.GetById(subActionId).OrganizationId;
+        }
+
+        public List<SubAction> ListFullPlan(int periotId)
+        {
+            /*  var SubActionList = (
+                             from S in _context.SubActions
+                             join A in _context.Actions
+                                    on S.ActionId equals A.Id
+                             join T in _context.Targets
+                                     on A.TargetId equals T.Id
+                             join AP in _context.Aims
+                                     on T.AimId equals AP.Id
+                             where AP.PeriotId == periotId
+                             select S
+                       ).ToList();
+            */
+            //var SubActionList = _repository.Table.Include(x=>x.Action).Include(x => x.Action.Target).Include(x => x.Action.Target.Aim).Where(x=>x.Action.Target.Aim.PeriotId==periotId).ToList();
+            return new List<SubAction>();
+       //     return SubActionList;
         }
     }
 }

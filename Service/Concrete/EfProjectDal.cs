@@ -58,7 +58,7 @@ namespace Service.Concrete
                 Direction = System.Data.ParameterDirection.Output,
             };
 
-            var result = _repositoryProject.UpdateSql("EXEC @result = sp_TableColumnControl @table,@columnName", new SqlParameter("@table", tableName.ToString()), new SqlParameter("@columnName", columnName.ToString()), parameterReturn);
+            var result = _repositoryProject.UpdateSql("EXEC sp_TableColumnControl @table,@columnName,@result OUTPUT", new SqlParameter("@table", tableName.ToString()), new SqlParameter("@columnName", columnName.ToString()), parameterReturn);
             int returnValue = (int)parameterReturn.Value;
             return returnValue.ToString() == "1";
         }
@@ -82,13 +82,14 @@ namespace Service.Concrete
             _repositoryProject.UpdateSql("update p" + projectColumnValue.ProjectId + " set " + updateString + " where Id=@Id", sqlParameters); 
         }
 
-        public void AddProjectQuestion(Question question)
+        public int AddProjectQuestion(Question question)
         {
 
             ColumnOperation(question);
-            _efQuestionDal.addQuestion(question);
+            return _efQuestionDal.addQuestion(question);
 
         }
+
         public void ColumnOperation(Question question)
         {
             if (question.Type == QuestionType.SingleMatris.ToString())
@@ -121,7 +122,7 @@ namespace Service.Concrete
                 Direction = System.Data.ParameterDirection.Output,
             };
 
-            var result = _repositoryProject.UpdateSql("EXEC @result = sp_InsertSurvey @tableName", new SqlParameter("@tableName", tableName.ToString()), parameterReturn);
+            var result = _repositoryProject.UpdateSql("EXEC  sp_InsertSurvey @tableName,@result OUTPUT", new SqlParameter("@tableName", tableName.ToString()), parameterReturn);
             int returnValue = (int)parameterReturn.Value;
             Id = Convert.ToInt32(returnValue.ToString());
             return Id;
@@ -137,7 +138,7 @@ namespace Service.Concrete
         public Project GetProjectQuestion(int projectID)
         {
             var projeQuestions=  _repositoryProject.Table.Include(x=>x.Questions).Where(x=>x.Id==projectID).FirstOrDefault();
-            if (projeQuestions.Questions == null)
+      //      if (projeQuestions.Questions == null)
             {
                 projeQuestions.Questions = _efQuestionDal.getQuestionList(projectID);
             }
@@ -212,5 +213,30 @@ namespace Service.Concrete
             _efQuestionDal.editQuestion(question);
 
         }
+        public List<QuestionHorizontal> getTargetList(int questionId)
+        {
+            return _efQuestionDal.getTargetList(questionId);
+        }
+
+        public int AddProjectQuestionHorizantal(QuestionHorizontal questionHorizontal)
+        {
+          return _efQuestionDal.addQuestionHorizontal(questionHorizontal);
+        }
+
+
+        /*     public List<Question> getAimList(int projectId)
+             {
+                 return _efQuestionDal.getAimList(projectId);
+             }
+
+             public List<Question> getTargetList(int projectId, int aimId)
+             {
+                 return _efQuestionDal.getTargetList(projectId,aimId);
+             }
+
+             public List<Question> getProjectTargetList(int projectId)
+             {
+                 return _efQuestionDal.getProjectTargetList(projectId);
+             }*/
     }
 }

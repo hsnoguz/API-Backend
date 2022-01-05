@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Entities.Concrete;
 using Core.Utilities.Security.Hashing;
-using System.ComponentModel.DataAnnotations.Schema;
+
+
 
 namespace DAL.Model
 {
@@ -52,8 +53,9 @@ namespace DAL.Model
         public virtual DbSet<ActionPrice> ActionPrices { get; set; }
         public virtual DbSet<LeftMenu> LeftMenus { get; set; }
         public virtual DbSet<UserLeftMenuClaim> UserLeftMenuClaims { get; set; }
-
-
+        public virtual DbSet<AimQuestion> AimQuestions { get; set; }
+        public virtual DbSet<QuestionTextType> QuestionTextTypes { get; set; }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -78,7 +80,7 @@ namespace DAL.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+
             modelBuilder.HasAnnotation("Relational:Collation", "Turkish_CI_AS");
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash("S1425p", out passwordHash, out passwordSalt);
@@ -89,22 +91,22 @@ namespace DAL.Model
             var user = new User
             {
                 Id = 1,
-                UserName= "admin@arastirmaturk.com",
+                UserName = "admin@arastirmaturk.com",
                 Email = "admin@arastirmaturk.com",
                 FirstName = "Admin",
                 LastName = "Admin",
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Status = true,
-                BranchId=1,
-                JopId=1,
-                OrganizationId=1
+                BranchId = 1,
+                JopId = 1,
+                OrganizationId = 1
             };
 
-          //  modelBuilder.Entity<Branch>().HasData(new Branch { Id=1,Explanation="IT"});
-      //      modelBuilder.Entity<OperationClaim>().HasData(new OperationClaim { Id = 1, Name = "Admin" });
+            //  modelBuilder.Entity<Branch>().HasData(new Branch { Id=1,Explanation="IT"});
+            //      modelBuilder.Entity<OperationClaim>().HasData(new OperationClaim { Id = 1, Name = "Admin" });
             modelBuilder.Entity<User>().HasData(user);
-            
+
             modelBuilder.Entity<UserOperationClaim>().HasData(new UserOperationClaim { Id = 1, UserId = 1, OperationClaimId = 1 });
             modelBuilder.Entity<Match>().HasData(new Match { Id = 1, Explanation = "Hedef" });
             modelBuilder.Entity<Match>().HasData(new Match { Id = 2, Explanation = "Faaliyet" });
@@ -114,15 +116,15 @@ namespace DAL.Model
             modelBuilder.Entity<PerformanceAim>().HasData(new PerformanceAim { Id = 3, Explanation = "Eşit" });
             modelBuilder.Entity<PerformanceAim>().HasData(new PerformanceAim { Id = 4, Explanation = "Rakamsal Azalış" });
             modelBuilder.Entity<PerformanceAim>().HasData(new PerformanceAim { Id = 5, Explanation = "Yüzdesel Artış" });
-            
-            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 1, Explanation =  1 });
-            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 2, Explanation =  2 });
-            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 3, Explanation =  3 });
-            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 4, Explanation =  4 });
-            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 5, Explanation =  5 });
-            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 6, Explanation =  6 });
-            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 7, Explanation =  7 });
-            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 8, Explanation =  8 });
+
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 1, Explanation = 1 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 2, Explanation = 2 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 3, Explanation = 3 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 4, Explanation = 4 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 5, Explanation = 5 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 6, Explanation = 6 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 7, Explanation = 7 });
+            modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 8, Explanation = 8 });
             modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 9, Explanation = 9 });
             modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 10, Explanation = 10 });
             modelBuilder.Entity<PerformancePeriot>().HasData(new PerformancePeriot { Id = 11, Explanation = 11 });
@@ -132,6 +134,10 @@ namespace DAL.Model
             modelBuilder.Entity<PerformanceType>().HasData(new PerformanceType { Id = 2, Explanation = "m2" });
             modelBuilder.Entity<PerformanceType>().HasData(new PerformanceType { Id = 3, Explanation = "m3" });
 
+            modelBuilder.Entity<QuestionTextType>().HasData(new QuestionTextType { Id = 1, Explanation = "Amaç" });
+            modelBuilder.Entity<QuestionTextType>().HasData(new QuestionTextType { Id = 2, Explanation = "Hedef" });
+            modelBuilder.Entity<QuestionTextType>().HasData(new QuestionTextType { Id = 3, Explanation = "Soru" });
+            modelBuilder.Entity<QuestionTextType>().HasData(new QuestionTextType { Id = 9, Explanation = "Pestle Sorusu" });
 
             modelBuilder.Entity<User>(entity =>
             {
@@ -143,9 +149,9 @@ namespace DAL.Model
 
             });
 
-            modelBuilder.Entity<LeftMenu>().HasData(new LeftMenu { Id = 1, Description="Kullanıcı İşlemleri",Src= "/user",MenuId=0,ImageUrl= "fa fa-user" });
+            modelBuilder.Entity<LeftMenu>().HasData(new LeftMenu { Id = 1, Description = "Kullanıcı İşlemleri", Src = "/user", MenuId = 0, ImageUrl = "fa fa-user" });
 
-       //     modelBuilder.Entity<UserLeftMenuClaim>().HasData(new UserLeftMenuClaim { Id = 1, OperationClaimId = 1, LeftMenuId = 1 });
+            //     modelBuilder.Entity<UserLeftMenuClaim>().HasData(new UserLeftMenuClaim { Id = 1, OperationClaimId = 1, LeftMenuId = 1 });
 
             modelBuilder.Entity<RefreshToken>(entity =>
             {
@@ -153,7 +159,7 @@ namespace DAL.Model
                 entity.Property(e => e.IsUsing).HasDefaultValue(false);
                 entity.Property(e => e.Token).HasMaxLength(255);
             });
-            
+
             modelBuilder.Entity<PerformanceMatchTarget>(entity =>
             {
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
@@ -166,6 +172,13 @@ namespace DAL.Model
                 entity.Property(e => e.ResultValue).HasColumnType("decimal(18,4)");
             });
 
+            
+           modelBuilder.Entity<QuestionTextType>(entity =>
+           {
+               
+               entity.Property(e => e.Explanation).HasMaxLength(50);
+
+           });
 
             modelBuilder.Entity<Aim>(entity =>
             {
@@ -182,7 +195,31 @@ namespace DAL.Model
 
             });
 
+            modelBuilder.Entity<Aim>()
+            .HasMany<Target>(s => s.Targets);
+            modelBuilder
+             .Entity<Aim>()
+             .HasMany(aim => aim.Targets);
+     
 
+            /*
+             modelBuilder.Entity<Aim>()
+    .HasOne(a => a.Targets).WithOne(b => b.ai)
+    .HasForeignKey<AuthorBiography>(e => e.AuthorId);
+
+            modelBuilder.Entity<Aim>()
+                .HasMany(p => p.Targets)
+      .WithOne(x => x.Aim).HasForeignKey(x => x.AimId)
+            .HasPrincipalKey(x => x.Id);
+
+            modelBuilder.Entity<Target>().HasMany(p => p.Actions)
+.WithOne(x => x.Target);
+            modelBuilder.Entity<Action>().HasMany(p => p.SubActions)
+.WithOne(x => x.Action);
+            /* .HasForeignKey(x => x.Id)
+            .HasPrincipalKey(x => x.TargetId)
+             * 
+             */
 
             modelBuilder.Entity<Action>(entity =>
             {
@@ -256,9 +293,13 @@ namespace DAL.Model
                 entity.Property(e => e.Name).HasMaxLength(70);
                 entity.Property(e => e.Text).HasMaxLength(1000);
                 entity.Property(e => e.Type).HasMaxLength(100);
-                
+            });
 
-
+            modelBuilder.Entity<AimQuestion>(entity =>
+            {
+                entity.Property(e => e.Explanation).HasMaxLength(2000);
+                entity.Property(e => e.IsActive).HasDefaultValue(true);
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<QuestionHorizontal>(entity =>

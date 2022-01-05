@@ -20,16 +20,16 @@ namespace Bussines.Concrete
             _projectDal = projectDal;
         }
 
-        public IResult AddProject(Question question)
+        public IResultData<int> AddProjectQuestion(Question question)
         {
             try
             {
-                _projectDal.AddProjectQuestion(question);
-                return new SuccessResult();
+             
+                return new SuccessResultData<int>(_projectDal.AddProjectQuestion(question));
             }
             catch (Exception ex)
             {
-                return new ErrorResult(ex.Message);
+                return new ErrorResultData<int>(0,ex.Message);
             }
          
         }
@@ -126,5 +126,39 @@ namespace Bussines.Concrete
             }
             return new SuccessResult();
         }
+
+        public IResultData<List<QuestionHorizontal>> getTargetList(int questionId)
+        {
+            return new SuccessResultData<List<QuestionHorizontal>>(_projectDal.getTargetList(questionId));
+        }
+
+        public IResultData<int> addQuestionHorizantalAdd(QuestionHorizontal questionHorizontal)
+        {
+            try
+            {
+                int Id=_projectDal.AddProjectQuestionHorizantal(questionHorizontal);
+                return new SuccessResultData<int>(Id);
+            }
+            catch (Exception ex)
+            {
+
+                return new ErrorResultData<int>(0,ex.Message);
+            }
+        }
+
+        /*  public IResultData<List<Question>> getAimList(int projectId)
+          {
+              return new SuccessResultData<List<Question>>(_projectDal.getAimList(projectId));
+          }
+
+          public IResultData<List<Question>> getTargetList(int projectId, int aimId)
+          {
+              return new SuccessResultData<List<Question>>(_projectDal.getTargetList(projectId, aimId));
+          }
+
+          public IResultData<List<Question>> getProjectTargetList(int projectId)
+          {
+              return new SuccessResultData<List<Question>>(_projectDal.getProjectTargetList(projectId));
+          }*/
     }
 }

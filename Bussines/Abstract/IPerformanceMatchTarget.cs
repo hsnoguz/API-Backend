@@ -22,5 +22,10 @@ namespace Bussines.Abstract
         public IResultData<List<PerformancePeriotMatchDto>> ListPerformancePeriotMatchTarget(string roleName, int userId, int periotId);
         public IResultData<List<PerformancePeriotMatchDto>> ListPerformanceMatchPeriotAction(string roleName, int userId, int periotId);
         public IResultData<List<PerformancePeriotMatchDto>> ListPerformanceMatchPeriotSubAction(string roleName, int userId, int periotId);
+        public IResultData<List<PerformancePeriotMatchDto>> ListPerformancePeriotMatchTargetSingle(int performanceID);
+        public IResultData<List<PerformancePeriotMatchDto>> ListPerformanceMatchPeriotActionSingle(int performanceID);
+        public IResultData<List<PerformancePeriotMatchDto>> ListPerformanceMatchPeriotSubActionSingle(int performanceID);
+
+
     }
 }

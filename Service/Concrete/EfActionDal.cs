@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Abstract;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,31 @@ namespace Service.Concrete
             var ActionList=_repository.Table.Where(x => x.TargetId == targetId).ToList();
             return ActionList;
         }
+
+        public List<ActionDto> ActionTargetAimList(int periotId)
+        {
+
+            var ActionList = (from A in _context.Actions
+                              join T in _context.Targets
+                                      on A.TargetId equals T.Id
+                              join AP in _context.Aims
+                                      on T.AimId equals AP.Id
+                              join O in _context.Organizations
+                                      on A.OrganizationId equals O.Id
+                              where AP.PeriotId == periotId
+                              select new ActionDto()
+                              {
+                                  Id = A.Id,
+                                  ActionId = A.ActionId,
+                                  Explanation = A.Explanation,
+                                  TargetExplanation=T.Explanation,
+                                  AimExplanation = AP.Explanation,
+                                  OrganizationExplanation=O.Explanation
+                              }
+                           ).ToList();
+            return ActionList;
+        }
+
 
         public void setActionId(DAL.Model.Action action)
         {
@@ -89,8 +115,15 @@ namespace Service.Concrete
 
         public List<DAL.Model.Action> ActionListFull(int periotId)
         {
-            
-            var ActionList = _repository.Table.Where(x=>x.Target.Aim.PeriotId == periotId).ToList();
+
+            var ActionList = (from A in _context.Actions
+                              join T in _context.Targets
+                                      on A.TargetId equals T.Id
+                              join AP in _context.Aims
+                                      on T.AimId equals AP.Id
+                                      where AP.PeriotId==periotId
+                              select A
+                              ).ToList();
             return ActionList;
         }
 

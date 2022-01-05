@@ -29,6 +29,14 @@ namespace Service.Concrete
             }
         }
 
+        public void EditPerformanceTargetResult(Performance_Target_Result performanceTragetResult)
+        {
+            Performance_Target_Result _performanceTragetResult = _repository.GetById(performanceTragetResult.Id);
+            _performanceTragetResult.Result = performanceTragetResult.Result;
+            _performanceTragetResult.Explanation = performanceTragetResult.Explanation;
+            _repository.Update(_performanceTragetResult);
+        }
+
         void IEfPerformanceTargetResultDal.InsertPerformanceTargetResult(Performance_Target_Result PerformanceTragetResult)
         {
             _repository.Insert(PerformanceTragetResult);

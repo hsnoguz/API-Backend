@@ -105,6 +105,36 @@ namespace TemelService.Controllers
         }
 
 
+
+        [HttpGet("ListPerformancePeriotMatchTargetSingle/{performanceId}")]
+        public IActionResult ListPerformancePeriotMatchTargetSingle(int performanceId)
+        {
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformancePeriotMatchTargetSingle(performanceId), jso));
+        }
+
+
+
+        [HttpGet("ListPerformanceMatchPeriotActionSingle/{performanceId}")]
+        public IActionResult ListPerformanceMatchPeriotAction(int performanceId)
+        {
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatchPeriotActionSingle(performanceId), jso));
+        }
+
+        [HttpGet("ListPerformanceMatchPeriotSubActionSingle/{performanceId}")]
+        public IActionResult ListPerformanceMatchPeriotSubAction(int performanceId)
+        {
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+
+            return Ok(System.Text.Json.JsonSerializer.Serialize(_performanceMatchTarget.ListPerformanceMatchPeriotSubActionSingle(performanceId), jso));
+        }
+
+
         [HttpPost("InsertPerformanceMatch")]
         public IActionResult InsertPerformanceMatch([FromBody] PerformanceMatchTarget performanceMatch)
         {

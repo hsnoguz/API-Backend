@@ -29,14 +29,13 @@ namespace TemelService.Controllers
         [HttpGet("jopList")]
         public IActionResult JopList()
         {
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(_JopService.getList().Data, jso));
+        
+            return Ok(_JopService.getList().Data);
       
         }
 
         [HttpPost("jopAdd")]
-        public IActionResult JopAdd(Jop Jop)
+        public IActionResult JopAdd([FromBody] Jop Jop)
         {
             IResult result = _JopService.Add(Jop);
 
@@ -49,7 +48,7 @@ namespace TemelService.Controllers
       
         }
 
-        [HttpPost("jopDelete")]
+        [HttpPost("jopDelete/{id}")]
         public IActionResult JopDelete(int Id)
         {
             IResult result = _JopService.Delete(Id);

@@ -80,7 +80,7 @@ namespace TemelService
           );
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize);
             services.AddSingleton(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.BasicLatin, UnicodeRanges.Latin1Supplement, UnicodeRanges.LatinExtendedA }));
-
+            
             services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
      
@@ -153,14 +153,17 @@ namespace TemelService
 
             app.UseAuthentication();
 
-            app.UseAuthorization();
-            app.Use(async (context, next) =>
-            {
-                context.Response.Headers.Add("X-XSS-Protection", "1; mode=block ");
-                context.Response.Headers.Add("Content-Security-Policy", "default-src 'self';");
-                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
-                await next.Invoke();
-            });
+               app.UseAuthorization();
+          app.Use(async (context, next) =>
+             {
+                 context.Response.Headers.Add("X-XSS-Protection", "1; mode=block ");
+                 context.Response.Headers.Add("Content-Security-Policy", "default-src 'self';");
+                 context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                 await next.Invoke();
+               });
+
+
+             
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

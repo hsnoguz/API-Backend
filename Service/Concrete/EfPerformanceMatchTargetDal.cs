@@ -138,9 +138,11 @@ namespace Service.Concrete
                                                        PerformanceExplanation=PM.Performance.Explanation,
                                                        PerformancePeriotExplanation=PP.Explanation,
                                                        MatchExplanation =M.Explanation,
-                                                       TargetExplanation= resultH.Explanation,
-                                                       ActionExplanation = resultFa.Explanation,
-                                                       SubActionExplanation = resultAFa.Explanation,
+                                                       TargetExplanation=(
+                                                       M.Id==1? resultH.Explanation:
+                                                       M.Id == 2 ? resultFa.Explanation :
+                                                       M.Id == 3 ? resultAFa.Explanation :""
+                                                       ),
                                                        BaseValue =PM.Performance.BaseValue,
                                                        TargetValue= PM.Performance.TargetValue
                                                    }
@@ -399,6 +401,102 @@ namespace Service.Concrete
             performanceMatchTarget.OrganizationId = organizationId;
             _repository.Update(performanceMatchTarget);
             _iEfPerformanceTargetResultDal.EditOrganizationId(performanceMatchTarget.Id, organizationId);
+        }
+
+
+        public List<PerformancePeriotMatchDto> ListPerformancePeriotMatchTargetSingle(int performanceId)
+        {
+            var performansPeriotList = (from PP in _context.Performance_Target_Results
+                                        join P in _context.Performances
+
+                                             on PP.PerformanceId equals P.Id
+                                        /*   join PA in _context.PerformanceAims
+                                                on P.PerformanceAimId equals PA.Id*/
+                                        join PM in _context.PerformanceMatchTargets
+
+                                            on P.Id equals PM.PerformanceId
+                                        where (P.Id == performanceId)
+                                        join M in (_context.Matchs)
+                                            on PM.MatchId equals M.Id
+                                        where M.Explanation == "Hedef"
+
+                                        select new PerformancePeriotMatchDto()
+                                        {
+                                            Id = PP.Id,
+
+                                            PerformanceExplanation = PP.Explanation,
+                                            AimExplanation = P.PerformanceAim.Explanation,
+                                            TargetTime = PP.TargetTime,
+
+                                            //     P.PerformanceAim.Explanation,
+                                            TargetValue = PP.Target,
+                                            ResultValue = PP.Result
+                                        }
+                               ).ToList();
+            return performansPeriotList;
+        }
+
+        public List<PerformancePeriotMatchDto> ListPerformanceMatchPeriotActionSingle(int performanceId)
+        {
+         
+            var performansPeriotList = (from PP in _context.Performance_Target_Results
+                                        join P in _context.Performances
+                                             on PP.PerformanceId equals P.Id
+                                        /*   join PA in _context.PerformanceAims
+                                                on P.PerformanceAimId equals PA.Id*/
+                                        join PM in _context.PerformanceMatchTargets
+                                            on P.Id equals PM.PerformanceId
+                                        where ( PM.TargetId == performanceId)
+                                        join M in (_context.Matchs)
+                                            on PM.MatchId equals M.Id
+                                        where M.Explanation == "Faaliyet"
+
+                                        select new PerformancePeriotMatchDto()
+                                        {
+                                            Id = PP.Id,
+
+                                            PerformanceExplanation = PP.Explanation,
+                                            AimExplanation = P.PerformanceAim.Explanation,
+                                            TargetTime = PP.TargetTime,
+
+                                            //     P.PerformanceAim.Explanation,
+                                            TargetValue = PP.Target,
+                                            ResultValue = PP.Result
+                                        }
+                         ).ToList();
+            return performansPeriotList;
+        }
+
+        public List<PerformancePeriotMatchDto> ListPerformanceMatchPeriotSubActionSingle(int performanceId)
+        {
+
+            var performansPeriotList = (from PP in _context.Performance_Target_Results
+                                        join P in _context.Performances
+                                             on PP.PerformanceId equals P.Id
+                                        /*   join PA in _context.PerformanceAims
+                                                on P.PerformanceAimId equals PA.Id*/
+                                        join PM in _context.PerformanceMatchTargets
+                                            on P.Id equals PM.PerformanceId
+                                        where (PM.TargetId == performanceId)
+
+                                        join M in (_context.Matchs)
+                                            on PM.MatchId equals M.Id
+                                        where M.Explanation == "Alt Faaliyet"
+
+                                        select new PerformancePeriotMatchDto()
+                                        {
+                                            Id = PP.Id,
+
+                                            PerformanceExplanation = PP.Explanation,
+                                            AimExplanation = P.PerformanceAim.Explanation,
+                                            TargetTime = PP.TargetTime,
+
+                                            //     P.PerformanceAim.Explanation,
+                                            TargetValue = PP.Target,
+                                            ResultValue = PP.Result
+                                        }
+                  ).ToList();
+            return performansPeriotList;
         }
     }
 }

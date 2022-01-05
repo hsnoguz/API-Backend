@@ -1,4 +1,5 @@
 ﻿using Bussines.Abstract;
+using Core.Extensions;
 using Core.Results;
 using DAL.Model;
 using Microsoft.AspNetCore.Http;
@@ -23,14 +24,23 @@ namespace TemelService.Controllers
             _aimManager = aimManager;
         }
 
-        [HttpGet("AimList")]
-        public IActionResult GetAimList(int periotId)
+        [HttpGet("AimList/{periotId}")]
+        public IActionResult GetAimList( int periotId)
         {
             var result = _aimManager.AimList(periotId);
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+
+            return Ok(result);
         }
+
+        [HttpGet("GetFullList")]
+        public IActionResult GetFullList()
+        {
+            var result = _aimManager.FullList(Convert.ToInt32(User.ClaimPeriotId().ToString()));
+
+            return Ok(result);
+        }
+
+
 
         [HttpPost("AddAim")]
         public IActionResult AddAim([FromBody] Aim aim)
@@ -61,7 +71,7 @@ namespace TemelService.Controllers
             }
         }
 
-            [HttpPost("DeleteAim")]
+            [HttpPost("DeleteAim/{aimId}")]
         public IActionResult DeleteAim(int aimId)
         {
             var result = _aimManager.DeleteAim(aimId);

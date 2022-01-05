@@ -28,22 +28,40 @@ namespace TemelService.Controllers
         public IActionResult GetSubActionList(int actionId)
         {
             var result = _SubActionManager.SubActionList(actionId);
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+
+
+            return Ok(result);
         }
+
+   /*     [HttpGet("ListFullPlan")]
+        public IActionResult ListFullPlan()
+        {
+
+            var result = _SubActionManager.ListFullPlan(Convert.ToInt32(User.ClaimPeriotId().ToString()));
+
+            return Ok(result);
+        }*/
 
         [HttpGet("SubActionListFull")]
         public IActionResult SubActionListFull()
         {
 
             var result = _SubActionManager.SubActionListFull(Convert.ToInt32(User.ClaimPeriotId().ToString()));
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+
+            return Ok(result);
         }
-        [HttpPost
-            ("EditAction/id/newActionId")]
+
+        [HttpGet("SubActionActionTargetAimList")]
+        public IActionResult SubActionActionTargetAimList()
+        {
+
+            var result = _SubActionManager.SubActionActionTargetAimList(Convert.ToInt32(User.ClaimPeriotId().ToString()));
+
+            return Ok(result);
+        }
+
+
+        [HttpPost("EditAction/id/newActionId")]
         public IActionResult EditAction(int id, int newActionId) {
             var result = _SubActionManager.EditAction(id, newActionId);
             if (result.IsValid)
@@ -61,9 +79,8 @@ namespace TemelService.Controllers
         public IActionResult GetSubAction_OrganizationId(int subActionId)
         {
             var result = _SubActionManager.GetOrganizationId(subActionId).Data;
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+
+            return Ok(result);
         }
 
         [HttpPost("EditSubAction")]
@@ -94,7 +111,7 @@ namespace TemelService.Controllers
             }
         }
 
-        [HttpPost("DeleteSubAction")]
+        [HttpPost("DeleteSubAction/{SubActionId}")]
         public IActionResult GetProjectList(int SubActionId)
         {
             var result = _SubActionManager.DeleteSubAction(SubActionId);

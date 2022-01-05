@@ -50,10 +50,8 @@ namespace TemelService.Controllers
             IResultData<List<Periot>> result = _periotManager.listPeriot();
             if (result.IsValid)
             {
-                JsonSerializerOptions jso = new JsonSerializerOptions();
-                jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-
-                return Ok(System.Text.Json.JsonSerializer.Serialize(result.Data, jso));
+   
+                return Ok(result.Data);
             }
             else
             {
