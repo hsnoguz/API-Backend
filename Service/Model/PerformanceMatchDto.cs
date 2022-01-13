@@ -18,6 +18,8 @@ namespace Service.Model
           public string SubActionExplanation { get; set; }*/
         public decimal BaseValue { get; set; }
         public decimal TargetValue { get; set; }
+        public decimal? SumTargetValue { get; set; }
+        public decimal? SumResultValue { get; set; }
 
     }
 }

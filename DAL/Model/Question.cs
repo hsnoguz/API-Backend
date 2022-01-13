@@ -21,7 +21,7 @@ namespace DAL.Model
         public int Index { get; set; }
         public int ParentId { get; set; }
 
-   
+        public decimal? Puan { get; set; }
         public List<QuestionHorizontal> QuestionHorizontals { get; set; }
    
         public List<QuestionVertical> QuestionVerticals { get; set; }

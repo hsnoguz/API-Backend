@@ -58,16 +58,16 @@ namespace TemelService
                     .AllowCredentials().WithOrigins("http://*","https://*"));
             });
 
-         /*   services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials()
-                        );
-            });*/  
-
+            /*   services.AddCors(options =>
+               {
+                   options.AddPolicy("CorsPolicy",
+                       builder => builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader()
+                           .AllowCredentials()
+                           );
+               });*/
+            
             services.AddDbContext<ManagerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ManagerConnection"), y => y.MigrationsAssembly("DAL")));
             //    services.AddDbContext<SecondDbContext>(options => options.UseSqlServer(y => y.MigrationsAssembly("DAL")));
 

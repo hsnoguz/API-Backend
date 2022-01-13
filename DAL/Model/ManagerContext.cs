@@ -55,7 +55,8 @@ namespace DAL.Model
         public virtual DbSet<UserLeftMenuClaim> UserLeftMenuClaims { get; set; }
         public virtual DbSet<AimQuestion> AimQuestions { get; set; }
         public virtual DbSet<QuestionTextType> QuestionTextTypes { get; set; }
-        
+        public virtual DbSet<ProjectSetting> ProjectSettings { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -63,6 +64,7 @@ namespace DAL.Model
                          // optionsBuilder.UseSqlServer("Data Source= DESKTOP-FSJ8JLM\\SQLEXPRESS;Initial Catalog=ManagerDb;User ID=sa;Password=nasah;MultipleActiveResultSets=True");
                    optionsBuilder.UseSqlServer("Server=176.53.65.202\\MSSQLSERVER2019;Database=arastirma_ManagerDb;User Id=arastirma_service;Password=AraTara051*;MultipleActiveResultSets=True");
             }
+            
             base.OnConfiguring(optionsBuilder.UseLoggerFactory(CustomerLoggerFactory));
             base.OnConfiguring(optionsBuilder);
         }
@@ -149,6 +151,9 @@ namespace DAL.Model
 
             });
 
+/*            modelBuilder.Entity<ProjectSetting>().HasData(new ProjectSetting { Id = 1, Name = "Analiz Count",Value="0" });
+            modelBuilder.Entity<ProjectSetting>().HasData(new ProjectSetting { Id = 2, Name = "Analiz DateTime" });
+*/
             modelBuilder.Entity<LeftMenu>().HasData(new LeftMenu { Id = 1, Description = "Kullanıcı İşlemleri", Src = "/user", MenuId = 0, ImageUrl = "fa fa-user" });
 
             //     modelBuilder.Entity<UserLeftMenuClaim>().HasData(new UserLeftMenuClaim { Id = 1, OperationClaimId = 1, LeftMenuId = 1 });
@@ -159,6 +164,16 @@ namespace DAL.Model
                 entity.Property(e => e.IsUsing).HasDefaultValue(false);
                 entity.Property(e => e.Token).HasMaxLength(255);
             });
+
+
+            modelBuilder.Entity<ProjectSetting>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.SettingName).HasMaxLength(255);
+                entity.Property(e => e.SettingValue).HasMaxLength(255);
+            });
+
+
 
             modelBuilder.Entity<PerformanceMatchTarget>(entity =>
             {
@@ -262,6 +277,8 @@ namespace DAL.Model
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
                 entity.Property(e => e.Target).HasColumnType("decimal(18,4)");
                 entity.Property(e => e.Result).HasColumnType("decimal(18,4)");
+                entity.Property(e => e.IsManual).HasDefaultValue(false);
+                entity.Property(e => e.IsEntry).HasDefaultValue(false);
 
             });
 
@@ -286,6 +303,7 @@ namespace DAL.Model
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
                 entity.Property(e => e.IsSuccess).HasDefaultValue(false);
                 entity.Property(e => e.SuccesCount).HasDefaultValue(0);
+                
             });
 
             modelBuilder.Entity<Question>(entity =>
@@ -293,6 +311,7 @@ namespace DAL.Model
                 entity.Property(e => e.Name).HasMaxLength(70);
                 entity.Property(e => e.Text).HasMaxLength(1000);
                 entity.Property(e => e.Type).HasMaxLength(100);
+                entity.Property(e => e.Puan).HasColumnType("decimal(18,4)");
             });
 
             modelBuilder.Entity<AimQuestion>(entity =>
@@ -306,7 +325,7 @@ namespace DAL.Model
             {
                 entity.Property(e => e.ColumnName).HasMaxLength(70);
                 entity.Property(e => e.Text).HasMaxLength(1000);
-
+                entity.Property(e => e.Puan).HasColumnType("decimal(18,4)");
             });
 
 

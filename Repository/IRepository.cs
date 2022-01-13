@@ -22,7 +22,8 @@ namespace Repository
         public int UpdateSql(string sql, params object[] _params);
         void Delete(T entity);
         void Delete(IEnumerable<T> entities);
-        IEnumerable<T> GetSql(string sql);
-        object GetSqlValue(string sql);
+         Task<IEnumerable<T>> GetSql(string sql);
+      //  object GetSqlValue(string sql);
+        
     }
 }

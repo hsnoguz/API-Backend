@@ -42,7 +42,7 @@ namespace TemelService.Controllers
             return Ok(result);
         }*/
 
-        [HttpGet("SubActionListFull")]
+      /*  [HttpGet("SubActionListFull")]
         public IActionResult SubActionListFull()
         {
 
@@ -50,8 +50,9 @@ namespace TemelService.Controllers
 
             return Ok(result);
         }
+      */
 
-        [HttpGet("SubActionActionTargetAimList")]
+        [HttpGet("SubActionListFull")]
         public IActionResult SubActionActionTargetAimList()
         {
 

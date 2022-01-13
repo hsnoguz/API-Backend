@@ -32,7 +32,7 @@ namespace TemelService.Controllers
 
             return Ok(result);
         }
-
+/*
         [HttpGet("ActionListFull")]
         public IActionResult ActionListFull()
         {
@@ -40,8 +40,8 @@ namespace TemelService.Controllers
 
             return Ok(result);
         }
-
-        [HttpGet("ActionTargetAimList")]
+*/
+        [HttpGet("ActionListFull")]
         public IActionResult ActionTargetAimList()
         {
             var result = _ActionManager.ActionTargetAimList(Convert.ToInt32(User.ClaimPeriotId().ToString()));

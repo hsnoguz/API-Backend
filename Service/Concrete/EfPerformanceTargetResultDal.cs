@@ -34,6 +34,7 @@ namespace Service.Concrete
             Performance_Target_Result _performanceTragetResult = _repository.GetById(performanceTragetResult.Id);
             _performanceTragetResult.Result = performanceTragetResult.Result;
             _performanceTragetResult.Explanation = performanceTragetResult.Explanation;
+            _performanceTragetResult.IsEntry = true;
             _repository.Update(_performanceTragetResult);
         }
 

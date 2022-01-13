@@ -23,5 +23,6 @@ namespace DAL.Model
         public virtual Periot Periot { get; set; }
         public virtual List<Question> Questions { get; set; }
 
+
     }
 }

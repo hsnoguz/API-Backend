@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20220108183628_ProjectSetting_Mig")]
+    partial class ProjectSetting_Mig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,8 +228,8 @@ namespace DAL.Migrations
                             JopId = 1,
                             LastName = "Admin",
                             OrganizationId = 1,
-                            PasswordHash = new byte[] { 60, 135, 9, 96, 194, 208, 121, 159, 93, 31, 115, 210, 187, 142, 98, 129, 114, 234, 39, 239, 219, 235, 35, 25, 183, 219, 18, 214, 76, 36, 53, 146, 68, 241, 176, 176, 64, 222, 109, 35, 142, 22, 246, 84, 106, 27, 53, 129, 81, 255, 36, 121, 10, 6, 155, 42, 43, 102, 105, 174, 105, 127, 232, 170 },
-                            PasswordSalt = new byte[] { 235, 241, 234, 122, 139, 236, 91, 118, 0, 218, 71, 107, 24, 133, 85, 62, 51, 65, 170, 58, 46, 139, 158, 152, 146, 220, 168, 14, 236, 2, 160, 65, 30, 176, 205, 156, 136, 239, 64, 226, 110, 117, 7, 85, 151, 118, 31, 39, 94, 198, 123, 22, 195, 189, 45, 202, 133, 227, 251, 248, 129, 204, 125, 16, 37, 238, 199, 229, 48, 126, 212, 81, 15, 134, 138, 140, 110, 243, 5, 11, 7, 211, 32, 62, 99, 220, 86, 24, 49, 154, 171, 78, 247, 187, 2, 54, 199, 145, 71, 221, 104, 159, 69, 216, 73, 47, 176, 239, 38, 54, 154, 24, 61, 96, 240, 112, 94, 84, 191, 30, 107, 28, 18, 110, 142, 157, 238, 6 },
+                            PasswordHash = new byte[] { 130, 114, 79, 216, 9, 151, 59, 130, 156, 249, 82, 70, 39, 52, 33, 173, 0, 208, 167, 137, 147, 198, 36, 176, 5, 129, 69, 247, 240, 166, 6, 215, 123, 59, 223, 98, 211, 41, 88, 4, 104, 16, 185, 21, 18, 107, 99, 90, 235, 136, 32, 55, 50, 114, 36, 35, 58, 57, 176, 13, 127, 177, 97, 174 },
+                            PasswordSalt = new byte[] { 118, 123, 235, 46, 1, 96, 72, 159, 19, 49, 187, 94, 116, 35, 82, 60, 135, 165, 231, 155, 203, 197, 191, 135, 5, 218, 186, 146, 104, 194, 184, 246, 202, 56, 18, 178, 19, 190, 186, 225, 26, 58, 43, 32, 235, 107, 72, 38, 155, 132, 111, 99, 70, 35, 151, 182, 220, 194, 96, 35, 127, 40, 245, 135, 37, 19, 27, 170, 105, 225, 192, 50, 74, 73, 134, 206, 96, 125, 148, 28, 180, 187, 5, 232, 50, 171, 214, 183, 125, 232, 218, 10, 107, 235, 148, 87, 118, 11, 131, 178, 97, 103, 106, 228, 192, 41, 226, 48, 165, 38, 64, 55, 234, 4, 41, 108, 178, 107, 58, 125, 114, 122, 130, 3, 148, 164, 81, 39 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });
@@ -629,8 +631,8 @@ namespace DAL.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
-                    b.Property<int>("MatchId")
-                        .HasColumnType("int");
+                    b.Property<short>("MatchId")
+                        .HasColumnType("smallint");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("int");
@@ -786,16 +788,6 @@ namespace DAL.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
-                    b.Property<bool>("IsEntry")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("IsManual")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<int>("OrganizationId")
                         .HasColumnType("int");
 
@@ -810,9 +802,6 @@ namespace DAL.Migrations
 
                     b.Property<decimal>("Target")
                         .HasColumnType("decimal(18,4)");
-
-                    b.Property<int>("TargetId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("TargetTime")
                         .HasColumnType("datetime2");
@@ -911,11 +900,11 @@ namespace DAL.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
-                    b.Property<string>("SettingName")
+                    b.Property<string>("Name")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("SettingValue")
+                    b.Property<string>("Value")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -925,6 +914,21 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProjectSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Analiz Count",
+                            Value = "0",
+                            projectID = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Analiz DateTime",
+                            projectID = 0
+                        });
                 });
 
             modelBuilder.Entity("DAL.Model.Question", b =>
@@ -946,9 +950,6 @@ namespace DAL.Migrations
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
-
-                    b.Property<decimal?>("Puan")
-                        .HasColumnType("decimal(18,4)");
 
                     b.Property<int?>("TargetQuestionId")
                         .HasColumnType("int");
@@ -986,9 +987,6 @@ namespace DAL.Migrations
 
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
-
-                    b.Property<decimal?>("Puan")
-                        .HasColumnType("decimal(18,4)");
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");

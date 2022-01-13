@@ -12,7 +12,7 @@ namespace DAL.Model
         public int Id { get; set; }
 
         public int PerformanceId { get; set; }
-        public Int16 MatchId { get; set; }
+        public int MatchId { get; set; }
         public int TargetId { get; set; }
 
         public int OrganizationId { get; set; }

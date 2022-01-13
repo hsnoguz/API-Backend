@@ -105,3 +105,184 @@ END
 
 --sp_TableColumnControl 'P0','Id1'
 GO
+
+
+
+CREATE PROCEDURE [arastirma_service].[sp_SetSwotPuan](@tableName varchar(150),@projectID int)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	declare @AnalizCount int;
+	declare @str varchar(max);
+	declare @SurveyCount int;
+	/*
+	IF OBJECT_ID('tempdb..##SwotAnaliz') IS NOT NULL  
+	begin
+		drop table ##SwotAnaliz
+	end
+	*/
+	select @AnalizCount=isNull(SettingValue,'0')  from ProjectSettings where projectID=@projectID and SettingName='Analiz Count'
+	select @SurveyCount=count(*) from PROJECTS WHERE Id=@projectID;
+
+	if (@AnalizCount is null or @AnalizCount<>@SurveyCount)
+	begin
+		declare @QuestionId int;
+		declare @HorizantalId int;
+		declare @SubHorizantalId int;
+		declare @SubHorizantalColumnName varchar(150);
+
+		declare @QuestionText varchar(250);
+		--SELECT Id,[Text] as Aciklama,cast(0.00 as numeric(18,2)) as Puan  into ##KOLONLAR FROM CRS_Question where projectId=@projectID
+
+		DECLARE CRS_Question CURSOR FOR
+		select Id from QuestionS where projectId=@projectID
+		OPEN CRS_Question
+		FETCH NEXT FROM CRS_Question INTO @QuestionId -- Select sorgusunda gelen sütunlar sırasına göre değişkenlere atanır Örn : @AD_SOYAD_C = @AdiSoyadi
+
+		WHILE @@FETCH_STATUS =0
+			BEGIN
+				--#HORİZANTAL PARENT
+					DECLARE CRS_Horizantal CURSOR FOR
+					select Id from QuestionHorizontals where QuestionID=@QuestionId and ColumnName is null
+					OPEN CRS_Horizantal
+					FETCH NEXT FROM CRS_Horizantal INTO @HorizantalId -- Select sorgusunda gelen sütunlar sırasına göre değişkenlere atanır Örn : @AD_SOYAD_C = @AdiSoyadi
+					WHILE @@FETCH_STATUS =0
+					BEGIN
+					--#SUBHORİZANTAL
+							DECLARE CRS_SubHorizantal CURSOR FOR
+							select Id,ColumnName from QuestionHorizontals where parentID=@HorizantalId and ColumnName is not null
+							OPEN CRS_SubHorizantal
+							FETCH NEXT FROM CRS_SubHorizantal INTO @SubHorizantalId,@SubHorizantalColumnName -- Select sorgusunda gelen sütunlar sırasına göre değişkenlere atanır Örn : @AD_SOYAD_C = @AdiSoyadi
+							  
+							WHILE @@FETCH_STATUS =0
+							BEGIN
+								set @str='update QuestionHorizontals SET Puan=(select avg(cast(' +@SubHorizantalColumnName + ' as numeric(18,2))) from ' + @tableName + ' where Statu=6 and ' +@SubHorizantalColumnName+ ' is not null) where Id=' + cast(@HorizantalId as varchar(50));
+								execute(@str);
+							FETCH NEXT FROM CRS_SubHorizantal INTO @SubHorizantalId,@SubHorizantalColumnName
+							END
+							CLOSE CRS_SubHorizantal
+							DEALLOCATE CRS_SubHorizantal
+						--#END SUBHORİZANTAL
+						update QuestionHorizontals set Puan=(select avg(Puan) from QuestionHorizontals where ParentId=@HorizantalId) where ID=@HorizantalId;
+
+					FETCH NEXT FROM CRS_Horizantal INTO @HorizantalId
+					END
+					CLOSE CRS_Horizantal
+					DEALLOCATE CRS_Horizantal
+			--#END HORİZANTAL
+			
+				--#HORİZANTAL PARENT COLUMNNAME
+				
+					DECLARE CRS_Horizantal CURSOR FOR
+					select Id,ColumnName from QuestionHorizontals where QuestionID=@QuestionId and ColumnName is NOT null and ParentId=0;
+					OPEN CRS_Horizantal
+					FETCH NEXT FROM CRS_Horizantal INTO @HorizantalId,@SubHorizantalColumnName -- Select sorgusunda gelen sütunlar sırasına göre değişkenlere atanır Örn : @AD_SOYAD_C = @AdiSoyadi
+					WHILE @@FETCH_STATUS =0
+					BEGIN
+						set @str='update QuestionHorizontals SET Puan=(select avg(cast(' +@SubHorizantalColumnName + ' as numeric(18,2))) from ' + @tableName + ' where Statu=1 and ' +@SubHorizantalColumnName+ ' is not null) where Id=' + cast(@HorizantalId as varchar(50));
+						execute(@str);
+						FETCH NEXT FROM CRS_Horizantal INTO @HorizantalId,@SubHorizantalColumnName
+					END
+					CLOSE CRS_Horizantal
+					DEALLOCATE CRS_Horizantal
+
+			update Questions set Puan=(select avg(Puan) from QuestionHorizontals where QuestionId=@QuestionId and puan is not null) where ID=@QuestionId;
+			FETCH NEXT FROM CRS_Question INTO @QuestionId
+ 			END
+
+
+		CLOSE CRS_Question
+		DEALLOCATE CRS_Question
+
+	if (exists(select top 1 'dsfs' from ProjectSettings where projectID=@projectId and SettingName='Analiz Count'))
+	begin
+			 set @str='
+				declare @answerCount int;
+				select @answerCount=count(*) from ' +@tableName+ ' where statu=1;
+				update ProjectSettings set SettingValue=cast(@answerCount as varchar(50)) where projectID='  + cast(@projectID as varchar(50)) + ' and SettingName=''Analiz Count'''
+			execute(@str);	
+	end
+	else
+	begin
+			 set @str='	insert into ProjectSettings(projectID,SettingName,SettingValue)
+				select ' + cast(@projectID as varchar(50)) + ',''Analiz Count'',cast(count(*) as varchar(50)) from ' + @tableName + ' where statu=1'  
+			execute(@str);
+	end
+end
+
+
+END
+
+
+
+
+
+ALTER PROCEDURE [arastirma_service].[sp_GetSwot](@projectId int)
+AS
+BEGIN
+declare @tableName varchar(250);
+set @tableName= 'P' + cast(@projectID as varchar(50));
+exec sp_SetSwotPuan @tableName,@projectID
+declare @QuestionId int;
+		declare @HorizantalId int;
+		declare @SubHorizantalId int;
+	SET NOCOUNT ON;
+		declare @myTable table(Id int,[Text] varchar(2000),Puan Decimal(18,2)/*,Sonuc varchar(250)*/)
+   	DECLARE CRS_Question CURSOR FOR
+		select Id from QuestionS where projectId=@projectId and [Name] not like '%Pestle%'  order by [Index]
+		OPEN CRS_Question
+		FETCH NEXT FROM CRS_Question INTO @QuestionId -- Select sorgusunda gelen sütunlar sırasına göre değişkenlere atanır Örn : @AD_SOYAD_C = @AdiSoyadi
+
+		WHILE @@FETCH_STATUS =0
+			BEGIN
+			print @QuestionId
+				insert into @myTable(Id,[Text],Puan) select Id,[Text],Puan from QuestionS where ID=@QuestionId
+				--#HORİZANTAL PARENT
+					DECLARE CRS_Horizantal CURSOR FOR
+					select Id from QuestionHorizontals where QuestionID=@QuestionId and ColumnName is null ORDER BY [Index]
+					OPEN CRS_Horizantal
+					FETCH NEXT FROM CRS_Horizantal INTO @HorizantalId -- Select sorgusunda gelen sütunlar sırasına göre değişkenlere atanır Örn : @AD_SOYAD_C = @AdiSoyadi
+					WHILE @@FETCH_STATUS =0
+					BEGIN
+						print 'H=' + cast(@HorizantalId as varchar(50));
+							insert into @myTable(Id,[Text],Puan) select Id,[Text],Puan from QuestionHorizontals where ID=@HorizantalId
+							insert into @myTable(Id,[Text],Puan) select Id,[Text],Puan from QuestionHorizontals where parentId=@HorizantalId order by [Index]
+						/*	
+							--#SUBHORİZANTAL
+							DECLARE CRS_SubHorizantal CURSOR FOR
+							select Id from QuestionHorizontals where parentID=@HorizantalId and ColumnName is not null ORDER BY [Index]
+							OPEN CRS_SubHorizantal
+							FETCH NEXT FROM CRS_SubHorizantal INTO @SubHorizantalId -- Select sorgusunda gelen sütunlar sırasına göre değişkenlere atanır Örn : @AD_SOYAD_C = @AdiSoyadi
+							  
+							WHILE @@FETCH_STATUS =0
+							BEGIN
+								insert into @myTable select Id,Aciklama,Puan from QuestionHorizontals where ID=@SubHorizantalId
+
+							FETCH NEXT FROM CRS_SubHorizantal INTO @SubHorizantalId
+							END
+							CLOSE CRS_SubHorizantal
+							DEALLOCATE CRS_SubHorizantal
+							--#ENDSUBHORİZANTAL
+							*/
+						FETCH NEXT FROM CRS_Horizantal INTO @HorizantalId
+					END
+					CLOSE CRS_Horizantal
+					DEALLOCATE CRS_Horizantal
+					
+					insert into @myTable(Id,[Text],Puan) select Id,[Text],Puan from QuestionHorizontals where  QuestionID=@QuestionId and ColumnName is not null ORDER BY [Index]
+					--#ENDHORİZANTAL
+				FETCH NEXT FROM CRS_Question INTO @QuestionId
+ 			END
+
+			
+		CLOSE CRS_Question
+		DEALLOCATE CRS_Question
+		
+/*		update @myTable set Sonuc=case when Puan<3.5 then 'Zayıf' 
+										when Puan>3.4  then 'Güçlü' 
+									end
+									*/
+select */*,'' as [Type],0 as ProjectId,0 as [Index],0 as ParentId,'' as [Name],0 as TargetQuestionId*/ from @myTable where Puan is not null
+END

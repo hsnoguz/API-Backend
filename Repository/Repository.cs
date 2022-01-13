@@ -125,16 +125,18 @@ namespace Repository
             _context.SaveChanges();
         }
 
-        public IEnumerable<T> GetSql(string sql)
+        public async Task<IEnumerable<T>> GetSql(string sql)
+        {
+            var result =Entities.FromSqlRaw(sql);
+            return await result.ToListAsync();
+        }
+
+    /*    public object GetSqlValue(string sql)
         {
             return Entities.FromSqlRaw(sql);
         }
-
-        public object GetSqlValue(string sql)
-        {
-            return Entities.FromSqlRaw(sql);
-        }
-
+    */
+  
 
         public int UpdateSql(string sql, params object[] _params)
         {

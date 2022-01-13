@@ -39,6 +39,7 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<EfQuestionVerticalDal>().As<IEfQuestionVerticalDal>();
             builder.RegisterType<EfTargetDal>().As<IEfTargetDal>();
             builder.RegisterType<EfUserLeftMenuClaimDal>().As<IEfUserLeftMenuClaimDal>();
+            builder.RegisterType<EfSurveyAnalyzeDal>().As<IEfSurveyAnalyzeDal>();
 
             builder.RegisterType<EfPerformanceDal>().As<IEfPerformanceDal>();
             builder.RegisterType<EfPerformanceTargetResultDal>().As<IEfPerformanceTargetResultDal>();
@@ -57,7 +58,8 @@ namespace Bussines.DependencyResolvers.Autofac
             builder.RegisterType<EfOperationClaimDal>().As<IEfOperationClaimDal>();
             builder.RegisterType<EfOperationClaimDal>().As<IEfOperationClaimDal>();
             builder.RegisterType<PerformanceTargetResultManager>().As<IPerformanceTargetResultManager>();
-            
+            builder.RegisterType<SurveyAnalzeManager>().As<ISurveyAnalzeManager>();
+
             builder.RegisterType<PerformanceMatchTargetManager>().As<IPerformanceMatchTarget>();
             builder.RegisterType<PerformanceManager>().As<IPerformanceManager>();
           //  builder.RegisterType<CookieHelper>().As<ICookieHelper>();

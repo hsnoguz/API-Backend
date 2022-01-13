@@ -12,6 +12,7 @@ namespace Service.Model
         public int Id { get; set; }
         public string PerformanceExplanation { get; set; }
         public string AimExplanation { get; set; }
+        public string ResultExplanation { get; set; }
         public DateTime TargetTime { get; set; }
         public decimal ResultValue { get; set; }
         public decimal TargetValue { get; set; }

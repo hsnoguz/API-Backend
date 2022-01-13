@@ -32,14 +32,14 @@ namespace TemelService.Controllers
             return Ok(result);
         }
 
-        [HttpGet("TargetListFull")]
+    /*    [HttpGet("TargetListFull")]
         public IActionResult TargetListFull()
         {
             var result = _TargetManager.TargetListFull(Convert.ToInt32(User.ClaimPeriotId().ToString()));
             return Ok(result);
-        }
+        }*/
 
-        [HttpGet("TargetAimList")]
+        [HttpGet("TargetListFull")]
         public IActionResult TargetAimnList()
         {
             var result = _TargetManager.TargetAimList(Convert.ToInt32(User.ClaimPeriotId().ToString()));
