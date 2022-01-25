@@ -52,6 +52,7 @@ namespace DAL.Model
         public virtual DbSet<PerformanceMatchTarget> PerformanceMatchTargets { get; set; }
         public virtual DbSet<ActionPrice> ActionPrices { get; set; }
         public virtual DbSet<LeftMenu> LeftMenus { get; set; }
+        public virtual DbSet<ManualPage> ManualPages { get; set; }
         public virtual DbSet<UserLeftMenuClaim> UserLeftMenuClaims { get; set; }
         public virtual DbSet<AimQuestion> AimQuestions { get; set; }
         public virtual DbSet<QuestionTextType> QuestionTextTypes { get; set; }
@@ -173,7 +174,12 @@ namespace DAL.Model
                 entity.Property(e => e.SettingValue).HasMaxLength(255);
             });
 
+            modelBuilder.Entity<ManualPage>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.Explanation).HasColumnType("ntext");
 
+            });
 
             modelBuilder.Entity<PerformanceMatchTarget>(entity =>
             {
@@ -399,6 +405,7 @@ namespace DAL.Model
                 entity.Property(e => e.Src)
                     .HasMaxLength(250)
                     .IsUnicode(false);
+                entity.Property(e => e.IsManual).HasDefaultValue(false);
                 entity.Property(e => e.isActive).HasDefaultValue(true);
             });
 

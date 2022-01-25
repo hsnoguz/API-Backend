@@ -1,6 +1,7 @@
 ﻿using DAL.Model;
 using Repository;
 using Service.Abstract;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,18 @@ namespace Service.Concrete
             _performanceTragetResult.Explanation = performanceTragetResult.Explanation;
             _performanceTragetResult.IsEntry = true;
             _repository.Update(_performanceTragetResult);
+        }
+
+        public void EditPerformanceTargeValue(PerformancePeriotMatchTargetValue performancePeriotMatchTargetValue)
+        {
+            Performance_Target_Result _performanceTragetResult = _repository.GetById(performancePeriotMatchTargetValue.Id);
+            if (_performanceTragetResult.IsEntry == false)
+            {
+                _performanceTragetResult.Target = performancePeriotMatchTargetValue.TargetValue;
+                _repository.Update(_performanceTragetResult);
+            }
+
+           
         }
 
         void IEfPerformanceTargetResultDal.InsertPerformanceTargetResult(Performance_Target_Result PerformanceTragetResult)

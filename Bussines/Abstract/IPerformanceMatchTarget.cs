@@ -12,6 +12,7 @@ namespace Bussines.Abstract
   public  interface IPerformanceMatchTarget
     {
         public IResult InsertPerformanceMatch(PerformanceMatchTarget performanceMatch);
+        public IResult DeletePerformanceMatch(int Id);
         public IResultData<List<PerformanceMatchDto>> ListPerformanceMatch(string roleName,int userId, int periotId);
         public IResultData<List<Match>> MatchList();
         public IResultData<List<Match>> MatchPriceList();

@@ -11,7 +11,7 @@ namespace Service.Abstract
  public interface IEfActionPriceDal
     {
         public void InsertActionPrice(ActionPrice actionMatchPrice);
-        //public void EditActionPrice(ActionPrice actionMatchPrice);
+        public void EditActionPrice(EditActionPriceMatchDto actionMatchPrice);
         public void SetActionPriceResult(int Id,decimal Result);
         public void DeleteActionPrice(int Id);
         public List<ActionPriceMatchDto> ListActionPrice(int roleId, int organizationId, int periotId);

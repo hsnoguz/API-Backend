@@ -10,6 +10,7 @@ namespace Service.Abstract
 {
   public interface IEfPerformanceMatchTargetDal
     {
+        public void DeletePerformanceMatch(int Id);
         public void InsertPerformanceMatch(PerformanceMatchTarget performanceMatch);
         public List<PerformanceMatchDto> ListPerformanceMatch(int roleId,int organizationId,int periotId);
         public List<PerformanceMatchDto> ListPerformanceMatchTarget(int roleId, int organizationId, int periotId);

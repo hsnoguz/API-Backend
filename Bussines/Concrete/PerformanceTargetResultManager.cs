@@ -2,6 +2,7 @@
 using Core.Results;
 using DAL.Model;
 using Service.Abstract;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,20 @@ namespace Bussines.Concrete
             try
             {
                 _efPerformanceTargetResultDal.EditPerformanceTargetResult(performanceTragetResult);
+                return new SuccessResult();
+            }
+            catch (Exception ex)
+            {
+
+                return new ErrorResult(ex.Message);
+            }
+        }
+
+        public IResult EditPerformanceTargeValue(PerformancePeriotMatchTargetValue performancePeriotMatchTargetValue)
+        {
+            try
+            {
+                _efPerformanceTargetResultDal.EditPerformanceTargeValue(performancePeriotMatchTargetValue);
                 return new SuccessResult();
             }
             catch (Exception ex)

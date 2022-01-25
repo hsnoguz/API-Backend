@@ -20,8 +20,8 @@ namespace DAL.Model
         public bool IsOpen { get; set; }
         public int? ParentId { get; set; }
         public decimal? Point { get; set; }
-        [JsonIgnore]
-        public virtual Question Question { get; set; }
+      //  [JsonIgnore]
+    //    public virtual Question Question { get; set; }
     }
 }
         

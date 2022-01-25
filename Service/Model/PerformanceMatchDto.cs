@@ -20,6 +20,6 @@ namespace Service.Model
         public decimal TargetValue { get; set; }
         public decimal? SumTargetValue { get; set; }
         public decimal? SumResultValue { get; set; }
-
+        public decimal? SuccessRate { get; set; }
     }
 }

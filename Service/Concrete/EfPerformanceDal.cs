@@ -53,7 +53,7 @@ namespace Service.Concrete
         }
         public Performance getPerformance(int Id)
         {
-            return _repository.Table.Include(x => x.PerformanceAim).Include(x => x.PerformanceType).Include(x => x.PerformancePeriot).FirstOrDefault();
+            return _repository.Table.Include(x => x.PerformanceAim).Include(x => x.PerformanceType).Include(x => x.PerformancePeriot).Where(x=>x.Id==Id).FirstOrDefault();
         }
 
         public List<Performance> PerformancePeriotList(int organizationId, int roleId)

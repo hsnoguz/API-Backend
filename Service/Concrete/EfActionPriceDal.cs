@@ -29,6 +29,15 @@ namespace Service.Concrete
             _repository.Insert(actionMatchPrice);
         }
 
+        public void EditActionPrice(EditActionPriceMatchDto actionMatchPrice)
+        {
+            var _actionPrice = _repository.GetById(actionMatchPrice.Id);
+            _actionPrice.TargetValue = actionMatchPrice.TargetValue;
+            _actionPrice.ResultValue= actionMatchPrice.ResultValue;
+
+            _repository.Update(_actionPrice);
+        }
+
         public List<ActionPriceMatchDto> ListActionSubActionPrice(int roleId, int organizationId, int periotId)
         {
             int AdminRoleId = _efOperationServiceDal.RoleId("Admin");
@@ -151,5 +160,7 @@ namespace Service.Concrete
             var actionPrice = _repository.GetById(Id);
             _repository.Delete(actionPrice);
         }
+
+  
     }
 }

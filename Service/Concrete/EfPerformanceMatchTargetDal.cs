@@ -155,7 +155,7 @@ namespace Service.Concrete
                                                        BaseValue =PM.Performance.BaseValue,
                                                        TargetValue= PM.Performance.TargetValue,
                                                        SumTargetValue =resultPPTR.Target == null ? 0 : resultPPTR.Target,
-                                                       SumResultValue = resultPPTR.Result == null ? 0 : resultPPTR.Result
+                                                       SuccessRate = resultPPTR.Result == null ? 0 : resultPPTR.Result / resultPPTR.Target == null ? 0 : resultPPTR.Target
                                                    }
                                                      ).ToList();
 
@@ -278,8 +278,10 @@ namespace Service.Concrete
                                         /*   join PA in _context.PerformanceAims
                                                 on P.PerformanceAimId equals PA.Id*/
                                         join PM in _context.PerformanceMatchTargets
+                                          on new { key2 = PP.PerformanceId, key1 = PP.PerformanceMatchId, key3 = PP.TargetId }
+                                                        equals
+                                           new { key2 = PM.PerformanceId, key1 = PM.MatchId, key3 = PM.TargetId }
 
-                                            on P.Id equals PM.PerformanceId
                                         where ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.Performance.PeriotId == periotId)
                                         join M in (_context.Matchs)
                                             on PM.MatchId equals M.Id
@@ -314,7 +316,9 @@ namespace Service.Concrete
                                         /*   join PA in _context.PerformanceAims
                                                 on P.PerformanceAimId equals PA.Id*/
                                         join PM in _context.PerformanceMatchTargets
-                                            on P.Id equals PM.PerformanceId
+                                            on new { key2 = PP.PerformanceId, key1 = PP.PerformanceMatchId, key3 = PP.TargetId }
+                                                        equals
+                                           new { key2 = PM.PerformanceId, key1 = PM.MatchId, key3 = PM.TargetId }
                                         where ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.Performance.PeriotId == periotId)
                                         join M in (_context.Matchs)
                                             on PM.MatchId equals M.Id
@@ -348,7 +352,9 @@ namespace Service.Concrete
                                         join P in _context.Performances
                                              on PP.PerformanceId equals P.Id
                                         join PM in _context.PerformanceMatchTargets
-                                            on P.Id equals PM.PerformanceId
+                                            on new { key2 = PP.PerformanceId, key1 = PP.PerformanceMatchId, key3 = PP.TargetId }
+                                            equals
+                                           new { key2 = PM.PerformanceId, key1 = PM.MatchId, key3 = PM.TargetId }
                                         where ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.Performance.PeriotId == periotId)
 
                                         join M in (_context.Matchs)
@@ -400,7 +406,7 @@ namespace Service.Concrete
                     result = tempValue - targetValue;
                     break;
                 default:
-                    tempValue = targetValue;
+                    result = targetValue;
                     break;
             }
 
@@ -429,7 +435,8 @@ namespace Service.Concrete
                                                 on P.PerformanceAimId equals PA.Id*/
                                         join PM in _context.PerformanceMatchTargets
 
-                                            on P.Id equals PM.PerformanceId
+                                        on PP.PerformanceMatchId equals PM.Id
+
                                         join T in (_context.Targets)
                                       on PM.TargetId equals T.Id
                                         where (PM.Id == performanceId)
@@ -464,7 +471,7 @@ namespace Service.Concrete
                                         /*   join PA in _context.PerformanceAims
                                                 on P.PerformanceAimId equals PA.Id*/
                                         join PM in _context.PerformanceMatchTargets
-                                            on P.Id equals PM.PerformanceId
+                                       on PP.PerformanceMatchId equals PM.Id
 
                                         join A in (_context.Actions)
                                             on PM.TargetId equals A.Id
@@ -501,7 +508,8 @@ namespace Service.Concrete
                                         /*   join PA in _context.PerformanceAims
                                                 on P.PerformanceAimId equals PA.Id*/
                                         join PM in _context.PerformanceMatchTargets
-                                            on P.Id equals PM.PerformanceId
+                                             on PP.PerformanceMatchId equals PM.Id
+
 
                                         join SA in (_context.SubActions)
                                     on PM.TargetId equals SA.Id
@@ -525,6 +533,12 @@ namespace Service.Concrete
                                         }
                   ).ToList();
             return performansPeriotList;
+        }
+
+        public void DeletePerformanceMatch(int Id)
+        {
+            var performanMatch = _repository.GetById(Id);
+            _repository.Delete(performanMatch);
         }
     }
 }

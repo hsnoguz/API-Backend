@@ -17,7 +17,7 @@ namespace DAL.Model
         public string ImageUrl2 { get; set; }
         public string OnClick { get; set; }
         public short? AccessRank { get; set; }
-
+        public bool? IsManual { get; set; }
         public bool isActive { get; set; }
 
     }

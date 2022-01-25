@@ -3,6 +3,7 @@ using Core.Extensions;
 using Core.Results;
 using DAL.Model;
 using Microsoft.AspNetCore.Mvc;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,23 @@ namespace TemelService.Controllers
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             IResult result = _actionPriceManager.InsertActionPrice(actionPrice);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+
+            }
+
+        }
+
+        [HttpPost("EditActionPrice")]
+        public IActionResult InsertActionPrice([FromBody] EditActionPriceMatchDto actionPrice)
+        {
+
+            IResult result = _actionPriceManager.EditActionPrice(actionPrice);
             if (result.IsValid)
             {
                 return Ok();

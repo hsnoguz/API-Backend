@@ -19,7 +19,7 @@ namespace DAL.Model
         public int Index { get; set; }
         public Int16? Value { get; set; }
         public Decimal? Puan { get; set; }
-        [JsonIgnore]
-        public virtual Question Question { get; set; }
+    //    [JsonIgnore]
+     //   public virtual Question Question { get; set; }
     }
 }

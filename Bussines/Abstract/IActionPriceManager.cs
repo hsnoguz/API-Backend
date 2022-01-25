@@ -12,6 +12,7 @@ namespace Bussines.Abstract
   public interface IActionPriceManager
     {
         public IResult InsertActionPrice(ActionPrice actionMatchPrice);
+        public IResult EditActionPrice(EditActionPriceMatchDto actionMatchPrice);
         public IResult SetActionPriceResult(int Id, decimal Result);
         public IResult DeleteActionPrice(int Id);
         public IResultData<List<ActionPriceMatchDto>> ListActionPrice(string roleName, int userId, int periotId);

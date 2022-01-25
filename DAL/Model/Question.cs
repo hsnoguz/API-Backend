@@ -27,7 +27,7 @@ namespace DAL.Model
         public List<QuestionVertical> QuestionVerticals { get; set; }
     //    public QuestionTextType QuestionTextType { get; set; }
 
-        [JsonIgnore]
-        public virtual Project Project { get; set; }
+       // [JsonIgnore]
+      //  public virtual Project Project { get; set; }
     }
 }

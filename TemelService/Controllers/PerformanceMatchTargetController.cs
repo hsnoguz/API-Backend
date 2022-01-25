@@ -153,5 +153,20 @@ namespace TemelService.Controllers
              
 
         }
+
+        [HttpPost("DeletePerformanceMatch/{Id}")]
+        public IActionResult DeletePerformanceMatch(int Id)
+        {
+            IResult result = _performanceMatchTarget.DeletePerformanceMatch(Id);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+
+            }
+        }
     }
 }

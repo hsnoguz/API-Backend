@@ -23,6 +23,20 @@ namespace Bussines.Concrete
             _authService = authService;
         }
 
+        public IResult DeletePerformanceMatch(int Id)
+        {
+            try
+            {
+                _efPerformanceMatchTargetDal.DeletePerformanceMatch(Id);
+                return new SuccessResult();
+            }
+            catch (Exception ex)
+            {
+
+                return new ErrorResult(ex.Message);
+            }
+        }
+
         public IResult InsertPerformanceMatch(DAL.Model.PerformanceMatchTarget performanceMatch)
         {
             try

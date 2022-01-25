@@ -34,6 +34,19 @@ namespace Bussines.Concrete
             }
         }
 
+        public IResult EditActionPrice(EditActionPriceMatchDto actionMatchPrice)
+        {
+            try
+            {
+                _efActionPriceDal.EditActionPrice(actionMatchPrice);
+                return new SuccessResult();
+            }
+            catch (Exception ex)
+            {
+                return new ErrorResult(ex.Message);
+            }
+        }
+
         public IResult InsertActionPrice(ActionPrice actionMatchPrice)
         {
             try

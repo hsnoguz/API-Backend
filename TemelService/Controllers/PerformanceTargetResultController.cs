@@ -1,6 +1,7 @@
 ﻿using Bussines.Abstract;
 using DAL.Model;
 using Microsoft.AspNetCore.Mvc;
+using Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,22 @@ namespace TemelService.Controllers
             }
 
         }
-        
+
+        [HttpPost("EditPerformanceTargetValue")]
+        public IActionResult EditPerformanceTargetValue([FromBody] PerformancePeriotMatchTargetValue performanceTragetValue)
+        {
+            var result = _performanceTargetResultManager.EditPerformanceTargeValue(performanceTragetValue);
+            if (result.IsValid)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+
+        }
+
         [HttpPost("EditOrganizationId/{performanceMatchId}/{organizationId}")]
         public IActionResult EditOrganizationId(int performanceMatchId, int organizationId)
         {

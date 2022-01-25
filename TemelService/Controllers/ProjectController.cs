@@ -27,9 +27,14 @@ namespace TemelService.Controllers
         public IActionResult GetProject(int projectId)
         {
             var result = _projectManager.GetProjectQuestion(projectId);
+            /*
+       
             JsonSerializerOptions jso = new JsonSerializerOptions();
             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+
             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+            */
+            return Ok(result.Data);
         }
 
 /*
@@ -46,27 +51,34 @@ namespace TemelService.Controllers
         public IActionResult getTargetList(int questionId)
         {
             var result = _projectManager.getTargetList(questionId);
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+            /* JsonSerializerOptions jso = new JsonSerializerOptions();
+             jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+             return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+             */
+            return Ok(result.Data);
+
         }
 
         [HttpGet("GetProjectGuid/{guid}")]
         public IActionResult GetProjectGuid(string guid)
         {
             var result = _projectManager.GetProjectQuestionGuid(guid);
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+            /*  JsonSerializerOptions jso = new JsonSerializerOptions();
+              jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+              return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+            */
+            return Ok(result.Data);
         }
 
         [HttpGet("GetProjectList/{periotId}")]
         public IActionResult GetProjectList(int periotId)
         {
             var result = _projectManager.Projects(periotId);
-            JsonSerializerOptions jso = new JsonSerializerOptions();
-            jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+            /*  JsonSerializerOptions jso = new JsonSerializerOptions();
+              jso.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+              return Ok(System.Text.Json.JsonSerializer.Serialize(result, jso));
+            */
+            return Ok(result.Data);
         }
 
         [HttpPost("SetColumnValue")]
