@@ -20,9 +20,10 @@ namespace Service.Concrete
             _context = context;
         }
 
-        public void AddLeftMenu(LeftMenu leftMenu)
+        public int AddLeftMenu(LeftMenu leftMenu)
         {
             _repository.Insert(leftMenu);
+            return leftMenu.Id;
         }
 
         public void DeleteLeftMenu(int Id)

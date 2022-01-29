@@ -74,7 +74,10 @@ namespace Bussines.Concrete
         {
             return _efTargetDal.TargetListFull(periotId);
         }
-
+        public IResultData<List<Object>> GetTargetCart(int targetId)
+        {
+            return new SuccessResultData<List<Object>>(_efTargetDal.GetTargetCart(targetId));
+        }
         public List<TargetDto> TargetAimList(int periotId)
         {
             return _efTargetDal.TargetAimList(periotId);

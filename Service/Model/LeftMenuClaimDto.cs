@@ -9,7 +9,7 @@ namespace Service.Model
 {
   public  class LeftMenuClaimDto: ICustomEntity
     {
-        public short Id { get; set; }
+        public int Id { get; set; }
         public string Description { get; set; }
         public string Src { get; set; }
         public short? MenuId { get; set; }

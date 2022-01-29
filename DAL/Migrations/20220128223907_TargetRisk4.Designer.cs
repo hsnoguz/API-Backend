@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20220128223907_TargetRisk4")]
+    partial class TargetRisk4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,8 +228,8 @@ namespace DAL.Migrations
                             JopId = 1,
                             LastName = "Admin",
                             OrganizationId = 1,
-                            PasswordHash = new byte[] { 238, 69, 75, 156, 151, 165, 26, 104, 157, 232, 177, 182, 47, 249, 201, 217, 210, 240, 146, 18, 55, 87, 7, 55, 42, 89, 6, 119, 218, 126, 192, 0, 24, 249, 238, 214, 133, 27, 171, 240, 145, 37, 175, 24, 204, 26, 48, 225, 143, 165, 244, 44, 73, 86, 218, 179, 192, 5, 204, 6, 198, 62, 132, 62 },
-                            PasswordSalt = new byte[] { 12, 8, 146, 26, 145, 80, 172, 102, 85, 92, 156, 220, 254, 217, 160, 89, 38, 134, 103, 88, 163, 117, 197, 14, 148, 23, 3, 45, 158, 161, 31, 206, 77, 54, 65, 189, 109, 105, 124, 120, 125, 1, 209, 60, 198, 151, 69, 103, 165, 249, 231, 106, 44, 180, 32, 173, 8, 209, 5, 169, 168, 132, 111, 126, 111, 152, 171, 184, 230, 9, 232, 150, 203, 96, 13, 109, 136, 28, 228, 20, 239, 91, 98, 98, 16, 247, 155, 223, 143, 231, 202, 79, 253, 186, 39, 143, 65, 157, 198, 5, 6, 93, 146, 5, 184, 169, 180, 90, 141, 1, 131, 87, 38, 89, 115, 82, 234, 38, 111, 24, 178, 217, 213, 200, 159, 184, 20, 39 },
+                            PasswordHash = new byte[] { 192, 226, 236, 37, 41, 107, 38, 246, 191, 236, 39, 225, 184, 169, 15, 229, 115, 63, 62, 165, 225, 221, 171, 95, 136, 204, 246, 15, 239, 247, 64, 130, 239, 245, 93, 106, 142, 59, 41, 238, 152, 77, 27, 47, 179, 228, 238, 124, 158, 102, 59, 228, 135, 224, 84, 196, 72, 101, 89, 17, 55, 92, 35, 233 },
+                            PasswordSalt = new byte[] { 75, 134, 138, 94, 13, 110, 215, 247, 144, 141, 240, 228, 161, 92, 253, 161, 51, 215, 71, 22, 101, 140, 141, 176, 165, 16, 170, 145, 203, 241, 71, 0, 6, 91, 132, 209, 60, 51, 190, 123, 178, 79, 204, 133, 146, 144, 130, 118, 134, 89, 252, 108, 227, 23, 175, 3, 121, 35, 41, 177, 100, 175, 86, 13, 50, 0, 217, 144, 151, 227, 50, 3, 135, 126, 89, 3, 109, 62, 0, 207, 20, 197, 165, 155, 2, 242, 123, 104, 11, 77, 28, 189, 158, 174, 25, 93, 68, 2, 94, 31, 146, 65, 115, 11, 177, 229, 194, 178, 17, 179, 182, 33, 155, 107, 179, 127, 166, 34, 223, 7, 177, 90, 245, 63, 30, 90, 175, 231 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });
@@ -418,9 +420,9 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Model.LeftMenu", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("smallint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<short?>("AccessRank")
@@ -476,7 +478,7 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = (short)1,
                             Description = "Kullanıcı İşlemleri",
                             ImageUrl = "fa fa-user",
                             MenuId = (short)0,

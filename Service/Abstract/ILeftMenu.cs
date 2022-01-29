@@ -13,7 +13,7 @@ namespace Service.Abstract
         public List<LeftMenu> GetLeftMenu(int roleId, int userId);
         public List<LeftMenuClaimDto> GetLeftMenuFull();
 
-        public void AddLeftMenu(LeftMenu leftMenu);
+        public int AddLeftMenu(LeftMenu leftMenu);
         public void DeleteLeftMenu(int Id);
         public void EditLeftMenu(LeftMenu leftMenu);
     }

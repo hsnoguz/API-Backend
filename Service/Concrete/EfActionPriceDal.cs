@@ -47,28 +47,80 @@ namespace Service.Concrete
             List<ActionPriceMatchDto> matchList = (from PM in _context.ActionPrices
                                                    where ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.PeriotId == periotId)
                                                    join M in _context.Matchs on PM.MatchId equals M.Id
-                                     
+
                                                    join A in _context.Actions.DefaultIfEmpty()
                                                         on new { Id = PM.ActionId, key2 = M.Explanation }
                                                         equals
                                                         new { Id = A.Id, key2 = "Faaliyet" }
                                                          into resut2
                                                    from resultFa in resut2.DefaultIfEmpty()
-                                                   join SA in _context.SubActions.DefaultIfEmpty()
-                                                        on new { Id = PM.ActionId, key2 = M.Explanation }
-                                                        equals
-                                                        new { Id = SA.Id, key2 = "Alt Faaliyet" }
-                                                              into resut3
-                                                   from resultAFa in resut3.DefaultIfEmpty()
-   
+
+                                                   join T in _context.Targets.DefaultIfEmpty()
+                                                           on resultFa.TargetId
+                                                           equals
+                                                           T.Id
+                                                            into resutActionTarget
+                                                   from resultAcFa in resutActionTarget.DefaultIfEmpty()
+                                                   join Am in _context.Aims.DefaultIfEmpty()
+                                                            on resultAcFa.AimId
+                                                            equals
+                                                            Am.Id
+                                                                into resutActionTargetAim
+                                                   from resultAcFaAm in resutActionTargetAim.DefaultIfEmpty()
 
                                                    select new ActionPriceMatchDto()
                                                    {
                                                        Id = PM.Id,
-                               
-                                          
                                                        MatchExplanation = M.Explanation,
+                                                       AimExplanation =resultAcFaAm.Explanation,
+                                                       TargetExplanation=resultAcFa.Explanation,
                                        
+                                                       ActionExplanation = resultFa.Explanation,
+                                                       //SubActionExplanation = resultAFa.Explanation,
+
+                                                       TargetValue = PM.TargetValue,
+                                                       ResultValue = PM.ResultValue
+                                                   }
+                                                  ).ToList();
+                              List<ActionPriceMatchDto> matchSubActionList = (from PM in _context.ActionPrices
+                                                   where ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.PeriotId == periotId)
+                                                   join M in _context.Matchs on PM.MatchId equals M.Id
+
+                                                        join SA in _context.SubActions.DefaultIfEmpty()
+                                                                            on new { Id = PM.ActionId, key2 = M.Explanation }
+                                                                            equals
+                                                                            new { Id = SA.Id, key2 = "Alt Faaliyet" }
+                                                                                    into resut3
+                                                        from resultAFa in resut3.DefaultIfEmpty()
+                                                        join A in _context.Actions.DefaultIfEmpty()
+                                                                                on resultAFa.ActionId   
+                                                                                equals
+                                                                              A.Id
+                                                             into resut4
+                                                            from resultFa in resut4.DefaultIfEmpty()
+
+                                                            join T in _context.Targets.DefaultIfEmpty()
+                                                           on resultFa.TargetId
+                                                           equals
+                                                           T.Id
+                                                            into resutActionTarget
+                                                   from resultAcFa in resutActionTarget.DefaultIfEmpty()
+                                                   join Am in _context.Aims.DefaultIfEmpty()
+                                                            on resultAcFa.AimId
+                                                            equals
+                                                            Am.Id
+                                                                into resutActionTargetAim
+                                                   from resultAcFaAm in resutActionTargetAim.DefaultIfEmpty()
+
+                                                   select new ActionPriceMatchDto()
+                                                   {
+                                                       Id = PM.Id,
+
+
+                                                       MatchExplanation = M.Explanation,
+                                                       
+                                                       AimExplanation = resultAcFaAm.Explanation,
+                                                       TargetExplanation = resultAcFa.Explanation,
                                                        ActionExplanation = resultFa.Explanation,
                                                        SubActionExplanation = resultAFa.Explanation,
 
@@ -76,7 +128,11 @@ namespace Service.Concrete
                                                        ResultValue = PM.ResultValue
                                                    }
                                                   ).ToList();
-            return matchList;
+
+            var resultList = matchList.Union(matchSubActionList).ToList();
+
+
+            return resultList;
         }
 
         public List<ActionPriceMatchDto> ListActionPrice(int roleId, int organizationId, int periotId)

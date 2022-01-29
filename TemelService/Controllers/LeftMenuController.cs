@@ -31,7 +31,7 @@ namespace TemelService.Controllers
             var result = _leftMenu.AddLeftMenu(leftMenu);
             if (result.IsValid)
             {
-                return Ok();
+                return Ok(result.Data);
             }
             else
             {

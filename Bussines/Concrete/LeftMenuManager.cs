@@ -29,17 +29,17 @@ namespace Bussines.Concrete
             return new SuccessResultData<List<LeftMenuClaimDto>>(_leftMenuDal.GetLeftMenuFull());
         }
 
-        public IResult AddLeftMenu(LeftMenu leftMenu)
+        public IResultData<int> AddLeftMenu(LeftMenu leftMenu)
         {
             try
             {
-                _leftMenuDal.AddLeftMenu(leftMenu);
-                return new SuccessResult();
+                int Id=_leftMenuDal.AddLeftMenu(leftMenu);
+                return new SuccessResultData<int>(Id);
             }
             catch (Exception ex)
             {
 
-                return new ErrorResult(ex.Message);
+                return new ErrorResultData<int>(0,ex.Message);
             }
         }
 

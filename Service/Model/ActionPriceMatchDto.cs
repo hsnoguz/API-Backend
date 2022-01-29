@@ -11,7 +11,9 @@ namespace Service.Model
     {
         public int Id { get; set; }
          public string MatchExplanation { get; set; }
-         public string ActionExplanation { get; set; }
+        public string AimExplanation { get; set; }
+        public string TargetExplanation { get; set; }
+        public string ActionExplanation { get; set; }
           public string SubActionExplanation { get; set; }
         public decimal TargetValue { get; set; }
         public decimal ResultValue { get; set; }

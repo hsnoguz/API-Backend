@@ -11,6 +11,7 @@ namespace Service.Model
     {
         public int PerformanceId { get; set; }
         public int TargetId { get; set; }
+        public int Year { get; set; }
         public int PerformanceMatchId { get; set; }
         public decimal? Target { get; set; }
         public decimal? Result { get; set; }

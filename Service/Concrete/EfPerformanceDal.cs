@@ -112,6 +112,6 @@ namespace Service.Concrete
          
         }
 
-     
+       
     }
 }

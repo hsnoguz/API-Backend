@@ -4,6 +4,7 @@ using Service.Abstract;
 using Service.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +14,19 @@ namespace Service.Concrete
     public class EfTargetDal : IEfTargetDal
     {
         private readonly IRepository<Target> _repository;
+        IEfPerformanceMatchTargetDal _efPerformanceMatchTargetDal;
+        IEfTargetRiskStrategyThreatenedNeedDal _efTargetRiskStrategyThreatenedNeedDal;
+     //   IEfSubActionDal _efSubActionDal;
         ManagerContext _context;
-        public EfTargetDal(IRepository<Target> repository, ManagerContext context)
+        public EfTargetDal(IRepository<Target> repository, ManagerContext context, IEfPerformanceMatchTargetDal efPerformanceMatchTargetDal,
+            IEfTargetRiskStrategyThreatenedNeedDal efTargetRiskStrategyThreatenedNeedDal
+           )
         {
             _repository = repository;
             _context = context;
+            _efPerformanceMatchTargetDal = efPerformanceMatchTargetDal;
+            _efTargetRiskStrategyThreatenedNeedDal = efTargetRiskStrategyThreatenedNeedDal;
+  
         }
 
         public void AddTarget(Target Target)
@@ -38,6 +47,22 @@ namespace Service.Concrete
                               ).ToList();
             // _repository.Table.Where(x=>x.Aim.PeriotId==periotId).ToList();
             return TargetList;
+        }
+        public List<SubAction> SubActionListFull(int targetId)
+        {
+            var SubActionList =
+                (from SA in _context.SubActions
+
+                 join A in _context.Actions
+                         on SA.ActionId equals A.Id
+                 join T in _context.Targets
+                         on A.TargetId equals T.Id
+
+                 where T.Id == targetId
+                 select SA
+                              ).ToList();
+            // _repository.Table.Where(x=>x.Aim.PeriotId==periotId).ToList();
+            return SubActionList;
         }
 
         public void setTargetId(Target target)
@@ -105,6 +130,51 @@ namespace Service.Concrete
         public int GetTargetAimId(int targetId)
         {
             return _repository.GetById(targetId).AimId;
+        }
+        public List<Object> GetTargetCart(int targetId)
+        {
+            List<Object> result = new();
+            var TargetAim =
+              (from T in _context.Targets
+
+               join AP in _context.Aims
+                         on T.AimId equals AP.Id
+               where T.Id == targetId
+               select new TargetDto()
+               {
+                   AimExplanation = AP.Explanation,
+                   Explanation = T.Explanation
+               }) .FirstOrDefault();
+            var actions = _repository.Table.Include(x => x.Actions).Where(x => x.Id == targetId).Select(x => x.Actions);
+            List<DAL.Model.Action> ActionsList = new();
+            List<SubAction> subActions = new();
+            foreach (var actionsTemp in actions)
+            {
+                ActionsList.AddRange(actionsTemp);
+                foreach (var action in actionsTemp)
+                {
+                    var subActionList = action.SubActions;
+                    if (subActionList == null)
+                    {
+                        subActionList= SubActionListFull(targetId);
+                    }
+
+                    if (subActionList != null)
+                    {
+                        subActions.AddRange(subActionList);
+                    }
+                        
+                }
+               
+            }
+
+            result.Add(TargetAim);
+            result.Add(_efPerformanceMatchTargetDal.ListPerformancePeriotMatchTargetCartSingle(targetId));
+            result.Add(actions);
+            result.Add(subActions);
+            result.Add(_efTargetRiskStrategyThreatenedNeedDal.GetTarget_RiskStrategyThreatenedNeed(targetId));
+       
+            return result;
         }
 
         public List<TargetDto> TargetAimList(int periotId)

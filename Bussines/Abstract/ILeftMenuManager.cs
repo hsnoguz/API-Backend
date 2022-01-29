@@ -13,7 +13,7 @@ namespace Bussines.Abstract
     {
         public IResultData<List<LeftMenu>> GetLeftMenu(string roleName, int userId);
         public IResultData<List<LeftMenuClaimDto>> GetLeftMenuFull();
-        public IResult AddLeftMenu(LeftMenu leftMenu);
+        public IResultData<int>AddLeftMenu(LeftMenu leftMenu);
         public IResult DeleteLeftMenu(int Id);
     }
 }

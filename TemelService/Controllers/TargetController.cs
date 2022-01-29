@@ -46,6 +46,13 @@ namespace TemelService.Controllers
             return Ok(result);
         }
 
+        [HttpGet("TargetCart/{targetId}")]
+        public IActionResult TargetCart(int targetId)
+        {
+            var result = _TargetManager.GetTargetCart(targetId);
+            return Ok(result.Data);
+        }
+
         [HttpPost("EditAim/{id}/{aimId}")]
         public IActionResult EditAim(int id, int aimId) {
             var result = _TargetManager.EditAim(id,aimId);

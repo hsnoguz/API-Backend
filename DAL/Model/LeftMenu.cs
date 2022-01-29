@@ -8,7 +8,7 @@ namespace DAL.Model
 {
     public partial class LeftMenu 
     {
-        public short Id { get; set; }
+        public int Id { get; set; }
         public string Description { get; set; }
         public string Src { get; set; }
         public short? MenuId { get; set; }

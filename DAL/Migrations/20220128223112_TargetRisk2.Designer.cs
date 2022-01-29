@@ -4,14 +4,16 @@ using DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    partial class ManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20220128223112_TargetRisk2")]
+    partial class TargetRisk2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,8 +228,8 @@ namespace DAL.Migrations
                             JopId = 1,
                             LastName = "Admin",
                             OrganizationId = 1,
-                            PasswordHash = new byte[] { 238, 69, 75, 156, 151, 165, 26, 104, 157, 232, 177, 182, 47, 249, 201, 217, 210, 240, 146, 18, 55, 87, 7, 55, 42, 89, 6, 119, 218, 126, 192, 0, 24, 249, 238, 214, 133, 27, 171, 240, 145, 37, 175, 24, 204, 26, 48, 225, 143, 165, 244, 44, 73, 86, 218, 179, 192, 5, 204, 6, 198, 62, 132, 62 },
-                            PasswordSalt = new byte[] { 12, 8, 146, 26, 145, 80, 172, 102, 85, 92, 156, 220, 254, 217, 160, 89, 38, 134, 103, 88, 163, 117, 197, 14, 148, 23, 3, 45, 158, 161, 31, 206, 77, 54, 65, 189, 109, 105, 124, 120, 125, 1, 209, 60, 198, 151, 69, 103, 165, 249, 231, 106, 44, 180, 32, 173, 8, 209, 5, 169, 168, 132, 111, 126, 111, 152, 171, 184, 230, 9, 232, 150, 203, 96, 13, 109, 136, 28, 228, 20, 239, 91, 98, 98, 16, 247, 155, 223, 143, 231, 202, 79, 253, 186, 39, 143, 65, 157, 198, 5, 6, 93, 146, 5, 184, 169, 180, 90, 141, 1, 131, 87, 38, 89, 115, 82, 234, 38, 111, 24, 178, 217, 213, 200, 159, 184, 20, 39 },
+                            PasswordHash = new byte[] { 186, 16, 75, 221, 12, 140, 57, 52, 255, 210, 15, 38, 252, 164, 145, 47, 85, 10, 238, 55, 215, 111, 92, 68, 27, 192, 19, 133, 52, 36, 6, 94, 109, 109, 206, 99, 20, 94, 92, 186, 192, 16, 95, 231, 191, 64, 101, 167, 25, 184, 198, 27, 91, 169, 161, 11, 251, 214, 174, 121, 75, 23, 237, 89 },
+                            PasswordSalt = new byte[] { 4, 51, 45, 45, 104, 14, 189, 3, 140, 135, 131, 34, 110, 183, 41, 140, 147, 111, 110, 110, 162, 11, 78, 17, 209, 154, 40, 37, 162, 121, 12, 3, 95, 43, 72, 13, 107, 145, 158, 226, 87, 251, 23, 162, 149, 241, 12, 33, 29, 115, 197, 157, 240, 133, 50, 245, 96, 156, 184, 34, 176, 235, 72, 22, 90, 139, 47, 165, 53, 160, 153, 148, 62, 118, 228, 45, 85, 123, 55, 245, 52, 16, 248, 77, 206, 107, 51, 84, 229, 170, 167, 44, 251, 12, 180, 110, 33, 19, 83, 227, 224, 208, 0, 251, 194, 108, 1, 95, 224, 144, 195, 21, 71, 202, 221, 6, 136, 60, 219, 97, 161, 24, 55, 130, 29, 45, 251, 151 },
                             Status = true,
                             UserName = "admin@arastirmaturk.com"
                         });
@@ -418,9 +420,9 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Model.LeftMenu", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("smallint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<short?>("AccessRank")
@@ -476,7 +478,7 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = (short)1,
                             Description = "Kullanıcı İşlemleri",
                             ImageUrl = "fa fa-user",
                             MenuId = (short)0,
@@ -1220,44 +1222,6 @@ namespace DAL.Migrations
                     b.ToTable("TargetQuestion");
                 });
 
-            modelBuilder.Entity("DAL.Model.TargetRiskStrategyThreatenedNeed", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("InsertTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.Property<string>("Need")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Risk")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Strategy")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<int>("TargetId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Threatened")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TargetId");
-
-                    b.ToTable("TargetRiskStrategyThreatenedNeeds");
-                });
-
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Jop", "Jop")
@@ -1494,17 +1458,6 @@ namespace DAL.Migrations
                         .HasForeignKey("AimQuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("DAL.Model.TargetRiskStrategyThreatenedNeed", b =>
-                {
-                    b.HasOne("DAL.Model.Target", "Target")
-                        .WithMany()
-                        .HasForeignKey("TargetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Target");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>

@@ -57,6 +57,7 @@ namespace DAL.Model
         public virtual DbSet<AimQuestion> AimQuestions { get; set; }
         public virtual DbSet<QuestionTextType> QuestionTextTypes { get; set; }
         public virtual DbSet<ProjectSetting> ProjectSettings { get; set; }
+        public virtual DbSet<TargetRiskStrategyThreatenedNeed> TargetRiskStrategyThreatenedNeeds { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -167,6 +168,16 @@ namespace DAL.Model
             });
 
 
+            modelBuilder.Entity<TargetRiskStrategyThreatenedNeed>(entity =>
+            {
+                entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.Risk).HasMaxLength(500);
+                entity.Property(e => e.Strategy).HasMaxLength(500);
+                entity.Property(e => e.Threatened).HasMaxLength(500);
+                entity.Property(e => e.Need).HasMaxLength(500);
+            });
+
+            
             modelBuilder.Entity<ProjectSetting>(entity =>
             {
                 entity.Property(e => e.InsertTime).HasColumnType("datetime").HasDefaultValueSql("(getdate())");
