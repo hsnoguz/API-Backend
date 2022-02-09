@@ -58,7 +58,7 @@ namespace DAL.Model
         public virtual DbSet<QuestionTextType> QuestionTextTypes { get; set; }
         public virtual DbSet<ProjectSetting> ProjectSettings { get; set; }
         public virtual DbSet<TargetRiskStrategyThreatenedNeed> TargetRiskStrategyThreatenedNeeds { get; set; }
-
+        public DbSet<V_ATFAF_Plan> V_ATFAF_Plans { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -370,6 +370,12 @@ namespace DAL.Model
                 entity.Property(e => e.Explanation).HasMaxLength(150);
             });
 
+            modelBuilder.Entity<V_ATFAF_Plan>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.ToTable("V_ATFAF_Plans");
+            });
+
             modelBuilder.Entity<QuestionVertical>(entity =>
             {
                 entity.Property(e => e.ColumnName).HasMaxLength(70);
@@ -398,7 +404,7 @@ namespace DAL.Model
                 entity.ToTable("LeftMenu");
 
                 entity.Property(e => e.Description)
-                    .HasMaxLength(50)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ImageUrl)

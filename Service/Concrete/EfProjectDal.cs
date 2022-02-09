@@ -97,14 +97,21 @@ namespace Service.Concrete
                 string tableName = "p" + question.ProjectId;
                 foreach (var item in question.QuestionHorizontals)
                 {
-                    columnProvider(tableName, item.ColumnName, "smallint");
+                    if (item.ColumnName!="" && item.ColumnName!=null)
+                    {
+                        columnProvider(tableName, item.ColumnName, "smallint");
+                    }
+                   
                 }
                 bool isOpen= question.QuestionVerticals.Where(x => x.IsOpen == true).Any();
                 if (isOpen)
                 {
                     foreach (var item in question.QuestionHorizontals)
                     {
-                        columnProvider(tableName, item.ColumnName, "varchar(250)");
+                        if (item.ColumnName != "" && item.ColumnName != null)
+                        {
+                            columnProvider(tableName, item.ColumnName, "varchar(250)");
+                        }
                     }
                 }
             }
@@ -220,7 +227,13 @@ namespace Service.Concrete
 
         public int AddProjectQuestionHorizantal(QuestionHorizontal questionHorizontal)
         {
-          return _efQuestionDal.addQuestionHorizontal(questionHorizontal);
+            if (questionHorizontal.ColumnName != "" && questionHorizontal.ColumnName != null)
+            {
+                var question = _efQuestionDal.getQuestion(questionHorizontal.QuestionId);
+            string tableName = "p" + question.ProjectId;
+                columnProvider(tableName, questionHorizontal.ColumnName, "smallint");
+            }
+            return _efQuestionDal.addQuestionHorizontal(questionHorizontal);
         }
 
 

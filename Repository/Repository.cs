@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -131,12 +132,13 @@ namespace Repository
             return await result.ToListAsync();
         }
 
-    /*    public object GetSqlValue(string sql)
-        {
-            return Entities.FromSqlRaw(sql);
-        }
-    */
-  
+        /*    public object GetSqlValue(string sql)
+            {
+                return Entities.FromSqlRaw(sql);
+            }
+        */
+   
+
 
         public int UpdateSql(string sql, params object[] _params)
         {

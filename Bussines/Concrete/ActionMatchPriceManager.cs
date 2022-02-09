@@ -65,21 +65,21 @@ namespace Bussines.Concrete
         {
             int organizationId = _authService.CurrentOrganizationId(userId).Data;
             int roleId = _authService.getRoleId(roleName).Data;
-            return new SuccessResultData<List<ActionPriceMatchDto>>(_efActionPriceDal.ListActionPrice(roleId, organizationId, periotId));
+            return new SuccessResultData<List<ActionPriceMatchDto>>(_efActionPriceDal.ListActionSubActionPrice(roleId, organizationId, periotId));
         }
 
         public IResultData<List<ActionPriceMatchDto>> ListActionSubActionPrice(string roleName, int userId, int periotId)
         {
             int organizationId = _authService.CurrentOrganizationId(userId).Data;
             int roleId = _authService.getRoleId(roleName).Data;
-            return new SuccessResultData<List<ActionPriceMatchDto>>(_efActionPriceDal.ListActionPrice(roleId, organizationId, periotId));
+            return new SuccessResultData<List<ActionPriceMatchDto>>(_efActionPriceDal.ListActionSubActionPrice(roleId, organizationId, periotId));
         }
 
         public IResultData<List<ActionPriceMatchDto>> ListSubActionPrice(string roleName, int userId, int periotId)
         {
             int organizationId = _authService.CurrentOrganizationId(userId).Data;
             int roleId = _authService.getRoleId(roleName).Data;
-            return new SuccessResultData<List<ActionPriceMatchDto>>(_efActionPriceDal.ListActionPrice(roleId, organizationId, periotId));
+            return new SuccessResultData<List<ActionPriceMatchDto>>(_efActionPriceDal.ListSubActionPrice(roleId, organizationId, periotId));
         }
 
         public IResult SetActionPriceResult(int Id, decimal Result)

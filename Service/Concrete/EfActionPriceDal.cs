@@ -45,15 +45,15 @@ namespace Service.Concrete
             organizationIdList = _efOrganizationServiceDal.OrganizationDalList(organizationId);
 
             List<ActionPriceMatchDto> matchList = (from PM in _context.ActionPrices
-                                                   where ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.PeriotId == periotId)
+                                                   where PM.MatchId == 2 && ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.PeriotId == periotId)
                                                    join M in _context.Matchs on PM.MatchId equals M.Id
 
-                                                   join A in _context.Actions.DefaultIfEmpty()
+                                                   join A in _context.Actions
                                                         on new { Id = PM.ActionId, key2 = M.Explanation }
                                                         equals
                                                         new { Id = A.Id, key2 = "Faaliyet" }
                                                          into resut2
-                                                   from resultFa in resut2.DefaultIfEmpty()
+                                                   from resultFa in resut2
 
                                                    join T in _context.Targets.DefaultIfEmpty()
                                                            on resultFa.TargetId
@@ -83,15 +83,15 @@ namespace Service.Concrete
                                                    }
                                                   ).ToList();
                               List<ActionPriceMatchDto> matchSubActionList = (from PM in _context.ActionPrices
-                                                   where ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.PeriotId == periotId)
+                                                   where PM.MatchId == 3 && ((roleId == AdminRoleId || organizationIdList.Contains(organizationId)) && PM.PeriotId == periotId)
                                                    join M in _context.Matchs on PM.MatchId equals M.Id
 
-                                                        join SA in _context.SubActions.DefaultIfEmpty()
+                                                        join SA in _context.SubActions
                                                                             on new { Id = PM.ActionId, key2 = M.Explanation }
                                                                             equals
                                                                             new { Id = SA.Id, key2 = "Alt Faaliyet" }
                                                                                     into resut3
-                                                        from resultAFa in resut3.DefaultIfEmpty()
+                                                        from resultAFa in resut3
                                                         join A in _context.Actions.DefaultIfEmpty()
                                                                                 on resultAFa.ActionId   
                                                                                 equals

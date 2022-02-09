@@ -131,9 +131,9 @@ namespace Service.Concrete
         {
             return _repository.GetById(targetId).AimId;
         }
-        public List<Object> GetTargetCart(int targetId)
+        public Dictionary<string,Object> GetTargetCart(int targetId)
         {
-            List<Object> result = new();
+            Dictionary<string,Object> result = new();
             var TargetAim =
               (from T in _context.Targets
 
@@ -167,12 +167,27 @@ namespace Service.Concrete
                 }
                
             }
+           var performanceList= _efPerformanceMatchTargetDal.ListPerformancePeriotMatchTargetCartSingle(targetId);
+          
+           
+            List<PerformancePeriotMatchTagetCartDto> resultList = new();
+            List<object> resultListGroup = new();
+            foreach (var item in performanceList)
+            {
+                if (resultList.Where(x => x.PerformanceExplanation == item.PerformanceExplanation).Count() < 1)
+                {
+                    resultList.Add(item);
+                    var list = performanceList.Where(x => x.PerformanceExplanation == item.PerformanceExplanation).ToList();
+                    resultListGroup.Add(list);
 
-            result.Add(TargetAim);
-            result.Add(_efPerformanceMatchTargetDal.ListPerformancePeriotMatchTargetCartSingle(targetId));
-            result.Add(actions);
-            result.Add(subActions);
-            result.Add(_efTargetRiskStrategyThreatenedNeedDal.GetTarget_RiskStrategyThreatenedNeed(targetId));
+                }
+            }
+
+            result.Add("Header",TargetAim);
+            result.Add("Performance",resultListGroup);
+            result.Add("Action",actions);
+            result.Add("SubAction",subActions);
+            result.Add("Risk",_efTargetRiskStrategyThreatenedNeedDal.GetTarget_RiskStrategyThreatenedNeed(targetId));
        
             return result;
         }

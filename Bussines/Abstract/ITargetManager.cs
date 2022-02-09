@@ -16,7 +16,7 @@ namespace Bussines.Abstract
         public IResult EditTarget(int id, int aimId, string explanation);
         public List<Target> TargetList(int aimId);
         public List<TargetDto> TargetAimList(int periotId);
-        public IResultData<List<Object>> GetTargetCart(int targetId);
+        public IResultData<Dictionary<string,Object>> GetTargetCart(int targetId);
         public IResult AddTarget(Target target);
         public IResult DeleteTarget( int id);
 

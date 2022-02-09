@@ -14,7 +14,7 @@ namespace Service.Abstract
 
         public void EditAim(int id, int aimId);
         public void EditTarget(int id, int aimId, string explanation);
-        public List<Object> GetTargetCart(int targetId);
+        public Dictionary<string,object> GetTargetCart(int targetId);
         public List<Target> TargetList(int aimId);
         public List<TargetDto> TargetAimList(int periotId);
 

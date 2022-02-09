@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Extensions;
 using Service.Model;
+using System.Data;
+using System.Reflection;
 
 namespace Service.Concrete
 {
@@ -137,7 +139,7 @@ namespace Service.Concrete
                                                   .Select(x => new PerformanPeriotGroupDto() { TargetId =x.Key.TargetId , PerformanceId = x.Key.PerformanceId, PerformanceMatchId = x.Key.PerformanceMatchId,Target= x.Sum(s => s.Target),Result= x.Sum(s => s.Result) })
                                             
                                                    //.GroupBy(x=> { x.PerformanceMatchId,x.PerformanceId,x.TargetId}) PPTR by PPTR.PerformanceId  into ppt
-                                                    on new { key2 = PM.PerformanceId, key1 = PM.MatchId, key3 =PM.TargetId }
+                                                    on new { key2 = PM.PerformanceId, key1 = PM.Id, key3 =PM.TargetId }
                                                         equals
                                                     new {  key2 =PPTR.PerformanceId, key1 = PPTR.PerformanceMatchId, key3 = PPTR.TargetId }
                                                     into result4
@@ -155,6 +157,7 @@ namespace Service.Concrete
                                                        BaseValue =PM.Performance.BaseValue,
                                                        TargetValue= PM.Performance.TargetValue,
                                                        SumTargetValue =resultPPTR.Target == null ? 0 : resultPPTR.Target,
+                                                       SumResultValue = resultPPTR.Result == null ? 0 : resultPPTR.Result,
                                                        SuccessRate = resultPPTR.Result == null ? 0 : (resultPPTR.Result / resultPPTR.Target) * 100  
                                                    }
                                                      ).ToList();
@@ -261,8 +264,6 @@ namespace Service.Concrete
                                                      ).ToList();
             return matchList;
         }
-
-
 
 
         public List<PerformancePeriotMatchDto> ListPerformancePeriotMatchTarget(int roleId, int organizationId,int periotId)
@@ -425,14 +426,47 @@ namespace Service.Concrete
 
         public List<PerformancePeriotMatchTagetCartDto> ListPerformancePeriotMatchTargetCartSingle(int targetId)
         {
-            var performansPeriotList = (from PP in 
-                                            
-                                            _context.Performance_Target_Results.Where(x=>x.TargetId==targetId).GroupBy(x=> new {x.TargetTime.Year,x.TargetId,x.PerformanceId,x.PerformanceMatchId }).Select(x=>new PerformanPeriotGroupDto {Year=x.Key.Year, TargetId=x.Key.TargetId,PerformanceId=x.Key.PerformanceId,Target= x.Sum(s => s.Target), Result = x.Sum(s => s.Result) })
-                                        
-                                        join P in _context.Performances
+            string query = "select  ";
+         /*   using (var command = _context.Database.GetDbConnection().CreateCommand())
+            {
+                command.CommandText = query;
+                command.CommandType = CommandType.Text;
+                _context.Database.OpenConnection();
 
+                List<PerformancePeriotMatchTagetCartDto> list = new List<PerformancePeriotMatchTagetCartDto>();
+                using (var result = command.ExecuteReader())
+                {
+                    PerformancePeriotMatchTagetCartDto obj = new();
+                    while (result.Read())
+                    {
+                        //obj = Activator.CreateInstance<T>();
+                        foreach (PropertyInfo prop in obj.GetType().GetProperties())
+                        {
+                            if (!object.Equals(result[prop.Name], DBNull.Value))
+                            {
+                                prop.SetValue(obj, result[prop.Name], null);
+                            }
+                        }
+                        list.Add(obj);
+                    }
+                }
+                Database.CloseConnection();
+                return list;
+            }*/
+          
+            var performansPeriotList = (from PP in 
+                                            _context.Performance_Target_Results
+                                           .GroupBy(x => new { x.TargetTime.Year, x.TargetId, x.PerformanceId, x.PerformanceMatchId }).Select(x => new PerformanPeriotGroupDto { Year = x.Key.Year, TargetId = x.Key.TargetId, PerformanceId = x.Key.PerformanceId, PerformanceMatchId = x.Key.PerformanceMatchId, Target = x.Sum(s => s.Target), Result = x.Sum(s => s.Result) })
+                                        join P in _context.Performances
                                              on PP.PerformanceId equals P.Id
-                      
+                                        join PM in _context.PerformanceMatchTargets.Where(x => x.MatchId == 1 && x.TargetId == targetId)
+                                        on PP.PerformanceMatchId equals PM.Id
+                    
+                                      /*  join Plan in _context.Targets.Where(x=>x.Id==targetId)
+                                          on new { Key1=PM.MatchId,Key2=PP.TargetId }
+                                          equals
+                                          new { Key1=1,Key2=Plan.Id}
+                                      */
                                         select new PerformancePeriotMatchTagetCartDto()
                                         {
                                             PerformanceExplanation = P.Explanation,
@@ -443,7 +477,61 @@ namespace Service.Concrete
                                             ResultValue = PP.Result
                                         }
                                ).ToList();
-            return performansPeriotList;
+
+            var performansPeriotList2 = (from PP in
+                                          _context.Performance_Target_Results
+                                         .GroupBy(x => new { x.TargetTime.Year, x.TargetId, x.PerformanceId, x.PerformanceMatchId }).Select(x => new PerformanPeriotGroupDto { Year = x.Key.Year, TargetId = x.Key.TargetId, PerformanceId = x.Key.PerformanceId, PerformanceMatchId = x.Key.PerformanceMatchId, Target = x.Sum(s => s.Target), Result = x.Sum(s => s.Result) })
+                                        join P in _context.Performances
+                                             on PP.PerformanceId equals P.Id
+                                        join PM in _context.PerformanceMatchTargets.Where(x => x.MatchId == 2)
+                                        on PP.PerformanceMatchId equals PM.Id
+                                      
+                                                    join PlanA in _context.Actions.Where(x => x.TargetId == targetId)
+                                                                on new { Key1 = PM.MatchId, Key2 = PP.TargetId }
+                                                                equals
+                                                                new { Key1 = 2, Key2 = PlanA.Id }
+                                                                into result2
+                                                    from ResultAction in result2
+
+                                         select new PerformancePeriotMatchTagetCartDto()
+                                        {
+                                            PerformanceExplanation = P.Explanation,
+                                            TargetYear = PP.Year,
+                                            TargetPeriotMonth = P.PerformancePeriot.Explanation,
+                                            //     P.PerformanceAim.Explanation,
+                                            TargetValue = PP.Target,
+                                            ResultValue = PP.Result
+                                        }
+                             ).ToList();
+
+            var performansPeriotList3 = (from PP in
+                                          _context.Performance_Target_Results
+                                         .GroupBy(x => new { x.TargetTime.Year, x.TargetId, x.PerformanceId, x.PerformanceMatchId }).Select(x => new PerformanPeriotGroupDto { Year = x.Key.Year, TargetId = x.Key.TargetId, PerformanceId = x.Key.PerformanceId, PerformanceMatchId = x.Key.PerformanceMatchId, Target = x.Sum(s => s.Target), Result = x.Sum(s => s.Result) })
+                                         join P in _context.Performances
+                                              on PP.PerformanceId equals P.Id
+                                         join PM in _context.PerformanceMatchTargets.Where(x=>x.MatchId==3 )
+                                         on PP.PerformanceMatchId equals PM.Id
+
+                                        join PlanAS in _context.V_ATFAF_Plans.Where(x => x.TargetId == targetId)
+                                                                            on new { Key1 = PM.MatchId, Key2 = PP.TargetId }
+                                                                            equals
+                                                                            new { Key1 = 3, Key2 = PlanAS.Id }
+                                        
+                                         select new PerformancePeriotMatchTagetCartDto()
+                                         {
+                                             PerformanceExplanation = P.Explanation,
+                                             TargetYear = PP.Year,
+                                             TargetPeriotMonth = P.PerformancePeriot.Explanation,
+                                             //     P.PerformanceAim.Explanation,
+                                             TargetValue = PP.Target,
+                                             ResultValue = PP.Result
+                                         }
+                             ).ToList();
+
+
+            var result = performansPeriotList.Union(performansPeriotList2).Union(performansPeriotList3).ToList();
+   
+            return result;
         }
 
         public List<PerformancePeriotMatchDto> ListPerformancePeriotMatchTargetSingle(int Id)

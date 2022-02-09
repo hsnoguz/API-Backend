@@ -286,3 +286,14 @@ declare @QuestionId int;
 									*/
 select */*,'' as [Type],0 as ProjectId,0 as [Index],0 as ParentId,'' as [Name],0 as TargetQuestionId*/ from @myTable where Puan is not null
 END
+
+
+CREATE VIEW [arastirma_service].[V_ATFAF_Plans]
+AS
+SELECT SA.Id, SA.SubActionId AS SubActionListId, SA.Explanation, SA.OrganizationId, A.Id AS ActionId, A.ActionId AS ActionListId, A.Explanation AS ActionExplanation, T.Id AS TargetId, T.TargetId AS TargetListId, 
+                  T.Explanation AS TargetExplanation, Am.Id AS AimId, Am.Explanation AS AimExplanation, Am.PeriotId
+FROM     arastirma_service.SubActions AS SA INNER JOIN
+                  arastirma_service.Actions AS A ON SA.ActionId = A.Id INNER JOIN
+                  arastirma_service.Targets AS T ON A.TargetId = T.Id INNER JOIN
+                  arastirma_service.Aims AS Am ON T.AimId = Am.Id
+GO
